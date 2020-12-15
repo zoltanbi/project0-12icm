@@ -1,2 +1,2 @@
 # project0-12icm
-By Zoltan Biro & Roberto Mejia Lacayo
+By Zoltan Biro, Umang Kapure, & Roberto Mejia Lacayo
