@@ -1,0 +1,5 @@
+version: 0.0.1
+name: ShopGUIPlugin
+main: com.roberto.core.main
+author: Roberto Mejia Lacayo
+description: GUI for Shop
