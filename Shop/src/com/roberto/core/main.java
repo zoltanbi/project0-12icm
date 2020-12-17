@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,9 +21,17 @@ public class main extends JavaPlugin {
     @Override
     public void onEnable() {
         System.out.println("Shop GUIS plugin enabled.");
+
         getCommand("shop").setExecutor(new ShopCommand(this));
         getCommand("pshop").setExecutor(new PShopCommand(this));
+
+        Bukkit.getPluginManager().registerEvents(
+                new ShopListener(this),this);
+        //repeat for PShopListener
     }
+
+    //Shop Logic
+
 
     /**
      * Every time /shop is called in chat, Shop UI is applied
