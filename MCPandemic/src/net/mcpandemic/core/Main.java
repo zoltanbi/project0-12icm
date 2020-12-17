@@ -2,6 +2,10 @@ package net.mcpandemic.core;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * This is the driver class. It is responsible to put everything that
+ * is needed together to drive the game mode.
+ */
 public class Main extends JavaPlugin {
 
     private static Main instance;
