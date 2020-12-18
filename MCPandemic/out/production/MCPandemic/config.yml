@@ -22,3 +22,73 @@ arenas:
     z: 100
     pitch: 60
     yaw: 60
+  '2':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '3':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '4':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '5':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '6':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '7':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '8':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '9':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '10':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60
+  '11':
+    world: 'world'
+    x: 100
+    y: 100
+    z: 100
+    pitch: 60
+    yaw: 60

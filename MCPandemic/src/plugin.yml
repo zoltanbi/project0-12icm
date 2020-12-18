@@ -4,3 +4,4 @@ name: mcpandemic
 api-version: 1.16
 commands:
   arena:
+  vote:
