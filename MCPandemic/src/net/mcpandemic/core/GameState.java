@@ -13,6 +13,7 @@ package net.mcpandemic.core;
 public enum GameState {
 
     RECRUITING,
+    VOTING,
     COUNTDOWN,
     LIVE;
 
