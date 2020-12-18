@@ -1,5 +1,6 @@
 package net.mcpandemic.core;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -10,10 +11,12 @@ import java.util.UUID;
 /**
  * The Arena class is responsible for driving the game mode in each
  * instance. Contains:
- *     - an id (int)
+ *     - id (int)
  *     - players (ArrayList)
  *     - spawn (Location)
  *     - state (GameState)
+ *     - countdown (Countdown)
+ *     - game (Game)
  */
 public class Arena {
 
@@ -21,12 +24,41 @@ public class Arena {
     private ArrayList<UUID> players;
     private Location spawn;
     private GameState state;
+    private Countdown countdown;
+    private Game game;
 
     public Arena(int id) {
         this.id = id;
         players = new ArrayList<>();
         spawn = Config.getArenaSpawn(id);
         state = GameState.RECRUITING;
+        countdown = new Countdown(this);
+        game = new Game(this);
+    }
+
+    public void start() {
+        game.start();
+    }
+
+    public void reset() {
+        for (UUID uuid : players) {
+            removePlayer(Bukkit.getPlayer(uuid));
+        }
+
+        state = GameState.RECRUITING;
+        players.clear();
+        countdown = new Countdown(this);
+        game = new Game(this);
+    }
+
+    /**
+     * Sends a message to everyone in the Arena.
+     * @param message a String.
+     */
+    public void sendMessage(String message) {
+        for (UUID uuid : players) {
+            Bukkit.getPlayer(uuid).sendMessage(message);
+        }
     }
 
     /**
@@ -37,6 +69,10 @@ public class Arena {
     public void addPlayer(Player player) {
         players.add(player.getUniqueId());
         player.teleport(spawn);
+
+        if (players.size() >= Config.getRequiredPlayers()) {
+            countdown.begin();
+        }
     }
 
     /**
@@ -47,6 +83,14 @@ public class Arena {
     public void removePlayer(Player player) {
         players.remove(player.getUniqueId());
         player.teleport(Config.getLobbySpawn());
+
+        if (players.size() <= Config.getRequiredPlayers() && state.equals(GameState.COUNTDOWN)) {
+            reset();
+        }
+
+        if (players.size() == 0 && state.equals(GameState.COUNTDOWN)) {
+            reset();
+        }
     }
 
     /*
@@ -63,6 +107,14 @@ public class Arena {
 
     public GameState getState() {
         return state;
+    }
+
+    /*
+     * SETTERS:
+     */
+
+    public void setState(GameState state) {
+        this.state = state;
     }
 
 }
