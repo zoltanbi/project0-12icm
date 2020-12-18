@@ -1,94 +1,94 @@
 required-players: 1
 countdown-seconds: 30
 lobby-spawn:
-  world: 'world'
-  x: 100
-  y: 100
-  z: 100
-  pitch: 60
-  yaw: 60
+  world: 'lobby'
+  x: 77.488
+  y: 13
+  z: 90.475
+  pitch: 0
+  yaw: 0
 arenas:
   '0':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '1':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '2':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '3':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '4':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '5':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '6':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '7':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '8':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '9':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '10':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0
   '11':
     world: 'world'
     x: 100
     y: 100
     z: 100
-    pitch: 60
-    yaw: 60
+    pitch: 0
+    yaw: 0

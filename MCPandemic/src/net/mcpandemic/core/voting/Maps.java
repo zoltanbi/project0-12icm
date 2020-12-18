@@ -2,6 +2,9 @@ package net.mcpandemic.core.voting;
 
 import net.mcpandemic.core.Config;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
+
+import java.util.HashMap;
 
 /**
  * Maps enum for getting all the maps and their locations.
