@@ -13,6 +13,8 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         Main.instance = this;
+
+        new Manager();
     }
 
     public static Main getInstance() {
