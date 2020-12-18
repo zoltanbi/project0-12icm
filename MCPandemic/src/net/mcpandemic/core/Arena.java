@@ -42,7 +42,7 @@ public class Arena {
 
     public void reset() {
         for (UUID uuid : players) {
-            removePlayer(Bukkit.getPlayer(uuid));
+            Bukkit.getPlayer(uuid).teleport(Config.getLobbySpawn());
         }
 
         state = GameState.RECRUITING;
@@ -101,12 +101,16 @@ public class Arena {
         return id;
     }
 
-    public List<UUID> getPlayers() {
+    public ArrayList<UUID> getPlayers() {
         return players;
     }
 
     public GameState getState() {
         return state;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     /*

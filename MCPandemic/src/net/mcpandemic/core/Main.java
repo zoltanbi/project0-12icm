@@ -1,5 +1,6 @@
 package net.mcpandemic.core;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -12,9 +13,18 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        System.out.println("ENABLING MCPANDEMIC");
+        System.out.println("ENABLING MCPANDEMIC");
+        System.out.println("ENABLING MCPANDEMIC");
         Main.instance = this;
 
+        new Config(this);
+
         new Manager();
+
+        getCommand("arena").setExecutor(new ArenaCommand());
+
+        Bukkit.getPluginManager().registerEvents(new GameListener(), this);
     }
 
     public static Main getInstance() {

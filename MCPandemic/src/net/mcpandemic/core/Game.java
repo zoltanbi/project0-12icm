@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * The Game class is responsible for the game mode's listeners and logic
+ * The Game class is responsible for the game mode's logic
  * for infection. Currently being tested for block break events.
  */
 public class Game {

@@ -14,6 +14,8 @@ public class Manager {
     private static ArrayList<Arena> arenas;
 
     public Manager() {
+        arenas = new ArrayList<>();
+
         for (int i = 0; i <= (Config.getArenaAmount() - 1); i++) {
             arenas.add(new Arena(i));
         }
@@ -63,6 +65,10 @@ public class Manager {
             }
         }
         return null;
+    }
+
+    public static boolean isRecruiting(int id) {
+        return getArena(id).getState() == GameState.RECRUITING;
     }
 
 }
