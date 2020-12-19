@@ -2,7 +2,9 @@ package net.mcpandemic.core;
 
 import net.mcpandemic.core.voting.VoteCommand;
 import net.mcpandemic.core.voting.VoteGUICommand;
+import net.mcpandemic.core.voting.VoteListener;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -25,9 +27,11 @@ public class Main extends JavaPlugin {
         new Manager();
 
         getCommand("arena").setExecutor(new ArenaCommand());
-        getCommand("vote").setExecutor(new VoteCommand());
+        getCommand("vote").setExecutor(new VoteGUICommand());
 
         Bukkit.getPluginManager().registerEvents(new GameListener(), this);
+        Bukkit.getPluginManager().registerEvents(
+                (Listener) new VoteListener(),this);
     }
 
     public static Main getInstance() {
