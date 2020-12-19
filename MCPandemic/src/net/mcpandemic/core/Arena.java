@@ -6,6 +6,7 @@ import net.mcpandemic.core.voting.VoteCountdown;
 import net.mcpandemic.core.voting.VoteMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -54,13 +55,17 @@ public class Arena {
 
     public void reset() {
         for (UUID uuid : players) {
-            Bukkit.getPlayer(uuid).teleport(Config.getLobbySpawn());
+            Bukkit.getPlayer(uuid).teleport(spawn);
         }
+
 
         state = GameState.RECRUITING;
         //players.clear(); removes from game which we dont want atm
         countdown = new Countdown(this);
         game = new Game(this);
+        if(players.size() >= Config.getRequiredPlayers()) {
+            countdown.begin();
+        }
     }
 
     /**
@@ -101,8 +106,8 @@ public class Arena {
     public void removePlayer(Player player) {
         players.remove(player.getUniqueId());
         if (player.isOnline()) {
-            player.teleport(Config.getLobbySpawn());
-            player.sendMessage("You're not supposed to be out of the game... Contact a staff member");
+            player.teleport(spawn);
+            player.sendMessage(ChatColor.RED + "You're not supposed to be out of the game... Contact a staff member");
         }
 
         if (players.size() <= Config.getRequiredPlayers() && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {

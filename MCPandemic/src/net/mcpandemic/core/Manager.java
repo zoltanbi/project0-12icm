@@ -1,5 +1,6 @@
 package net.mcpandemic.core;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -56,6 +57,11 @@ public class Manager {
 
     public static boolean isRecruiting() {
         return getArena().getState() == GameState.RECRUITING;
+    }
+
+    public static String getServerTag() {
+        String tag = ChatColor.RED + "[MCPandemic] " + ChatColor.RESET;
+        return tag;
     }
 
 }

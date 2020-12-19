@@ -25,8 +25,12 @@ public class ArenaCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "You are not in an arena!");
                 }
             } else if (args[0].equalsIgnoreCase("join")) {
-                Manager.getArena().addPlayer(player);
-                player.sendMessage("You are now playing.");
+                if (!Manager.getArena().getPlayers().contains(player.getUniqueId())) {
+                    Manager.getArena().addPlayer(player);
+                    player.sendMessage("You are now playing.");
+                } else {
+                    player.sendMessage("You are already playing!");
+                }
             } else {
                 player.sendMessage(ChatColor.RED + "Invalid usage - these " +
                         "are the options:");

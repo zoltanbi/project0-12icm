@@ -32,8 +32,8 @@ public class Config {
     }
 
     public static Location getLobbySpawn() {
-        World world = Bukkit.getServer().getWorld("world");
-        return new Location(world, 77.488, 13.0, 90.475, 0,0);
+        World world = Bukkit.getServer().getWorld("lobby");
+        return new Location(world, 77.4, 13.0, 90.47, 0, 0);
 
     }
 

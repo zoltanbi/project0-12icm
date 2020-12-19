@@ -1,5 +1,6 @@
 package net.mcpandemic.core;
 
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -30,18 +31,18 @@ public class Countdown extends BukkitRunnable {
             arena.start();
 
         }
-        if (seconds % 30 == 0 || seconds <=10) {
+        if (seconds % 30 == 0 || seconds <= 10) {
             if (seconds == 1 ) {
-                arena.sendMessage("Game will start in 1 second.");
-            } else {
-                arena.sendMessage("Game will start in " + seconds + " seconds.");
+                arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "Game will start in 1 second.");
+            } else if (seconds != 0) {
+                arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "Game will start in " + seconds + " seconds.");
             }
         }
 
         if (arena.getPlayers().size() < Config.getRequiredPlayers()) {
             cancel();
             arena.setState(GameState.RECRUITING);
-            arena.sendMessage("There are too few players. Countdown stopped.");
+            arena.sendMessage(Manager.getServerTag() + "There are too few players. Countdown stopped.");
             return;
         }
 
