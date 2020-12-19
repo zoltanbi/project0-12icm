@@ -27,7 +27,7 @@ public class Game extends BukkitRunnable {
         arena.setState(GameState.LIVE);
         arena.teleportPlayersToArena();
         arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "You have one minute to run away! The "
-                + ChatColor.RED + "Zovid-19" + ChatColor.DARK_GREEN + "virus is " + ChatColor.RED + "coming" + ChatColor.DARK_GREEN + "!");
+                + ChatColor.YELLOW + "Zovid-19" + ChatColor.DARK_GREEN + " virus is coming!");
 
         for (UUID uuid : arena.getPlayers()) {
             points.put(uuid, 0);
@@ -42,8 +42,8 @@ public class Game extends BukkitRunnable {
             arena.setState(GameState.INFECTION);
 
         }
-        if (preGameSeconds % 30 == 0) {
-            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "The virus is here in " + ChatColor.YELLOW + "30" + ChatColor.DARK_GREEN + "...");
+        if (preGameSeconds == 30) {
+            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "The virus will spread in " + ChatColor.YELLOW + "30" + ChatColor.DARK_GREEN + " seconds...");
         }
         if (preGameSeconds <= 10) {
             if (preGameSeconds != 0) {

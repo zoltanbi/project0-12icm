@@ -25,25 +25,21 @@ public class GameListener implements Listener {
 
     }
 
-//    @EventHandler
-//    public void onJoin(PlayerJoinEvent e) {
-//        Player player = e.getPlayer();
-//        Manager.getArena().addPlayer(player);
-//        player.sendMessage("You are playing MCPandemic");
-//
-//
-//    }
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        Player player = e.getPlayer();
+        Manager.getArena().addPlayer(player);
+        player.sendMessage("You are playing MCPandemic");
+    }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-
         Player player = e.getPlayer();
-        //Manager.getArena().removePlayer((player));
-
-        if (Manager.isPlaying(player)) {
+        try {
             Manager.getArena().removePlayer((player));
+        } catch (Exception exception){
+            exception.printStackTrace();
         }
-
     }
 
 }

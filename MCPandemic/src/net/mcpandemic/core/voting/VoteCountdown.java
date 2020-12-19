@@ -2,8 +2,12 @@ package net.mcpandemic.core.voting;
 
 import net.mcpandemic.core.*;
 import net.mcpandemic.core.voting.VoteMap;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 /**
  * The Countdown class is responsible for the countdown logic. Announces
@@ -16,6 +20,7 @@ public class VoteCountdown extends BukkitRunnable {
     private VoteMap voteMap;
     private Countdown countdown;
     private int voteSeconds;
+    private Maps map;
 
     public VoteCountdown(Arena arena) {
         this.arena = arena;
@@ -32,10 +37,11 @@ public class VoteCountdown extends BukkitRunnable {
     public void run() {
         if (voteSeconds == 0) {
             cancel();
-            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Voting has ended! The winner is " + ChatColor.YELLOW + arena.getHighestVoted().getMapName());
-            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_AQUA + "Loading map " + ChatColor.YELLOW + arena.getHighestVoted().getMapName() + ChatColor.DARK_AQUA + " ...");
+            map = arena.getHighestVoted();
+            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Voting has ended! The winner is " + ChatColor.YELLOW + map.getMapName());
+            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_AQUA + "Loading map " + ChatColor.YELLOW + map.getMapName() + ChatColor.DARK_AQUA + " ...");
             //set the winning arena's spawnpoint
-            arena.setMapSpawn(arena.getHighestVoted().getLocation());
+            arena.setMapSpawn(map.getLocation());
 
             //start game countdown
             arena.startCountdown();

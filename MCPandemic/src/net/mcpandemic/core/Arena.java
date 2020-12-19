@@ -74,13 +74,16 @@ public class Arena {
             Bukkit.getPlayer(uuid).teleport(spawn);
         }
 
-
-        state = GameState.RECRUITING;
-        //players.clear(); removes from game which we dont want atm
+        voteMap = new VoteMap();
+        votableMaps = voteMap.getVotableMaps();
+        mapArray = new Maps[5];
+        votedPlayers = new ArrayList<>();
+        voteCountdown = new VoteCountdown(this);
+        //rest
         countdown = new Countdown(this);
         game = new Game(this);
         if(players.size() >= Config.getRequiredPlayers()) {
-            countdown.begin();
+            voteCountdown.startVote();
         }
     }
 
@@ -106,6 +109,10 @@ public class Arena {
             player.teleport(spawn);
             if (state == GameState.RECRUITING && players.size() >= Config.getRequiredPlayers()) {
                 voteCountdown.startVote();
+            }
+            if (state == GameState.VOTING) {
+                player.sendMessage(Manager.getServerTag() + ChatColor.DARK_AQUA + "Hello, " + ChatColor.YELLOW
+                        + player.getName() + ChatColor.DARK_AQUA + ", vote for the next map! " + ChatColor.YELLOW + "(/vote)");
             }
         }
         if (state == GameState.LIVE) {
