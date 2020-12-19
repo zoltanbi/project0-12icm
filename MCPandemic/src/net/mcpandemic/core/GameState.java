@@ -15,6 +15,7 @@ public enum GameState {
     RECRUITING,
     VOTING,
     COUNTDOWN,
-    LIVE;
+    LIVE,
+    INFECTION;
 
 }

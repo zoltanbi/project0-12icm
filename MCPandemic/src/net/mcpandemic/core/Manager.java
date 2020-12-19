@@ -11,18 +11,15 @@ import java.util.List;
  */
 public class Manager {
 
-    private static ArrayList<Arena> arenas;
+    private static Arena arena;
 
     public Manager() {
-        arenas = new ArrayList<>();
+        arena = new Arena();
 
-        for (int i = 0; i <= (Config.getArenaAmount() - 1); i++) {
-            arenas.add(new Arena(i));
-        }
     }
 
-    public static List<Arena> getArenas() {
-        return arenas;
+    public static Arena getArenas() {
+        return arena;
     }
 
     /**
@@ -31,10 +28,8 @@ public class Manager {
      * @return a boolean.
      */
     public static boolean isPlaying(Player player) {
-         for (Arena arena : arenas) {
-             if (arena.getPlayers().contains(player.getUniqueId())) {
-                 return true;
-             }
+         if (arena.getPlayers().contains(player.getUniqueId())) {
+             return true;
          }
          return false;
     }
@@ -45,30 +40,22 @@ public class Manager {
      * @return an Arena.
      */
     public static Arena getArena(Player player) {
-        for (Arena arena : arenas) {
-            if (arena.getPlayers().contains(player.getUniqueId())) {
-                return arena;
-            }
+        if (arena.getPlayers().contains(player.getUniqueId())) {
+            return arena;
         }
         return null;
     }
 
     /**
      * Returns the arena by id.
-     * @param id an int.
      * @return an Arena.
      */
-    public static Arena getArena(int id) {
-        for (Arena arena : arenas) {
-            if (arena.getID() == id) {
-                return arena;
-            }
-        }
-        return null;
+    public static Arena getArena() {
+        return arena;
     }
 
-    public static boolean isRecruiting(int id) {
-        return getArena(id).getState() == GameState.RECRUITING;
+    public static boolean isRecruiting() {
+        return getArena().getState() == GameState.RECRUITING;
     }
 
 }

@@ -1,10 +1,15 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.voting.Maps;
+import net.mcpandemic.core.voting.VoteCountdown;
+import net.mcpandemic.core.voting.VoteMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -19,18 +24,23 @@ import java.util.UUID;
  */
 public class Arena {
 
-    private int id;
     private ArrayList<UUID> players;
     private Location spawn;
+    private Location mapSpawn;
     private GameState state;
+    private VoteMap voteMap;
+//    HashMap<Maps, Integer> votableMaps;
+//    private VoteCountdown voteCountdown;
     private Countdown countdown;
     private Game game;
 
-    public Arena(int id) {
-        this.id = id;
+    public Arena() {
         players = new ArrayList<>();
-        spawn = Config.getArenaSpawn(id);
+        spawn = Config.getLobbySpawn();
         state = GameState.RECRUITING;
+        mapSpawn = Config.getArenaSpawn(0);
+//        voteMap = new VoteMap();
+//        votableMaps = voteMap.getVotableMaps();
         countdown = new Countdown(this);
         game = new Game(this);
     }
@@ -45,7 +55,7 @@ public class Arena {
         }
 
         state = GameState.RECRUITING;
-        players.clear();
+        //players.clear(); removes from game which we dont want atm
         countdown = new Countdown(this);
         game = new Game(this);
     }
@@ -67,11 +77,17 @@ public class Arena {
      */
     public void addPlayer(Player player) {
         players.add(player.getUniqueId());
-        player.teleport(spawn);
-
-        if (players.size() >= Config.getRequiredPlayers()) {
-            countdown.begin();
+        if (state == GameState.RECRUITING || state == GameState.VOTING ||
+                state == GameState.COUNTDOWN) {
+            player.teleport(spawn);
+            if (state == GameState.RECRUITING && players.size() >= Config.getRequiredPlayers()) {
+                countdown.begin();
+            }
         }
+        if (state == GameState.LIVE) {
+            player.teleport(mapSpawn);
+        }
+
     }
 
     /**
@@ -81,13 +97,16 @@ public class Arena {
      */
     public void removePlayer(Player player) {
         players.remove(player.getUniqueId());
-        player.teleport(Config.getLobbySpawn());
+        if (player.isOnline()) {
+            player.teleport(Config.getLobbySpawn());
+            player.sendMessage("You're not supposed to be out of the game... Contact a staff member");
+        }
 
-        if (players.size() <= Config.getRequiredPlayers() && state.equals(GameState.COUNTDOWN)) {
+        if (players.size() <= Config.getRequiredPlayers() && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
             reset();
         }
 
-        if (players.size() == 0 && state.equals(GameState.COUNTDOWN)) {
+        if (players.size() == 0 && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
             reset();
         }
     }
@@ -96,8 +115,8 @@ public class Arena {
      * GETTERS:
      */
 
-    public int getID() {
-        return id;
+    public String getID() {
+        return "main";
     }
 
     public ArrayList<UUID> getPlayers() {
@@ -110,6 +129,10 @@ public class Arena {
 
     public Game getGame() {
         return game;
+    }
+
+    public Location getMapSpawn() {
+        return mapSpawn;
     }
 
     /*

@@ -22,6 +22,10 @@ public class Config {
         return main.getConfig().getInt("required-players");
     }
 
+    public static int getVoteSeconds() {
+        return main.getConfig().getInt("vote-seconds");
+    }
+
     public static int getCountdownSeconds() {
         return main.getConfig().getInt("countdown-seconds");
     }
@@ -55,6 +59,11 @@ public class Config {
 
     public static int getArenaAmount() {
         return main.getConfig().getConfigurationSection("arenas.").getKeys(
+                false).size();
+    }
+
+    public static int getLobbyAmount() {
+        return main.getConfig().getConfigurationSection("lobby-spawn.").getKeys(
                 false).size();
     }
 
