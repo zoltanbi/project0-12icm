@@ -28,7 +28,7 @@ public class Countdown extends BukkitRunnable {
     public void run() {
         if (seconds == 0) {
             cancel();
-            arena.start();
+            arena.startGame();
 
         }
         if (seconds % 30 == 0 || seconds <= 10) {

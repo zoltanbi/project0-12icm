@@ -38,9 +38,10 @@ public class GameListener implements Listener {
     public void onQuit(PlayerQuitEvent e) {
 
         Player player = e.getPlayer();
+        //Manager.getArena().removePlayer((player));
 
         if (Manager.isPlaying(player)) {
-            Manager.getArena(player).removePlayer((player));
+            Manager.getArena().removePlayer((player));
         }
 
     }

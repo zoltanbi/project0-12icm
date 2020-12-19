@@ -60,7 +60,7 @@ public class Manager {
     }
 
     public static String getServerTag() {
-        String tag = ChatColor.RED + "[MCPandemic] " + ChatColor.RESET;
+        String tag = ChatColor.DARK_RED + "[MCPandemic] " + ChatColor.RESET;
         return tag;
     }
 

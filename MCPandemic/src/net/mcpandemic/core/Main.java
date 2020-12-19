@@ -25,7 +25,7 @@ public class Main extends JavaPlugin {
         new Manager();
 
         getCommand("arena").setExecutor(new ArenaCommand());
-        getCommand("vote").setExecutor(new VoteCommand());
+        getCommand("vote").setExecutor(new VoteGUICommand());
 
         Bukkit.getPluginManager().registerEvents(new GameListener(), this);
     }
