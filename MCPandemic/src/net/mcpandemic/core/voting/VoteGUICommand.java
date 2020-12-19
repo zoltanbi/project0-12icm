@@ -19,38 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class VoteGUICommand implements CommandExecutor {
+public class VoteGUICommand {
 
     public VoteGUICommand() {}
-
-    /**
-     * Opens up Voting GUI on /vote command
-     *
-     * @param sender
-     * @param command
-     * @param s
-     * @param strings
-     * @return
-     */
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s,
-                             String[] strings) {
-        if (sender instanceof Player) {
-            applyVoteUI((Player) sender);
-        }
-        else {
-            System.out.println("Console can't use this command!");
-        }
-
-        return false;
-    }
 
     /**
      * Creates Voting GUI
      *
      * @param p
      */
-    private void applyVoteUI(Player p) {
+    public static void applyVoteUI(Player p) {
         //SETUP
         Inventory vGUI = Bukkit.createInventory(
                 null, 9, ChatColor.DARK_GRAY + "Vote");

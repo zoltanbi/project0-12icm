@@ -1,19 +1,19 @@
 package net.mcpandemic.core.voting;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.ArrayList;
 
 public class VoteMap {
 
     private ArrayList<Maps> maps;
-    private HashMap<Maps, Integer> votableMaps;
+    private LinkedHashMap<Maps, Integer> votableMaps;
 
     public VoteMap() {
         maps = new ArrayList<Maps>();
         loadMaps();
-        votableMaps = new HashMap<Maps, Integer>();
+        votableMaps = new LinkedHashMap<Maps, Integer>();
         randomMaps();
     }
 
@@ -30,7 +30,7 @@ public class VoteMap {
         votableMaps.put(maps.get(4), 0);
     }
 
-    public HashMap<Maps, Integer> getVotableMaps() {
+    public LinkedHashMap<Maps, Integer> getVotableMaps() {
         return votableMaps;
     }
 

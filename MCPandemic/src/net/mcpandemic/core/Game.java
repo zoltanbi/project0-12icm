@@ -21,6 +21,7 @@ public class Game {
 
     public void start() {
         arena.setState(GameState.LIVE);
+        arena.teleportPlayersToArena();
 
         arena.sendMessage("Game has started! Your objective is to be the " +
                 "first player to break 20 blocks.");
