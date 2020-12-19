@@ -32,8 +32,8 @@ public class Arena {
     private Location mapSpawn;
     private GameState state;
     private VoteMap voteMap;
-//    HashMap<Maps, Integer> votableMaps;
-//    private VoteCountdown voteCountdown;
+    HashMap<Maps, Integer> votableMaps;
+    private VoteCountdown voteCountdown;
     private Countdown countdown;
     private Game game;
 
@@ -43,13 +43,18 @@ public class Arena {
         spawn = new Location(world, 77.4, 13.0, 90.47, 0, 0);
         state = GameState.RECRUITING;
         mapSpawn = Config.getArenaSpawn(0);
-//        voteMap = new VoteMap();
-//        votableMaps = voteMap.getVotableMaps();
+        voteMap = new VoteMap();
+        votableMaps = voteMap.getVotableMaps();
+        voteCountdown = new VoteCountdown(this);
         countdown = new Countdown(this);
         game = new Game(this);
     }
 
-    public void start() {
+    public void startCountdown() {
+        countdown.begin();
+    }
+
+    public void startGame() {
         game.start();
     }
 
@@ -89,7 +94,7 @@ public class Arena {
                 state == GameState.COUNTDOWN) {
             player.teleport(spawn);
             if (state == GameState.RECRUITING && players.size() >= Config.getRequiredPlayers()) {
-                countdown.begin();
+                voteCountdown.startVote();
             }
         }
         if (state == GameState.LIVE) {
@@ -141,6 +146,21 @@ public class Arena {
 
     public Location getMapSpawn() {
         return mapSpawn;
+    }
+
+    public void promptVotableMaps() {
+        StringBuilder prompt = new StringBuilder();
+        prompt.append(Manager.getServerTag() + ChatColor.DARK_GREEN + "Vote for the next map! " + ChatColor.YELLOW + "(/vote <id>)");
+        int i = 1;
+        for (Maps map : votableMaps.keySet()) {
+            prompt.append(Manager.getServerTag() + ChatColor.DARK_GREEN + "\n" + i + ". " + ChatColor.AQUA + map.getMapName());
+            i++;
+        }
+        sendMessage(prompt.toString());
+    }
+
+    public HashMap<Maps, Integer> getVotableMaps() {
+        return votableMaps;
     }
 
     /*

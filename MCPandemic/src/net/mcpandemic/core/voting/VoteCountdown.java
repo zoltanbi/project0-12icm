@@ -2,6 +2,7 @@ package net.mcpandemic.core.voting;
 
 import net.mcpandemic.core.*;
 import net.mcpandemic.core.voting.VoteMap;
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -16,14 +17,14 @@ public class VoteCountdown extends BukkitRunnable {
     private Countdown countdown;
     private int voteSeconds;
 
-    public VoteCountdown(Arena arena, VoteMap voteMap) {
+    public VoteCountdown(Arena arena) {
         this.arena = arena;
-        this.voteMap = voteMap;
         this.voteSeconds = Config.getVoteSeconds();
     }
 
     public void startVote() {
         arena.setState(GameState.VOTING);
+        arena.promptVotableMaps();
         this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
@@ -31,14 +32,12 @@ public class VoteCountdown extends BukkitRunnable {
     public void run() {
         if (voteSeconds == 0) {
             cancel();
-            countdown.begin();
+            arena.startCountdown();
 
         }
-        if (voteSeconds % 60 == 0 || voteSeconds <=10) {
-            if (voteSeconds == 1 ) {
-                arena.sendMessage("Voting will end in 1 second.");
-            } else {
-                arena.sendMessage("Voting will end in  " + voteSeconds + " seconds.");
+        if (voteSeconds % 45 == 0 || voteSeconds <=10) {
+            if (voteSeconds != 0) {
+                arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Voting ends in " + voteSeconds + "...");
             }
         }
 
