@@ -2,6 +2,7 @@ package net.mcpandemic.core;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  * This class is responsible for the config.yml logic. All methods in
@@ -31,15 +32,8 @@ public class Config {
     }
 
     public static Location getLobbySpawn() {
-        return new Location(
-                Bukkit.getWorld(main.getConfig().getString(
-                        "lobby-spawn.world")),
-                main.getConfig().getDouble("lobby-spawn.x"),
-                main.getConfig().getDouble("lobby-spawn.y"),
-                main.getConfig().getDouble("lobby-spawn.z"),
-                main.getConfig().getInt("lobby-spawn.yaw"),
-                (float) main.getConfig().getDouble("lobby-spawn.pitch")
-        );
+        World world = Bukkit.getServer().getWorld("world");
+        return new Location(world, 77.488, 13.0, 90.475, 0,0);
 
     }
 

@@ -1,11 +1,13 @@
 package net.mcpandemic.core;
 
+import com.sun.istack.internal.NotNull;
 import net.mcpandemic.core.voting.Maps;
 import net.mcpandemic.core.voting.VoteCountdown;
 import net.mcpandemic.core.voting.VoteMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -36,7 +38,8 @@ public class Arena {
 
     public Arena() {
         players = new ArrayList<>();
-        spawn = Config.getLobbySpawn();
+        World world = Bukkit.getServer().getWorld("lobby");
+        spawn = new Location(world, 77.4, 13.0, 90.47, 0, 0);
         state = GameState.RECRUITING;
         mapSpawn = Config.getArenaSpawn(0);
 //        voteMap = new VoteMap();

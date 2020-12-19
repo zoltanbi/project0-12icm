@@ -2,6 +2,7 @@ main: net.mcpandemic.core.Main
 version: 1.0
 name: mcpandemic
 api-version: 1.16
+softdepend: [Multiverse-Core]
 commands:
   arena:
   vote:

@@ -15,26 +15,18 @@ public class ArenaCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (args.length == 1 && args[0].equalsIgnoreCase(
-                    "list")) {
-                player.sendMessage(ChatColor.GREEN + "These are the " +
-                        "available arenas: ");
-                player.sendMessage(ChatColor.GREEN + "- " +
-                        Manager.getArena().getID());
-            } else if (args.length == 1 && args[0].equalsIgnoreCase(
-                    "leave")) {
+            if (args[0].equalsIgnoreCase("list")) {
+                player.sendMessage(ChatColor.GREEN + "These are the available arenas: ");
+                player.sendMessage(Manager.getArenas().getID());
+            } else if (args[0].equalsIgnoreCase("leave")) {
                 if (Manager.isPlaying(player)) {
                     Manager.getArena(player).removePlayer(player);
-
-                    player.sendMessage(ChatColor.GREEN + "You have left " +
-                            "the arena!");
                 } else {
-                    player.sendMessage(ChatColor.RED + "You are not in an " +
-                            "arena!");
+                    player.sendMessage(ChatColor.RED + "You are not in an arena!");
                 }
             } else if (args[0].equalsIgnoreCase("join")) {
                 Manager.getArena().addPlayer(player);
-                player.sendMessage("You are not playing");
+                player.sendMessage("You are now playing.");
             } else {
                 player.sendMessage(ChatColor.RED + "Invalid usage - these " +
                         "are the options:");
