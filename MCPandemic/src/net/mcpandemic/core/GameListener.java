@@ -16,7 +16,7 @@ public class GameListener implements Listener {
         Player player = e.getPlayer();
 
         if (Manager.isPlaying(player) && Manager.getArena(player).getState()
-                .equals((GameState.LIVE))) {
+                .equals((GameState.INFECTION))) {
 
             player.sendMessage(ChatColor.GOLD + "+1 Point!");
 

@@ -186,6 +186,10 @@ public class Arena {
         return votedPlayers;
     }
 
+    public Maps[] getMapArray() {
+        return mapArray;
+    }
+
 
     public Maps getHighestVoted() {
         Random random = new Random();
