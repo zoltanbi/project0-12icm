@@ -1,10 +1,9 @@
 package net.mcpandemic.core;
 
-import com.sun.istack.internal.NotNull;
+import net.mcpandemic.core.teams.Team;
 import net.mcpandemic.core.voting.Maps;
 import net.mcpandemic.core.voting.VoteCountdown;
 import net.mcpandemic.core.voting.VoteMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The Arena class is responsible for driving the game mode in each
@@ -36,12 +36,14 @@ public class Arena {
     private VoteCountdown voteCountdown;
     private Countdown countdown;
     private Game game;
+    private HashMap<UUID, Team> teams;
 
     public Arena() {
         //initial setup
         players = new ArrayList<>();
         World world = Bukkit.getServer().getWorld("lobby");
         spawn = new Location(world, 77.4, 13.0, 90.47, 0, 0);
+        teams = new HashMap<>();
         //gamestate
         state = GameState.RECRUITING;
         //voting
@@ -80,6 +82,7 @@ public class Arena {
         votedPlayers = new ArrayList<>();
         voteCountdown = new VoteCountdown(this);
         //rest
+        teams.clear();
         countdown = new Countdown(this);
         game = new Game(this);
         if(players.size() >= Config.getRequiredPlayers()) {
@@ -116,9 +119,26 @@ public class Arena {
             }
         }
         if (state == GameState.LIVE) {
+            //setting all players to HUMAN at first
+            setTeam(player, Team.HUMAN);
+
             player.teleport(mapSpawn);
         }
 
+        if (state == GameState.INFECTION) {
+            //setting 1 in 5 players to ZOMBIE
+            int zombieCount = players.size()/5;
+            if (zombieCount == 0) {
+                zombieCount++;
+            }
+
+            for (int i = 0; i < zombieCount; i++) {
+                int randomIndex = ThreadLocalRandom.current().nextInt(
+                        0, players.size());
+
+                setTeam(Bukkit.getPlayer(players.get(randomIndex)),Team.ZOMBIE);
+            }
+        }
     }
 
     /**
@@ -141,6 +161,8 @@ public class Arena {
         if (players.size() == 0 && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
             reset();
         }
+
+        teams.remove(player);
     }
 
     public void promptVotableMaps() {
@@ -159,6 +181,31 @@ public class Arena {
         votedPlayers.add(player.getUniqueId());
         votableMaps.put(mapArray[id-1], votableMaps.get(mapArray[id-1]) + 1);
         sendMessage(Manager.getServerTag() + ChatColor.DARK_AQUA + "Player " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " voted for " + ChatColor.YELLOW + mapArray[id-1].getMapName());
+    }
+
+    /*
+     * TEAM ADDING/REMOVING
+     */
+    public void setTeam(Player p, Team t) {
+        removeTeam(p);
+        teams.put(p.getUniqueId(), t);
+    }
+
+    public void removeTeam(Player p) {
+        if (teams.containsKey(p.getUniqueId())) {
+            teams.remove(p.getUniqueId());
+        }
+    }
+
+    public int getTeamCount(Team t) {
+        int amount = 0;
+        for (Team team : teams.values()) {
+            if (team.equals(t)) {
+                amount++;
+            }
+        }
+
+        return amount;
     }
 
     /*
@@ -221,5 +268,4 @@ public class Arena {
     public void setMapSpawn(Location mapSpawn) {
         this.mapSpawn = mapSpawn;
     }
-
 }
