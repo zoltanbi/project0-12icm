@@ -30,6 +30,11 @@ public class Game extends BukkitRunnable {
         this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
+    public void skipGame() {
+        cancel();
+        arena.startInfection();
+    }
+
     @Override
     public void run() {
         if (preGameSeconds == 0) {

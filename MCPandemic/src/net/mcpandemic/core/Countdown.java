@@ -24,6 +24,11 @@ public class Countdown extends BukkitRunnable {
 
     }
 
+    public void skipCountdown() {
+        cancel();
+        arena.startGame();
+    }
+
     @Override
     public void run() {
         if (seconds == 0) {

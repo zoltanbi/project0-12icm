@@ -12,8 +12,8 @@ import java.util.UUID;
 
 public class KitMotherZombie extends Kit {
 
-    public KitMotherZombie(UUID uuid, KitType type) {
-        super(uuid, type);
+    public KitMotherZombie(UUID uuid) {
+        super(uuid, KitType.MOTHERZOMBIE);
     }
 
     @Override

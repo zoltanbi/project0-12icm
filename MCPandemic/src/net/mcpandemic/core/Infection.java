@@ -25,7 +25,7 @@ public class Infection extends BukkitRunnable {
 
     public void start() {
         arena.setState(GameState.INFECTION);
-        arena.sendMessage(Manager.getServerTag() + ChatColor.RED + "Player is the mother zombie!");
+        arena.setMotherZombie();
 
         for (UUID uuid : arena.getPlayers()) {
             points.put(uuid, 0);
@@ -67,6 +67,7 @@ public class Infection extends BukkitRunnable {
 
         if (p == 20) {
             arena.sendMessage(player.getName() + " WINS!!");
+            cancel();
 
             arena.reset();
             return;

@@ -2,6 +2,7 @@ package net.mcpandemic.core;
 
 import net.mcpandemic.core.kits.Kit;
 import net.mcpandemic.core.kits.humantypes.*;
+import net.mcpandemic.core.kits.infectedtypes.KitZombie;
 import net.mcpandemic.core.teams.Team;
 import net.mcpandemic.core.voting.Maps;
 import net.mcpandemic.core.voting.VoteCountdown;
@@ -96,6 +97,7 @@ public class Arena {
         teams.clear();
         countdown = new Countdown(this);
         game = new Game(this);
+        infection = new Infection(this);
         if(players.size() >= Config.getRequiredPlayers()) {
             voteCountdown.startVote();
         }
@@ -138,6 +140,7 @@ public class Arena {
         if (state == GameState.INFECTION) {
             setTeam(player, Team.ZOMBIE);
             player.teleport(mapSpawn);
+            setZombieKit(player);
         }
 
 //        if (state == GameState.INFECTION) {
@@ -184,15 +187,17 @@ public class Arena {
         return amount;
     }
 
-    public void setInfected() {
+    public void setMotherZombie() {
         int infAmount = 1 + (teams.size() / 7);
         Random random = new Random();
         ArrayList<Integer> unique = new ArrayList<Integer>();
-        while (unique.size() <= infAmount) {
+        while (unique.size() < infAmount) {
             int a = random.nextInt(players.size());
             if (!unique.contains(a)) {
                 unique.add(a);
                 setTeam(Bukkit.getPlayer(players.get(a)), Team.ZOMBIE);
+                new KitZombie(players.get(a)).onStart(Bukkit.getPlayer(players.get(a)));
+                sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(players.get(a)).getName() + " is the mother zombie!");
             }
         }
     }
@@ -285,6 +290,11 @@ public class Arena {
         return voteCountdown;
     }
 
+    public Countdown getCountdown() {
+        return countdown;
+    }
+
+
     public Kit getHumanKit(Player player) {
 
         switch (Main.getFileManager().getInfectedRank(player).getKitType()) {
@@ -329,7 +339,6 @@ public class Arena {
             case T:
                 return new KitT(player.getUniqueId());
 
-
         }
         return new KitA(player.getUniqueId());
     }
@@ -362,6 +371,14 @@ public class Arena {
     public void setHumanKits() {
         for (UUID uuid : players) {
             getHumanKit(Bukkit.getPlayer(uuid)).onStart(Bukkit.getPlayer(uuid));
+        }
+    }
+
+    public void setZombieKit(Player player) {
+        for (UUID uuid : teams.keySet()) {
+            if (teams.get(player.getUniqueId()) == Team.ZOMBIE) {
+                new KitZombie(uuid).onStart(player);
+            }
         }
     }
 

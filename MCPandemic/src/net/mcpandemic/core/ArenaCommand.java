@@ -37,6 +37,18 @@ public class ArenaCommand implements CommandExecutor {
                 } else {
                     player.sendMessage("Game-state is not voting!");
                 }
+            } else if (args[0].equalsIgnoreCase("skipcount")){
+                if (Manager.getArena().getState() == GameState.COUNTDOWN) {
+                    Manager.getArena().getCountdown().skipCountdown();
+                } else {
+                    player.sendMessage("Game-state is not countdown!");
+                }
+            } else if (args[0].equalsIgnoreCase("skipgame")){
+                if (Manager.getArena().getState() == GameState.LIVE) {
+                    Manager.getArena().getGame().skipGame();
+                } else {
+                    player.sendMessage("Game-state is not live!");
+                }
             } else {
                 player.sendMessage(ChatColor.RED + "Invalid usage - these " +
                         "are the options:");
