@@ -26,6 +26,7 @@ public class Game extends BukkitRunnable {
     public void start() {
         arena.setState(GameState.LIVE);
         arena.teleportPlayersToArena();
+        arena.setHumanKits();
         arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "You have one minute to run away! The "
                 + ChatColor.YELLOW + "Zovid-19" + ChatColor.DARK_GREEN + " virus is coming!");
 

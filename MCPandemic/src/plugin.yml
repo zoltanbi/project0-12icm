@@ -6,3 +6,12 @@ softdepend: [Multiverse-Core]
 commands:
   arena:
   vote:
+  setrank:
+    description: Set a players rank.
+    aliases: [ sr ]
+  setinfectedrank:
+    description: Set a players infected rank.
+    aliases: [ sir ]
+  setprestige:
+    description: Set a players prestige rank.
+    aliases: [ sp ]

@@ -33,6 +33,17 @@ public class VoteCountdown extends BukkitRunnable {
         this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
+    public void skipVote() {
+        cancel();
+        map = arena.getHighestVoted();
+        arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Voting has ended! The winner is " + ChatColor.YELLOW + map.getMapName());
+        arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_AQUA + "Loading map " + ChatColor.YELLOW + map.getMapName() + ChatColor.DARK_AQUA + " ...");
+        //set the winning arena's spawnpoint
+        arena.setMapSpawn(map.getLocation());
+        //start game countdown
+        arena.startCountdown();
+    }
+
     @Override
     public void run() {
         if (voteSeconds == 0) {

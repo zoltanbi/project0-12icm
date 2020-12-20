@@ -1,5 +1,6 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.ranks.*;
 import net.mcpandemic.core.voting.VoteCommand;
 import net.mcpandemic.core.voting.VoteGUICommand;
 import net.mcpandemic.core.voting.VoteListener;
@@ -14,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 
     private static Main instance;
+    private static FileManager fileManager;
 
     @Override
     public void onEnable() {
@@ -22,12 +24,17 @@ public class Main extends JavaPlugin {
         System.out.println("ENABLING MCPANDEMIC");
         Main.instance = this;
 
+        fileManager = new FileManager(this);
         new Config(this);
 
         new Manager();
 
         getCommand("arena").setExecutor(new ArenaCommand());
         getCommand("vote").setExecutor(new VoteCommand());
+        Bukkit.getPluginManager().registerEvents(new RankListener(), this);
+        getCommand("setRank").setExecutor(new RankCommand());
+        getCommand("setInfectedRank").setExecutor(new InfectedRankCommand());
+        getCommand("setPrestige").setExecutor(new SetPrestigeCommand());
 
         Bukkit.getPluginManager().registerEvents(new GameListener(), this);
         Bukkit.getPluginManager().registerEvents(
@@ -36,6 +43,10 @@ public class Main extends JavaPlugin {
 
     public static Main getInstance() {
         return instance;
+    }
+
+    public static FileManager getFileManager() {
+        return fileManager;
     }
 
 }

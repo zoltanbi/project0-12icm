@@ -1,6 +1,9 @@
 package net.mcpandemic.core;
 
 import com.sun.istack.internal.NotNull;
+import net.mcpandemic.core.kits.Kit;
+import net.mcpandemic.core.kits.KitType;
+import net.mcpandemic.core.kits.humantypes.*;
 import net.mcpandemic.core.voting.Maps;
 import net.mcpandemic.core.voting.VoteCountdown;
 import net.mcpandemic.core.voting.VoteMap;
@@ -71,6 +74,7 @@ public class Arena {
 
     public void reset() {
         for (UUID uuid : players) {
+            Bukkit.getPlayer(uuid).getInventory().clear();
             Bukkit.getPlayer(uuid).teleport(spawn);
         }
 
@@ -197,6 +201,59 @@ public class Arena {
         return mapArray;
     }
 
+    public VoteCountdown getVoteCountdown() {
+        return voteCountdown;
+    }
+
+    public Kit getHumanKit(Player player) {
+
+        switch (Main.getFileManager().getInfectedRank(player).getKitType()) {
+            case A:
+                return new KitA(player.getUniqueId());
+            case B:
+                return new KitB(player.getUniqueId());
+            case C:
+                return new KitC(player.getUniqueId());
+            case D:
+                return new KitD(player.getUniqueId());
+            case E:
+                return new KitE(player.getUniqueId());
+            case F:
+                return new KitF(player.getUniqueId());
+            case G:
+                return new KitG(player.getUniqueId());
+            case H:
+                return new KitH(player.getUniqueId());
+            case I:
+                return new KitI(player.getUniqueId());
+            case J:
+                return new KitJ(player.getUniqueId());
+            case K:
+                return new KitK(player.getUniqueId());
+            case L:
+                return new KitL(player.getUniqueId());
+            case M:
+                return new KitM(player.getUniqueId());
+            case N:
+                return new KitN(player.getUniqueId());
+            case O:
+                return new KitO(player.getUniqueId());
+            case P:
+                return new KitP(player.getUniqueId());
+            case Q:
+                return new KitQ(player.getUniqueId());
+            case R:
+                return new KitR(player.getUniqueId());
+            case S:
+                return new KitS(player.getUniqueId());
+            case T:
+                return new KitT(player.getUniqueId());
+
+
+        }
+        return new KitA(player.getUniqueId());
+    }
+
 
     public Maps getHighestVoted() {
         Random random = new Random();
@@ -220,6 +277,12 @@ public class Arena {
 
     public void setMapSpawn(Location mapSpawn) {
         this.mapSpawn = mapSpawn;
+    }
+
+    public void setHumanKits() {
+        for (UUID uuid : players) {
+            getHumanKit(Bukkit.getPlayer(uuid)).onStart(Bukkit.getPlayer(uuid));
+        }
     }
 
 }
