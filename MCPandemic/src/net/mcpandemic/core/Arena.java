@@ -1,8 +1,6 @@
 package net.mcpandemic.core;
 
-import com.sun.istack.internal.NotNull;
 import net.mcpandemic.core.kits.Kit;
-import net.mcpandemic.core.kits.KitType;
 import net.mcpandemic.core.kits.humantypes.*;
 import net.mcpandemic.core.teams.Team;
 import net.mcpandemic.core.voting.Maps;
@@ -128,21 +126,6 @@ public class Arena {
             setTeam(player, Team.HUMAN);
 
             player.teleport(mapSpawn);
-        }
-
-        if (state == GameState.INFECTION) {
-            //setting 1 in 5 players to ZOMBIE
-            int zombieCount = players.size()/5;
-            if (zombieCount == 0) {
-                zombieCount++;
-            }
-
-            for (int i = 0; i < zombieCount; i++) {
-                int randomIndex = ThreadLocalRandom.current().nextInt(
-                        0, players.size());
-
-                setTeam(Bukkit.getPlayer(players.get(randomIndex)),Team.ZOMBIE);
-            }
         }
     }
 
