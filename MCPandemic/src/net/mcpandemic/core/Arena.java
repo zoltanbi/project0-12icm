@@ -1,8 +1,6 @@
 package net.mcpandemic.core;
 
-import com.sun.istack.internal.NotNull;
 import net.mcpandemic.core.kits.Kit;
-import net.mcpandemic.core.kits.KitType;
 import net.mcpandemic.core.kits.humantypes.*;
 import net.mcpandemic.core.teams.Team;
 import net.mcpandemic.core.voting.Maps;

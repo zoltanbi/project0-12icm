@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="spigot-1.16.3" level="project" />
     <orderEntry type="library" name="spigot-1.16.31" level="project" />
+    <orderEntry type="library" name="spigot-1.16.32" level="project" />
   </component>
 </module>
