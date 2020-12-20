@@ -20,7 +20,7 @@ public class GameListener implements Listener {
 
             player.sendMessage(ChatColor.GOLD + "+1 Point!");
 
-            Manager.getArena(player).getGame().addPoint(player);
+            Manager.getArena(player).getInfection().addPoint(player);
         }
 
     }

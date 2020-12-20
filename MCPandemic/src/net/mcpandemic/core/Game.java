@@ -14,12 +14,10 @@ import java.util.UUID;
 public class Game extends BukkitRunnable {
 
     private Arena arena;
-    private HashMap<UUID, Integer> points;
     private int preGameSeconds;
 
     public Game(Arena arena) {
         this.arena = arena;
-        this.points = new HashMap<>();
         this.preGameSeconds = 60;
     }
 
@@ -29,10 +27,6 @@ public class Game extends BukkitRunnable {
         arena.setHumanKits();
         arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "You have one minute to run away! The "
                 + ChatColor.YELLOW + "Zovid-19" + ChatColor.DARK_GREEN + " virus is coming!");
-
-        for (UUID uuid : arena.getPlayers()) {
-            points.put(uuid, 0);
-        }
         this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
@@ -40,7 +34,7 @@ public class Game extends BukkitRunnable {
     public void run() {
         if (preGameSeconds == 0) {
             cancel();
-            arena.setState(GameState.INFECTION);
+            arena.startInfection();
 
         }
         if (preGameSeconds == 30) {
@@ -53,19 +47,6 @@ public class Game extends BukkitRunnable {
         }
 
         preGameSeconds--;
-    }
-
-    public void addPoint(Player player) {
-        int p = points.get(player.getUniqueId()) + 1;
-
-        if (p == 20) {
-            arena.sendMessage(player.getName() + " WINS!!");
-
-            arena.reset();
-            return;
-        }
-
-        points.replace(player.getUniqueId(), p);
     }
 
 }
