@@ -1,8 +1,5 @@
 package net.mcpandemic.core.kits;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-
 public enum KitType {
 
     A,
@@ -26,7 +23,8 @@ public enum KitType {
     S,
     T,
     ZOMBIE,
-    MOTHERZOMBIE;
+    MOTHERZOMBIE,
+    SKELETON;
 
 //    MINER(ChatColor.GOLD + "Miner", Material.DIAMOND_PICKAXE,
 //            new String[]{ChatColor.GRAY + "The best Mining kit!"}),

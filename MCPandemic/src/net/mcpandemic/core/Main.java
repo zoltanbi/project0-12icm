@@ -1,5 +1,7 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.infectionkitgui.InfectionKitGUI;
+import net.mcpandemic.core.infectionkitgui.InfectionKitListener;
 import net.mcpandemic.core.ranks.*;
 import net.mcpandemic.core.voting.VoteCommand;
 import net.mcpandemic.core.voting.VoteGUICommand;
@@ -58,11 +60,16 @@ public class Main extends JavaPlugin {
         getCommand("setRank").setExecutor(new RankCommand());
         getCommand("setInfectedRank").setExecutor(new InfectedRankCommand());
         getCommand("setPrestige").setExecutor(new SetPrestigeCommand());
+        getCommand("infectedKits").setExecutor(new InfectionKitGUI());
 
-        Bukkit.getPluginManager().registerEvents(new TeleportFix(this), this);
-        Bukkit.getPluginManager().registerEvents(new GameListener(), this);
+        Bukkit.getPluginManager().registerEvents(
+                new TeleportFix(this), this);
+        Bukkit.getPluginManager().registerEvents(
+                new GameListener(), this);
         Bukkit.getPluginManager().registerEvents(
                 (Listener) new VoteListener(),this);
+        Bukkit.getPluginManager().registerEvents(
+                (Listener) new InfectionKitListener(),this);
     }
 
     private void openConnection() throws SQLException {
