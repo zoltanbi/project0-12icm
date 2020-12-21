@@ -49,6 +49,12 @@ public class ArenaCommand implements CommandExecutor {
                 } else {
                     player.sendMessage("Game-state is not live!");
                 }
+            } else if (args[0].equalsIgnoreCase("skipinfection")){
+                if (Manager.getArena().getState() == GameState.INFECTION) {
+                    Manager.getArena().getInfection().skipInfection();
+                } else {
+                    player.sendMessage("Game-state is not infection!");
+                }
             } else {
                 player.sendMessage(ChatColor.RED + "Invalid usage - these " +
                         "are the options:");

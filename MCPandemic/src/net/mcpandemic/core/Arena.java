@@ -3,6 +3,7 @@ package net.mcpandemic.core;
 import net.mcpandemic.core.kits.Kit;
 import net.mcpandemic.core.kits.humantypes.*;
 import net.mcpandemic.core.kits.infectedtypes.KitMotherZombie;
+import net.mcpandemic.core.kits.infectedtypes.KitSkeleton;
 import net.mcpandemic.core.kits.infectedtypes.KitZombie;
 import net.mcpandemic.core.ranks.DatabaseManager;
 import net.mcpandemic.core.teams.Team;
@@ -43,6 +44,7 @@ public class Arena {
     private Countdown countdown;
     private Game game;
     private Infection infection;
+    private Endgame endgame;
 
 
     public Arena() {
@@ -63,6 +65,7 @@ public class Arena {
         countdown = new Countdown(this);
         game = new Game(this);
         infection = new Infection(this);
+        endgame = new Endgame(this);
     }
 
     public void startCountdown() {
@@ -77,6 +80,10 @@ public class Arena {
         infection.start();
     }
 
+    public void startEndgame() {
+        endgame.start();
+    }
+
     public void teleportPlayersToArena() {
         for (UUID uuid : players) {
             Bukkit.getPlayer(uuid).teleport(mapSpawn);
@@ -84,6 +91,7 @@ public class Arena {
     }
 
     public void reset() {
+        state = GameState.RECRUITING;
         for (UUID uuid : players) {
             Bukkit.getPlayer(uuid).getInventory().clear();
             Bukkit.getPlayer(uuid).teleport(spawn);
@@ -97,9 +105,11 @@ public class Arena {
         voteCountdown = new VoteCountdown(this);
         //rest
         teams.clear();
+        teams = new HashMap<>();
         countdown = new Countdown(this);
         game = new Game(this);
         infection = new Infection(this);
+        endgame = new Endgame(this);
         if(players.size() >= Config.getRequiredPlayers()) {
             voteCountdown.startVote();
         }
@@ -134,8 +144,8 @@ public class Arena {
             }
         }
         if (state == GameState.LIVE) {
-            //setting all players to HUMAN at first
-            setTeam(player, Team.HUMAN);
+            //setting all players to HUMAN at first and settong kit
+            setHuman(player.getUniqueId());
 
             player.teleport(mapSpawn);
         }
@@ -145,20 +155,6 @@ public class Arena {
             setZombieKit(player);
         }
 
-//        if (state == GameState.INFECTION) {
-//            //setting 1 in 5 players to ZOMBIE
-//            int zombieCount = players.size()/5;
-//            if (zombieCount == 0) {
-//                zombieCount++;
-//            }
-//
-//            for (int i = 0; i < zombieCount; i++) {
-//                int randomIndex = ThreadLocalRandom.current().nextInt(
-//                        0, players.size());
-//
-//                setTeam(Bukkit.getPlayer(players.get(randomIndex)),Team.ZOMBIE);
-//            }
-//        }
     }
     /**
      * TEAM ADDING/REMOVING
@@ -185,8 +181,29 @@ public class Arena {
                 amount++;
             }
         }
-
         return amount;
+    }
+
+    public boolean areSurvivors() {
+        for (UUID uuid : teams.keySet()) {
+            if (teams.get(uuid) == Team.HUMAN) {
+                System.out.println("There are humans still");
+                return true;
+            }
+        }
+        System.out.println("No more humans left");
+        return false;
+    }
+
+    public String getSurvivors() {
+        StringBuilder output = new StringBuilder();
+        for (UUID uuid : teams.keySet()) {
+            if (teams.get(uuid) == Team.HUMAN) {
+                output.append(ChatColor.YELLOW + " " + Bukkit.getPlayer(uuid).getName() + ChatColor.DARK_GREEN + ",");
+            }
+        }
+        output.setLength(output.length() - 1);
+        return output.toString();
     }
 
     public void setMotherZombie() {
@@ -211,7 +228,7 @@ public class Arena {
      */
     public void removePlayer(Player player) {
         players.remove(player.getUniqueId());
-        teams.remove(player);
+        teams.remove(player.getUniqueId());
 
         votedPlayers.remove(player.getUniqueId());
         if (player.isOnline()) {
@@ -370,18 +387,34 @@ public class Arena {
         this.mapSpawn = mapSpawn;
     }
 
-    public void setHumanKits() {
+    public void setHuman(UUID uuid) {
+        setTeam(Bukkit.getPlayer(uuid), Team.HUMAN);
+        getHumanKit(Bukkit.getPlayer(uuid)).onStart(Bukkit.getPlayer(uuid));
+    }
+    /**
+     * Set human team and apply kits
+     */
+    public void setHumans() {
         for (UUID uuid : players) {
+            setTeam(Bukkit.getPlayer(uuid), Team.HUMAN);
             getHumanKit(Bukkit.getPlayer(uuid)).onStart(Bukkit.getPlayer(uuid));
         }
     }
 
     public void setZombieKit(Player player) {
-        for (UUID uuid : teams.keySet()) {
-            if (teams.get(player.getUniqueId()) == Team.ZOMBIE) {
-                new KitZombie(uuid).onStart(player);
-            }
+        switch(DatabaseManager.getInfectedKit(player)) {
+            case ZOMBIE:
+                new KitZombie(player.getUniqueId());
+                break;
+            case SKELETON:
+                new KitSkeleton(player.getUniqueId());
+                break;
         }
+//        for (UUID uuid : teams.keySet()) {
+//            if (teams.get(player.getUniqueId()) == Team.ZOMBIE) {
+//                new KitZombie(uuid).onStart(player);
+//            }
+//        }
     }
 
 

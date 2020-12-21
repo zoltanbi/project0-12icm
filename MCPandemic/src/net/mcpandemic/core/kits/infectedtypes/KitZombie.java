@@ -13,7 +13,7 @@ import java.util.UUID;
 public class KitZombie extends Kit {
 
     public KitZombie(UUID uuid) {
-        super(uuid, KitType.MOTHERZOMBIE);
+        super(uuid, KitType.ZOMBIE);
     }
 
     @Override

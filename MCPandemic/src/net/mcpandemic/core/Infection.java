@@ -33,14 +33,26 @@ public class Infection extends BukkitRunnable {
         this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 
+    public void skipInfection() {
+        cancel();
+        arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Infection phase skipped... Congratulations to these survivors:" + arena.getSurvivors());
+        arena.startEndgame();
+    }
+
     @Override
     public void run() {
         if (seconds == 0) {
             cancel();
-            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Time limit reached! Congratulations to these survivors:" + ChatColor.YELLOW + "player");
-            arena.reset();
-
+            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Time limit reached! Congratulations to these survivors:" + arena.getSurvivors());
+            arena.startEndgame();
         }
+
+        if (!arena.areSurvivors()) {
+            cancel();
+            arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "All humans had been infected! Zombies have won! ");
+            arena.startEndgame();
+        }
+
         if (seconds == 180) {
             arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are " + ChatColor.YELLOW + "3" + ChatColor.AQUA + " minutes left!");
             arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are currently " + ChatColor.YELLOW + "x" + ChatColor.AQUA + " humans and " + ChatColor.YELLOW + "x" + ChatColor.AQUA + " zombies!");
@@ -59,6 +71,13 @@ public class Infection extends BukkitRunnable {
             }
         }
 
+        if (arena.getPlayers().size() < Config.getRequiredPlayers()) {
+            cancel();
+            arena.sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
+            arena.reset();
+            return;
+        }
+
         seconds--;
     }
 
@@ -69,7 +88,7 @@ public class Infection extends BukkitRunnable {
             arena.sendMessage(player.getName() + " WINS!!");
             cancel();
 
-            arena.reset();
+            arena.startEndgame();
             return;
         }
 
