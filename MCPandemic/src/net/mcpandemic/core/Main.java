@@ -59,6 +59,7 @@ public class Main extends JavaPlugin {
         getCommand("setInfectedRank").setExecutor(new InfectedRankCommand());
         getCommand("setPrestige").setExecutor(new SetPrestigeCommand());
 
+        Bukkit.getPluginManager().registerEvents(new TeleportFix(this), this);
         Bukkit.getPluginManager().registerEvents(new GameListener(), this);
         Bukkit.getPluginManager().registerEvents(
                 (Listener) new VoteListener(),this);
