@@ -24,7 +24,7 @@ public class InfectedRankCommand implements CommandExecutor{
                 if (Bukkit.getOfflinePlayer(args[0]).isOnline() ||
                         Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore()) {
                     if (EnumUtils.isValidEnum(InfectedRank.class, args[1].toUpperCase())) {
-                        Main.getFileManager().setInfectedRank(
+                        DatabaseManager.setInfectedRank(
                                 Bukkit.getOfflinePlayer(args[0]).getUniqueId(),
                                 InfectedRank.valueOf(args[1].toUpperCase()));
                         player.sendMessage(ChatColor.DARK_GREEN + "You changed this rank!");

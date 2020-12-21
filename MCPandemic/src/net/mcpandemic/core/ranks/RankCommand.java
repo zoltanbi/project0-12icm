@@ -25,7 +25,7 @@ public class RankCommand implements CommandExecutor{
                 if (Bukkit.getOfflinePlayer(args[0]).isOnline() ||
                         Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore()) {
                     if (EnumUtils.isValidEnum(Rank.class, args[1].toUpperCase())) {
-                        Main.getFileManager().setRank(
+                        DatabaseManager.setServerRank(
                                 Bukkit.getOfflinePlayer(args[0]).getUniqueId(),
                                 Rank.valueOf(args[1].toUpperCase()));
                         player.sendMessage(ChatColor.DARK_GREEN + "You changed this rank!");

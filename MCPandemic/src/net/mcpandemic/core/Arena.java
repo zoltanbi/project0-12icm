@@ -2,7 +2,9 @@ package net.mcpandemic.core;
 
 import net.mcpandemic.core.kits.Kit;
 import net.mcpandemic.core.kits.humantypes.*;
+import net.mcpandemic.core.kits.infectedtypes.KitMotherZombie;
 import net.mcpandemic.core.kits.infectedtypes.KitZombie;
+import net.mcpandemic.core.ranks.DatabaseManager;
 import net.mcpandemic.core.teams.Team;
 import net.mcpandemic.core.voting.Maps;
 import net.mcpandemic.core.voting.VoteCountdown;
@@ -196,8 +198,8 @@ public class Arena {
             if (!unique.contains(a)) {
                 unique.add(a);
                 setTeam(Bukkit.getPlayer(players.get(a)), Team.ZOMBIE);
-                new KitZombie(players.get(a)).onStart(Bukkit.getPlayer(players.get(a)));
-                sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(players.get(a)).getName() + " is the mother zombie!");
+                new KitMotherZombie(players.get(a)).onStart(Bukkit.getPlayer(players.get(a)));
+                sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(players.get(a)).getName() + ChatColor.RED + " is the mother zombie!");
             }
         }
     }
@@ -297,7 +299,7 @@ public class Arena {
 
     public Kit getHumanKit(Player player) {
 
-        switch (Main.getFileManager().getInfectedRank(player).getKitType()) {
+        switch (DatabaseManager.getInfectedRank(player).getKitType()) {
             case A:
                 return new KitA(player.getUniqueId());
             case B:

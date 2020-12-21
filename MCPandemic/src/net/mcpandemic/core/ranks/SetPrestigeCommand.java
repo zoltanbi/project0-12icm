@@ -24,7 +24,7 @@ public class SetPrestigeCommand implements CommandExecutor{
                 if (Bukkit.getOfflinePlayer(args[0]).isOnline() ||
                         Bukkit.getOfflinePlayer(args[0]).hasPlayedBefore()) {
                     if (EnumUtils.isValidEnum(Prestige.class, args[1].toUpperCase())) {
-                        Main.getFileManager().setPrestige(
+                        DatabaseManager.setPrestigeRank(
                                 Bukkit.getOfflinePlayer(args[0]).getUniqueId(),
                                 Prestige.valueOf(args[1].toUpperCase()));
                         player.sendMessage(ChatColor.DARK_GREEN + "You changed this prestige!");
