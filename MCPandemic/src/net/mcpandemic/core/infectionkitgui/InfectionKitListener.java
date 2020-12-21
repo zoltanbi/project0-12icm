@@ -8,8 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import static net.mcpandemic.core.Arena.setZombieKit;
 import static net.mcpandemic.core.ranks.DatabaseManager.getInfectedKit;
-import static net.mcpandemic.core.ranks.DatabaseManager.setInfectedKit;
 
 public class InfectionKitListener implements Listener {
 
@@ -29,6 +29,8 @@ public class InfectionKitListener implements Listener {
                             break;
                         }
 
+                        setZombieKit(p);
+
                         p.sendMessage(Manager.getServerTag()
                                 + ChatColor.DARK_GREEN + "Zombie Kit Equipped.");
                         p.closeInventory();
@@ -39,6 +41,8 @@ public class InfectionKitListener implements Listener {
                                     + ChatColor.DARK_GRAY + "Skeleton Kit Already Equipped!");
                             break;
                         }
+
+                        setZombieKit(p);
 
                         p.sendMessage(Manager.getServerTag()
                                 + ChatColor.DARK_GRAY + "Skeleton Kit Equipped.");
