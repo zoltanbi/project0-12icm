@@ -24,7 +24,8 @@ public class Game extends BukkitRunnable {
     public void start() {
         arena.setState(GameState.LIVE);
         arena.teleportPlayersToArena();
-        arena.setHumanKits();
+        //set humans and set kits
+        arena.setHumans();
         arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "You have one minute to run away! The "
                 + ChatColor.YELLOW + "Zovid-19" + ChatColor.DARK_GREEN + " virus is coming!");
         this.runTaskTimer(Main.getInstance(), 0, 20);
@@ -49,6 +50,13 @@ public class Game extends BukkitRunnable {
             if (preGameSeconds != 0) {
                 arena.sendMessage(Manager.getServerTag() + ChatColor.YELLOW + preGameSeconds + ChatColor.DARK_GREEN + "...");
             }
+        }
+
+        if (arena.getPlayers().size() < Config.getRequiredPlayers()) {
+            cancel();
+            arena.sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
+            arena.reset();
+            return;
         }
 
         preGameSeconds--;

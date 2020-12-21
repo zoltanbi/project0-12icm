@@ -10,8 +10,8 @@ import java.util.UUID;
 
 public class KitSkeleton extends Kit {
 
-    public KitSkeleton(UUID uuid, KitType type) {
-        super(uuid, type);
+    public KitSkeleton(UUID uuid) {
+        super(uuid, KitType.SKELETON);
     }
 
     @Override
