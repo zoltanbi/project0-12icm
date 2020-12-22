@@ -6,7 +6,8 @@ import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.FlagWatcher;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +25,7 @@ public class DisguiseManager {
         ItemStack[] itemStack = {air, air, air, air};
         watcher.setArmor(itemStack);
         mobDisguise.setNotifyBar(DisguiseConfig.NotifyBar.NONE);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("You are now INFECTED!"));
         mobDisguise.startDisguise();
     }
 
