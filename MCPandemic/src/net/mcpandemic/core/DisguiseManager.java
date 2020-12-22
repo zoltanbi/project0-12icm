@@ -29,6 +29,32 @@ public class DisguiseManager {
         mobDisguise.startDisguise();
     }
 
+    public static void setSkeletonDisguise(Player player) {
+        MobDisguise mobDisguise = new MobDisguise(DisguiseType.SKELETON);
+        mobDisguise.setEntity(player);
+        mobDisguise.setViewSelfDisguise(false);
+        FlagWatcher watcher = mobDisguise.getWatcher();
+        ItemStack air = new ItemStack(Material.AIR);
+        ItemStack[] itemStack = {air, air, air, air};
+        watcher.setArmor(itemStack);
+        mobDisguise.setNotifyBar(DisguiseConfig.NotifyBar.NONE);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("You are now INFECTED!"));
+        mobDisguise.startDisguise();
+    }
+
+    public static void setZombifiedPiglinDisguise(Player player) {
+        MobDisguise mobDisguise = new MobDisguise(DisguiseType.ZOMBIFIED_PIGLIN);
+        mobDisguise.setEntity(player);
+        mobDisguise.setViewSelfDisguise(false);
+        FlagWatcher watcher = mobDisguise.getWatcher();
+        ItemStack air = new ItemStack(Material.AIR);
+        ItemStack[] itemStack = {air, air, air, air};
+        watcher.setArmor(itemStack);
+        mobDisguise.setNotifyBar(DisguiseConfig.NotifyBar.NONE);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("You are now INFECTED!"));
+        mobDisguise.startDisguise();
+    }
+
     public static void removeDisguise(Player player) {
         Disguise d = DisguiseAPI.getDisguise(player);
         d.removeDisguise();
