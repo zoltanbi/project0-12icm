@@ -1,9 +1,11 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.teams.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -37,6 +39,11 @@ public class Infection extends BukkitRunnable {
         cancel();
         arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Infection phase skipped... Congratulations to these survivors:" + arena.getSurvivors());
         arena.startEndgame();
+        try {
+            arena.infectedWinBonus(1);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
@@ -44,30 +51,40 @@ public class Infection extends BukkitRunnable {
         if (seconds == 0) {
             cancel();
             arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Time limit reached! Congratulations to these survivors:" + arena.getSurvivors());
+            try {
+                arena.survivorWinBonus(1);
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
             arena.startEndgame();
         }
 
         if (!arena.areSurvivors()) {
             cancel();
             arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "All humans had been infected! Zombies have won! ");
+            try {
+                arena.infectedWinBonus(1);
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
             arena.startEndgame();
         }
 
         if (seconds == 180) {
             arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are " + ChatColor.YELLOW + "3" + ChatColor.AQUA + " minutes left!");
-            arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are currently " + ChatColor.YELLOW + "x" + ChatColor.AQUA + " humans and " + ChatColor.YELLOW + "x" + ChatColor.AQUA + " zombies!");
+            arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are currently " + ChatColor.YELLOW + arena.getTeamCount(Team.HUMAN) + ChatColor.AQUA + " humans and " + ChatColor.YELLOW + arena.getTeamCount(Team.ZOMBIE) + ChatColor.AQUA + " zombies!");
         }
         if (seconds == 120) {
             arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are " + ChatColor.YELLOW + "2" + ChatColor.AQUA + " minutes left!");
-            arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are currently " + ChatColor.YELLOW + "x" + ChatColor.AQUA + " humans and " + ChatColor.YELLOW + "x" + ChatColor.AQUA + " zombies!");
+            arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are currently " + ChatColor.YELLOW + arena.getTeamCount(Team.HUMAN) + ChatColor.AQUA + " humans and " + ChatColor.YELLOW + ChatColor.YELLOW + arena.getTeamCount(Team.ZOMBIE) + ChatColor.AQUA + " zombies!");
         }
         if (seconds == 60) {
             arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There is " + ChatColor.YELLOW + "1" + ChatColor.AQUA + " minute left!");
-            arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are currently " + ChatColor.YELLOW + "x" + ChatColor.AQUA + " humans and " + ChatColor.YELLOW + "x" + ChatColor.AQUA + " zombies!");
+            arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + "There are currently " + ChatColor.YELLOW + arena.getTeamCount(Team.HUMAN) + ChatColor.AQUA + " humans and " + ChatColor.YELLOW + ChatColor.YELLOW + arena.getTeamCount(Team.ZOMBIE) + ChatColor.AQUA + " zombies!");
         }
         if (seconds <= 10) {
             if (seconds != 0) {
-                arena.sendMessage(Manager.getServerTag() + ChatColor.YELLOW + seconds + ChatColor.DARK_GREEN + "...");
+                arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + seconds);
             }
         }
 

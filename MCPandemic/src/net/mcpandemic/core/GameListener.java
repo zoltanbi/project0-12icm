@@ -2,6 +2,7 @@ package net.mcpandemic.core;
 
 import net.mcpandemic.core.teams.Team;
 import net.minecraft.server.v1_16_R2.PacketPlayInClientCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
@@ -17,6 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class GameListener implements Listener {
@@ -95,6 +97,11 @@ public class GameListener implements Listener {
 
                     }
                 });
+                try {
+                    Manager.getArena().survivorBonus(1);
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
 
             // if killer was found
             } else if(e.getEntity().getKiller() != null) {
@@ -115,6 +122,12 @@ public class GameListener implements Listener {
 
                         }
                     });
+                    //add rankpoints to killer
+                    try {
+                        Manager.getArena().killBonus(killer, 1);
+                    } catch (SQLException exception) {
+                        exception.printStackTrace();
+                    }
                 // if the killer was zombie and killed was human
                 // send kill feed message. Adds human to newly infected hashmap
                 } else if (Manager.getArena().getTeam(killer) == Team.ZOMBIE && Manager.getArena().getTeam(killed) == Team.HUMAN) {
@@ -134,6 +147,12 @@ public class GameListener implements Listener {
 
                         }
                     });
+                    try {
+                        Manager.getArena().killBonus(killer, 1);
+                        Manager.getArena().survivorBonus(1);
+                    } catch (SQLException exception) {
+                        exception.printStackTrace();
+                    }
                 }
             } else if (Manager.getArena().getTeam(killed) == Team.ZOMBIE) {
                 Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
@@ -149,6 +168,42 @@ public class GameListener implements Listener {
                 });
 
             }
+        // IF GAMESTATE IS IN LIVE
+        } else if (Manager.getArena().getState() == GameState.LIVE) {
+            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
+                public void run(){
+                    if (killed.isDead()){
+                        ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                        //logic
+                        killed.teleport(Manager.getArena().getMapSpawn());
+                        Manager.getArena().getHumanKit(killed).onStart(killed);
+                    }
+
+                }
+            });
+        } else if (Manager.getArena().getState() == GameState.ENDGAME) {
+            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
+                public void run(){
+                    if (killed.isDead()){
+                        ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                        //logic
+                        killed.teleport(Manager.getArena().getMapSpawn());
+                    }
+
+                }
+            });
+        // IF IN LOBBY
+        } else {
+            Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
+                public void run(){
+                    if (killed.isDead()){
+                        ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                        //logic
+                        killed.teleport(Manager.getArena().getLobbySpawn());
+                    }
+
+                }
+            });
         }
     }
 
