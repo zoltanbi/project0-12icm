@@ -162,6 +162,7 @@ public class GameListener implements Listener {
                             //logic
                             killed.teleport(Manager.getArena().getMapSpawn());
                             Manager.getArena().setZombieKit(killed);
+                            //
                         }
 
                     }
