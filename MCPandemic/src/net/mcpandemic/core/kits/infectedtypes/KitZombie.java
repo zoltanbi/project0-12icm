@@ -32,7 +32,7 @@ public class KitZombie extends Kit {
         //armor
         player.getInventory().setHelmet(new ItemStack(Material.CHAINMAIL_HELMET));
         player.getInventory().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-        player.getInventory().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-        player.getInventory().setBoots(new ItemStack(Material.CHAINMAIL_BOOTS));
+        player.getInventory().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
+        player.getInventory().setBoots(new ItemStack(Material.LEATHER_BOOTS));
     }
 }

@@ -95,10 +95,14 @@ public class Arena {
     }
 
     public void reset() {
+        Bukkit.getScheduler().cancelTasks(Main.getInstance());
+        teams.clear();
+        teams = new HashMap<>();
         state = GameState.RECRUITING;
         for (UUID uuid : players) {
             Bukkit.getPlayer(uuid).getInventory().clear();
             Bukkit.getPlayer(uuid).teleport(spawn);
+            Bukkit.getPlayer(uuid).setHealth(20.0);
         }
 
         voteMap = new VoteMap();
@@ -107,13 +111,11 @@ public class Arena {
         votedPlayers.clear();
         votedPlayers = new ArrayList<>();
         voteCountdown = new VoteCountdown(this);
-        //rest
-        teams.clear();
-        teams = new HashMap<>();
         countdown = new Countdown(this);
         game = new Game(this);
         infection = new Infection(this);
         endgame = new Endgame(this);
+        //BUG
         if(players.size() >= Config.getRequiredPlayers()) {
             voteCountdown.startVote();
         }
@@ -241,10 +243,12 @@ public class Arena {
         }
 
         if (players.size() <= Config.getRequiredPlayers() && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
+            sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
             reset();
         }
 
         if (players.size() == 0 && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
+            sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
             reset();
         }
 
@@ -451,11 +455,11 @@ public class Arena {
 
     public void zombieKillMessage(Player killer, Player killed) {
         String msg1 = Manager.getServerTag() + ChatColor.YELLOW + killer.getName() +
-                ChatColor.GOLD + " tore " + ChatColor.YELLOW + killed + ChatColor.RED + " into pieces!";
+                ChatColor.GOLD + " tore " + ChatColor.YELLOW + killed.getName() + ChatColor.RED + " into pieces!";
         String msg2 = Manager.getServerTag() + ChatColor.YELLOW + killer.getName() +
-                ChatColor.GOLD + " destroyed " + ChatColor.YELLOW + killed + ChatColor.RED + "!";
+                ChatColor.GOLD + " destroyed " + ChatColor.YELLOW + killed.getName() + ChatColor.RED + "!";
         String msg3 = Manager.getServerTag() + ChatColor.YELLOW + killer.getName() +
-                ChatColor.GOLD + " killed " + ChatColor.YELLOW + killed + ChatColor.RED + "!";
+                ChatColor.GOLD + " killed " + ChatColor.YELLOW + killed.getName() + ChatColor.RED + "!";
         String[] arr = {msg1, msg2, msg3};
         Random random = new Random();
         int select = random.nextInt(arr.length);
