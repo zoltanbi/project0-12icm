@@ -66,10 +66,8 @@ public class Main extends JavaPlugin {
                 new TeleportFix(this), this);
         Bukkit.getPluginManager().registerEvents(
                 new GameListener(), this);
-        Bukkit.getPluginManager().registerEvents(
-                (Listener) new VoteListener(),this);
-        Bukkit.getPluginManager().registerEvents(
-                (Listener) new InfectionKitListener(),this);
+        Bukkit.getPluginManager().registerEvents(new VoteListener(),this);
+        Bukkit.getPluginManager().registerEvents(new InfectionKitListener(),this);
     }
 
     private void openConnection() throws SQLException {

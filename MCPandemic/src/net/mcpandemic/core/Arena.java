@@ -68,6 +68,10 @@ public class Arena {
         endgame = new Endgame(this);
     }
 
+    public Location getLobbySpawn() {
+        return spawn;
+    }
+
     public void startCountdown() {
         countdown.begin();
     }
@@ -131,6 +135,7 @@ public class Arena {
      * @param player a Player.
      */
     public void addPlayer(Player player) {
+        player.getInventory().clear();
         players.add(player.getUniqueId());
         if (state == GameState.RECRUITING || state == GameState.VOTING ||
                 state == GameState.COUNTDOWN) {
@@ -187,7 +192,6 @@ public class Arena {
     public boolean areSurvivors() {
         for (UUID uuid : teams.keySet()) {
             if (teams.get(uuid) == Team.HUMAN) {
-                System.out.println("There are humans still");
                 return true;
             }
         }
@@ -391,6 +395,7 @@ public class Arena {
         setTeam(Bukkit.getPlayer(uuid), Team.HUMAN);
         getHumanKit(Bukkit.getPlayer(uuid)).onStart(Bukkit.getPlayer(uuid));
     }
+
     /**
      * Set human team and apply kits
      */
@@ -401,13 +406,16 @@ public class Arena {
         }
     }
 
+
+
     public void setZombieKit(Player player) {
         switch(DatabaseManager.getInfectedKit(player)) {
             case ZOMBIE:
-                new KitZombie(player.getUniqueId());
+                System.out.println("INFECTED KIT SET");
+                new KitZombie(player.getUniqueId()).onStart(player);
                 break;
             case SKELETON:
-                new KitSkeleton(player.getUniqueId());
+                new KitSkeleton(player.getUniqueId()).onStart(player);
                 break;
         }
 //        for (UUID uuid : teams.keySet()) {
@@ -415,6 +423,45 @@ public class Arena {
 //                new KitZombie(uuid).onStart(player);
 //            }
 //        }
+    }
+
+    public void zombieInfectMessage(Player player) {
+        String msg1 = Manager.getServerTag() + ChatColor.YELLOW + player.getName() + ChatColor.RED + " got infected!";
+        String msg2 = Manager.getServerTag() + ChatColor.YELLOW + player.getName() + ChatColor.RED + " is now a zombie";
+        String msg3 = Manager.getServerTag() + ChatColor.RED + "The virus got " + ChatColor.YELLOW + player.getName() + ChatColor.RED + "!";
+        String[] arr = {msg1, msg2, msg3};
+        Random random = new Random();
+        int select = random.nextInt(arr.length);
+        sendMessage(arr[select]);
+    }
+
+    public void humanKillMessage(Player killer, Player killed) {
+        String msg1 = Manager.getServerTag() + ChatColor.RED + "Om nom nom nom nom..." +
+                ChatColor.YELLOW + killer.getName() + ChatColor.RED + " just made a sandwich out of " +
+                ChatColor.YELLOW + killed.getName() + ChatColor.RED + "'s brain!";
+
+        String msg2 = Manager.getServerTag() + ChatColor.YELLOW + killer.getName() + ChatColor.RED + " got " +
+                ChatColor.YELLOW + killed.getName() + ChatColor.RED + "!";
+
+        String msg3 = Manager.getServerTag() + ChatColor.YELLOW + killer.getName() + ChatColor.RED + " bit " +
+                ChatColor.YELLOW + killed.getName() + ChatColor.RED + "! He bit him!";
+        String[] arr = {msg1, msg2, msg3};
+        Random random = new Random();
+        int select = random.nextInt(arr.length);
+        sendMessage(arr[select]);
+    }
+
+    public void zombieKillMessage(Player killer, Player killed) {
+        String msg1 = Manager.getServerTag() + ChatColor.YELLOW + killer.getName() +
+                ChatColor.GOLD + " tore " + ChatColor.YELLOW + killed + ChatColor.RED + " into pieces!";
+        String msg2 = Manager.getServerTag() + ChatColor.YELLOW + killer.getName() +
+                ChatColor.GOLD + " destroyed " + ChatColor.YELLOW + killed + ChatColor.RED + "!";
+        String msg3 = Manager.getServerTag() + ChatColor.YELLOW + killer.getName() +
+                ChatColor.GOLD + " killed " + ChatColor.YELLOW + killed + ChatColor.RED + "!";
+        String[] arr = {msg1, msg2, msg3};
+        Random random = new Random();
+        int select = random.nextInt(arr.length);
+        sendMessage(arr[select]);
     }
 
 

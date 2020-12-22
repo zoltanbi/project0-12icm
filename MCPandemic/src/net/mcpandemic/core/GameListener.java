@@ -1,16 +1,27 @@
 package net.mcpandemic.core;
 
 import net.mcpandemic.core.teams.Team;
+import net.minecraft.server.v1_16_R2.PacketPlayInClientCommand;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+
+import java.util.HashMap;
 
 public class GameListener implements Listener {
+
+    HashMap<Player, Location> newlyInfected = new HashMap<>();
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
@@ -43,6 +54,100 @@ public class GameListener implements Listener {
                 }
             } else {
                 e.setCancelled(true);
+            }
+        }
+    }
+
+//    @EventHandler
+//    public void RespawnScreen(PlayerDeathEvent e){
+//        final Player p = e.getEntity();
+//        Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
+//            public void run(){
+//                if (p.isDead()){
+//                    ((CraftPlayer)p).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+//                }
+//            }
+//        });
+//    }
+
+    //KILL MESSAGE NEEDS TO BE SET ON ONJOIN STILL
+    @EventHandler
+    public void onKill(PlayerDeathEvent e) {
+        Player killed = e.getEntity();
+        Location deathLocation = e.getEntity().getLocation();
+        if (Manager.getArena().getState() == GameState.INFECTION){
+            //if unknown cause of death and human
+            //sets to team zombie and kill feed message. Adds human to newly infected hashmap
+            if (e.getEntity().getKiller() == null && Manager.getArena().getTeam(killed) == Team.HUMAN) {
+                Manager.getArena().setTeam(killed, Team.ZOMBIE);
+                Manager.getArena().zombieInfectMessage(e.getEntity());
+                newlyInfected.put(killed, deathLocation);
+                // death logic
+                Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
+                    public void run(){
+                        if (killed.isDead()){
+                            ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                            //logic
+                            killed.teleport(newlyInfected.get(killed));
+                            Manager.getArena().setZombieKit(killed);
+                            newlyInfected.remove(killed);
+                        }
+
+                    }
+                });
+
+            // if killer was found
+            } else if(e.getEntity().getKiller() != null) {
+                Player killer = e.getEntity().getKiller();
+                // if the killer was human and killed was zombie
+                // //send kill feed message
+                if(Manager.getArena().getTeam(killer) == Team.HUMAN && Manager.getArena().getTeam(killed) == Team.ZOMBIE) {
+                    Manager.getArena().zombieKillMessage(killer, killed);
+                    //death logic
+                    Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
+                        public void run(){
+                            if (killed.isDead()){
+                                ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                                //logic
+                                killed.teleport(Manager.getArena().getMapSpawn());
+                                Manager.getArena().setZombieKit(killed);
+                            }
+
+                        }
+                    });
+                // if the killer was zombie and killed was human
+                // send kill feed message. Adds human to newly infected hashmap
+                } else if (Manager.getArena().getTeam(killer) == Team.ZOMBIE && Manager.getArena().getTeam(killed) == Team.HUMAN) {
+                    Manager.getArena().setTeam(killed, Team.ZOMBIE);
+                    Manager.getArena().humanKillMessage(killer, killed);
+                    newlyInfected.put(killed, deathLocation);
+                    //death logic
+                    Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
+                        public void run(){
+                            if (killed.isDead()){
+                                ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                                //logic
+                                killed.teleport(newlyInfected.get(killed));
+                                Manager.getArena().setZombieKit(killed);
+                                newlyInfected.remove(killed);
+                            }
+
+                        }
+                    });
+                }
+            } else if (Manager.getArena().getTeam(killed) == Team.ZOMBIE) {
+                Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
+                    public void run(){
+                        if (killed.isDead()){
+                            ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                            //logic
+                            killed.teleport(Manager.getArena().getMapSpawn());
+                            Manager.getArena().setZombieKit(killed);
+                        }
+
+                    }
+                });
+
             }
         }
     }
