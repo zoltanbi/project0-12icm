@@ -6,7 +6,8 @@ import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.FlagWatcher;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -25,6 +26,33 @@ public class DisguiseManager {
         watcher.setArmor(itemStack);
         //Actionabe
         mobDisguise.setNotifyBar(DisguiseConfig.NotifyBar.NONE);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("You are now INFECTED!"));
+        mobDisguise.startDisguise();
+    }
+
+    public static void setSkeletonDisguise(Player player) {
+        MobDisguise mobDisguise = new MobDisguise(DisguiseType.SKELETON);
+        mobDisguise.setEntity(player);
+        mobDisguise.setViewSelfDisguise(false);
+        FlagWatcher watcher = mobDisguise.getWatcher();
+        ItemStack air = new ItemStack(Material.AIR);
+        ItemStack[] itemStack = {air, air, air, air};
+        watcher.setArmor(itemStack);
+        mobDisguise.setNotifyBar(DisguiseConfig.NotifyBar.NONE);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("You are now INFECTED!"));
+        mobDisguise.startDisguise();
+    }
+
+    public static void setZombifiedPiglinDisguise(Player player) {
+        MobDisguise mobDisguise = new MobDisguise(DisguiseType.ZOMBIFIED_PIGLIN);
+        mobDisguise.setEntity(player);
+        mobDisguise.setViewSelfDisguise(false);
+        FlagWatcher watcher = mobDisguise.getWatcher();
+        ItemStack air = new ItemStack(Material.AIR);
+        ItemStack[] itemStack = {air, air, air, air};
+        watcher.setArmor(itemStack);
+        mobDisguise.setNotifyBar(DisguiseConfig.NotifyBar.NONE);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("You are now INFECTED!"));
         mobDisguise.startDisguise();
     }
 

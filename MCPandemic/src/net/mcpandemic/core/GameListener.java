@@ -92,7 +92,7 @@ public class GameListener implements Listener {
                             //logic
                             killed.teleport(newlyInfected.get(killed));
                             Manager.getArena().setZombieKit(killed);
-                            DisguiseManager.setZombieDisguise(killed);
+                            //DisguiseManager.setZombieDisguise(killed);
                             newlyInfected.remove(killed);
                         }
 
@@ -143,7 +143,7 @@ public class GameListener implements Listener {
                                 //logic
                                 killed.teleport(newlyInfected.get(killed));
                                 Manager.getArena().setZombieKit(killed);
-                                DisguiseManager.setZombieDisguise(killed);
+                                //DisguiseManager.setZombieDisguise(killed);
                                 newlyInfected.remove(killed);
                             }
 

@@ -18,6 +18,9 @@ import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 import java.util.*;
+
+import static net.mcpandemic.core.DisguiseManager.setSkeletonDisguise;
+import static net.mcpandemic.core.DisguiseManager.setZombieDisguise;
 //import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -229,7 +232,7 @@ public class Arena {
                 unique.add(a);
                 setTeam(Bukkit.getPlayer(players.get(a)), Team.ZOMBIE);
                 new KitMotherZombie(players.get(a)).onStart(Bukkit.getPlayer(players.get(a)));
-                DisguiseManager.setZombieDisguise(Bukkit.getPlayer(players.get(a)));
+                DisguiseManager.setZombifiedPiglinDisguise(Bukkit.getPlayer(players.get(a)));
                 sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(players.get(a)).getName() + ChatColor.RED + " is the mother zombie!");
             }
         }
@@ -423,9 +426,11 @@ public class Arena {
             case ZOMBIE:
                 System.out.println("INFECTED KIT SET");
                 new KitZombie(player.getUniqueId()).onStart(player);
+                setZombieDisguise(player);
                 break;
             case SKELETON:
                 new KitSkeleton(player.getUniqueId()).onStart(player);
+                setSkeletonDisguise(player);
                 break;
         }
 //        for (UUID uuid : teams.keySet()) {
