@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -38,6 +39,11 @@ public class Infection extends BukkitRunnable {
         cancel();
         arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Infection phase skipped... Congratulations to these survivors:" + arena.getSurvivors());
         arena.startEndgame();
+        try {
+            arena.infectedWinBonus(1);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
@@ -45,12 +51,22 @@ public class Infection extends BukkitRunnable {
         if (seconds == 0) {
             cancel();
             arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Time limit reached! Congratulations to these survivors:" + arena.getSurvivors());
+            try {
+                arena.survivorWinBonus(1);
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
             arena.startEndgame();
         }
 
         if (!arena.areSurvivors()) {
             cancel();
             arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "All humans had been infected! Zombies have won! ");
+            try {
+                arena.infectedWinBonus(1);
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
             arena.startEndgame();
         }
 

@@ -16,6 +16,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.sql.SQLException;
 import java.util.*;
 //import java.util.concurrent.ThreadLocalRandom;
 
@@ -160,6 +161,7 @@ public class Arena {
             setTeam(player, Team.ZOMBIE);
             player.teleport(mapSpawn);
             setZombieKit(player);
+            zombieInfectMessage(player);
         }
 
     }
@@ -464,6 +466,49 @@ public class Arena {
         Random random = new Random();
         int select = random.nextInt(arr.length);
         sendMessage(arr[select]);
+    }
+
+    /**
+     * CURRENCY LOGIC
+     */
+    public void survivorBonus(int multiplier) throws SQLException {
+        for (UUID uuid : teams.keySet()) {
+            if (teams.get(uuid) == Team.HUMAN) {
+                Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "A fellow human died! Survival bonus! +" + (2*multiplier) + " Rankpoints");
+                DatabaseManager.setRankPoints(uuid, (2*multiplier));
+            } else if (teams.get(uuid) == Team.ZOMBIE) {
+                Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "A human got infected! Spread bonus! +" + (multiplier) + " Rankpoints");
+                DatabaseManager.setRankPoints(uuid, (multiplier));
+            }
+        }
+    }
+
+    public void killBonus(Player player, int multiplier) throws SQLException {
+        if (teams.get(player.getUniqueId()) == Team.HUMAN) {
+            player.sendMessage(ChatColor.GREEN + "You killed an infected! Kill bonus! +" + (2*multiplier) + " Rankpoints");
+            DatabaseManager.setRankPoints(player.getUniqueId(), (2*multiplier));
+        } else if (teams.get(player.getUniqueId()) == Team.ZOMBIE) {
+            player.sendMessage(ChatColor.GREEN + "You infected a human! Kill bonus! +" + (2*multiplier) + " Rankpoints");
+            DatabaseManager.setRankPoints(player.getUniqueId(), (2*multiplier));
+        }
+    }
+
+    public void survivorWinBonus(int multiplier) throws SQLException {
+        for (UUID uuid : teams.keySet()) {
+            if (teams.get(uuid) == Team.HUMAN) {
+                Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "Win bonus! +" + (30*multiplier) + " Rankpoints");
+                DatabaseManager.setRankPoints(uuid, (30*multiplier));
+            }
+        }
+    }
+
+    public void infectedWinBonus(int multiplier) throws SQLException {
+        for (UUID uuid : teams.keySet()) {
+            if (teams.get(uuid) == Team.ZOMBIE) {
+                Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "Win bonus! +" + (15*multiplier) + " Rankpoints");
+                DatabaseManager.setRankPoints(uuid, (15*multiplier));
+            }
+        }
     }
 
 
