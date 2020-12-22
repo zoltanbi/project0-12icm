@@ -23,6 +23,7 @@ public class DisguiseManager {
         ItemStack air = new ItemStack(Material.AIR);
         ItemStack[] itemStack = {air, air, air, air};
         watcher.setArmor(itemStack);
+        //Actionabe
         mobDisguise.setNotifyBar(DisguiseConfig.NotifyBar.NONE);
         mobDisguise.startDisguise();
     }
