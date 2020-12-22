@@ -13,10 +13,8 @@ public class DisguiseManager {
     public static void setZombieDisguise(Player player) {
         MobDisguise mobDisguise = new MobDisguise(DisguiseType.ZOMBIE);
         mobDisguise.setEntity(player);
-        if (!mobDisguise.isSelfDisguiseVisible()) {
-            mobDisguise.setViewSelfDisguise(true);
-        }
-        //TODO hide nametag as well
+        mobDisguise.setViewSelfDisguise(false);
+        mobDisguise.setHideArmorFromSelf(true);
         mobDisguise.startDisguise();
     }
 

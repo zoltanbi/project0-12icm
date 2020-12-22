@@ -96,6 +96,11 @@ public class Arena {
     }
 
     public void reset() {
+        for (UUID uuid : teams.keySet()) {
+            if (teams.get(uuid) == Team.ZOMBIE) {
+                DisguiseManager.removeDisguise(Bukkit.getPlayer(uuid));
+            }
+        }
         Bukkit.getScheduler().cancelTasks(Main.getInstance());
         teams.clear();
         teams = new HashMap<>();
@@ -224,6 +229,7 @@ public class Arena {
                 unique.add(a);
                 setTeam(Bukkit.getPlayer(players.get(a)), Team.ZOMBIE);
                 new KitMotherZombie(players.get(a)).onStart(Bukkit.getPlayer(players.get(a)));
+                DisguiseManager.setZombieDisguise(Bukkit.getPlayer(players.get(a)));
                 sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(players.get(a)).getName() + ChatColor.RED + " is the mother zombie!");
             }
         }
