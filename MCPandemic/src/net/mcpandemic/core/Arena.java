@@ -406,8 +406,6 @@ public class Arena {
         }
     }
 
-
-
     public void setZombieKit(Player player) {
         switch(DatabaseManager.getInfectedKit(player)) {
             case ZOMBIE:

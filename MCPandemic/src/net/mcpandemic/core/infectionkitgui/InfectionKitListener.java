@@ -2,6 +2,7 @@ package net.mcpandemic.core.infectionkitgui;
 
 import net.mcpandemic.core.Manager;
 import net.mcpandemic.core.kits.KitType;
+import net.mcpandemic.core.ranks.DatabaseManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import static net.mcpandemic.core.ranks.DatabaseManager.getInfectedKit;
-import static net.mcpandemic.core.ranks.DatabaseManager.setInfectedKit;
 
 public class InfectionKitListener implements Listener {
 
@@ -23,25 +23,26 @@ public class InfectionKitListener implements Listener {
 
                 switch (e.getCurrentItem().getType()) {
                     case ZOMBIE_HEAD:
-                        if (getInfectedKit(p) == KitType.ZOMBIE) {
+                        if (DatabaseManager.getInfectedKit(p) == KitType.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag()
                                     + ChatColor.DARK_GREEN + "Zombie Kit Already Equipped!");
-                            break;
+                        } else {
+                            p.sendMessage(Manager.getServerTag()
+                                    + ChatColor.DARK_GREEN + "Zombie Kit Equipped.");
+                            DatabaseManager.setInfectedKit(p, KitType.ZOMBIE);
                         }
 
-                        p.sendMessage(Manager.getServerTag()
-                                + ChatColor.DARK_GREEN + "Zombie Kit Equipped.");
                         p.closeInventory();
                         break;
                     case SKELETON_SKULL:
                         if (getInfectedKit(p) == KitType.SKELETON) {
                             p.sendMessage(Manager.getServerTag()
                                     + ChatColor.DARK_GRAY + "Skeleton Kit Already Equipped!");
-                            break;
+                        } else {
+                            p.sendMessage(Manager.getServerTag()
+                                    + ChatColor.DARK_GRAY + "Skeleton Kit Equipped.");
+                            DatabaseManager.setInfectedKit(p, KitType.SKELETON);
                         }
-
-                        p.sendMessage(Manager.getServerTag()
-                                + ChatColor.DARK_GRAY + "Skeleton Kit Equipped.");
                         p.closeInventory();
                         break;
                     default:
