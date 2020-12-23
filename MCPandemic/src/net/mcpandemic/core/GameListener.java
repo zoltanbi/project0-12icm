@@ -1,8 +1,9 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.gamestates.GameState;
+import net.mcpandemic.core.infectedmanager.ZombieManager;
 import net.mcpandemic.core.teams.Team;
 import net.minecraft.server.v1_16_R2.PacketPlayInClientCommand;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
@@ -11,12 +12,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -91,7 +89,7 @@ public class GameListener implements Listener {
                             ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                             //logic
                             killed.teleport(newlyInfected.get(killed));
-                            Manager.getArena().setZombieKit(killed);
+                            ZombieManager.playerZombieSetup(killed);
                             //DisguiseManager.setZombieDisguise(killed);
                             newlyInfected.remove(killed);
                         }
@@ -118,7 +116,7 @@ public class GameListener implements Listener {
                                 ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                                 //logic
                                 killed.teleport(Manager.getArena().getMapSpawn());
-                                Manager.getArena().setZombieKit(killed);
+                                ZombieManager.playerZombieSetup(killed);
                             }
 
                         }
@@ -142,7 +140,7 @@ public class GameListener implements Listener {
                                 ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                                 //logic
                                 killed.teleport(newlyInfected.get(killed));
-                                Manager.getArena().setZombieKit(killed);
+                                ZombieManager.playerZombieSetup(killed);
                                 //DisguiseManager.setZombieDisguise(killed);
                                 newlyInfected.remove(killed);
                             }
@@ -163,7 +161,7 @@ public class GameListener implements Listener {
                             ((CraftPlayer)killed).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                             //logic
                             killed.teleport(Manager.getArena().getMapSpawn());
-                            Manager.getArena().setZombieKit(killed);
+                            ZombieManager.playerZombieSetup(killed);
                             //
                         }
 

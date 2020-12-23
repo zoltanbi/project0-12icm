@@ -1,10 +1,16 @@
-package net.mcpandemic.core;
+package net.mcpandemic.core.gamestates;
 
+import net.mcpandemic.core.Arena;
+import net.mcpandemic.core.Config;
+import net.mcpandemic.core.Main;
+import net.mcpandemic.core.Manager;
+import net.mcpandemic.core.gamestates.GameState;
+import net.mcpandemic.core.infectedmanager.DatabaseManager;
+import net.mcpandemic.core.kits.KitType;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -28,6 +34,11 @@ public class Game extends BukkitRunnable {
         arena.setHumans();
         arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "You have one minute to run away! The "
                 + ChatColor.YELLOW + "Zovid-19" + ChatColor.DARK_GREEN + " virus is coming!");
+        for (UUID uuid : arena.getPlayers()) {
+            if (DatabaseManager.getInfectedKit(Bukkit.getPlayer(uuid)) == KitType.MOTHERZOMBIE) {
+                DatabaseManager.setInfectedKit(uuid, KitType.ZOMBIE);
+            }
+        }
         this.runTaskTimer(Main.getInstance(), 0, 20);
     }
 

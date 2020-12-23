@@ -1,14 +1,15 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.gamestates.*;
+import net.mcpandemic.core.infectedmanager.DisguiseManager;
+import net.mcpandemic.core.infectedmanager.ZombieManager;
 import net.mcpandemic.core.kits.Kit;
+import net.mcpandemic.core.kits.KitType;
 import net.mcpandemic.core.kits.humantypes.*;
-import net.mcpandemic.core.kits.infectedtypes.KitMotherZombie;
-import net.mcpandemic.core.kits.infectedtypes.KitSkeleton;
-import net.mcpandemic.core.kits.infectedtypes.KitZombie;
-import net.mcpandemic.core.ranks.DatabaseManager;
+import net.mcpandemic.core.infectedmanager.DatabaseManager;
 import net.mcpandemic.core.teams.Team;
 import net.mcpandemic.core.voting.Maps;
-import net.mcpandemic.core.voting.VoteCountdown;
+import net.mcpandemic.core.gamestates.VoteCountdown;
 import net.mcpandemic.core.voting.VoteMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,9 +19,6 @@ import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
 import java.util.*;
-
-import static net.mcpandemic.core.DisguiseManager.setSkeletonDisguise;
-import static net.mcpandemic.core.DisguiseManager.setZombieDisguise;
 //import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -102,6 +100,9 @@ public class Arena {
         for (UUID uuid : teams.keySet()) {
             if (teams.get(uuid) == Team.ZOMBIE) {
                 DisguiseManager.removeDisguise(Bukkit.getPlayer(uuid));
+                if (DatabaseManager.getInfectedKit(Bukkit.getPlayer(uuid)) == KitType.MOTHERZOMBIE) {
+                    DatabaseManager.setInfectedKit(uuid, KitType.ZOMBIE);
+                }
             }
         }
         Bukkit.getScheduler().cancelTasks(Main.getInstance());
@@ -162,13 +163,15 @@ public class Arena {
         if (state == GameState.LIVE) {
             //setting all players to HUMAN at first and settong kit
             setHuman(player.getUniqueId());
-
             player.teleport(mapSpawn);
+            if (DatabaseManager.getInfectedKit(player) == KitType.MOTHERZOMBIE) {
+                DatabaseManager.setInfectedKit(player.getUniqueId(), KitType.ZOMBIE);
+            }
         }
         if (state == GameState.INFECTION) {
             setTeam(player, Team.ZOMBIE);
             player.teleport(mapSpawn);
-            setZombieKit(player);
+            ZombieManager.playerZombieSetup(player);
             zombieInfectMessage(player);
         }
 
@@ -231,8 +234,9 @@ public class Arena {
             if (!unique.contains(a)) {
                 unique.add(a);
                 setTeam(Bukkit.getPlayer(players.get(a)), Team.ZOMBIE);
-                new KitMotherZombie(players.get(a)).onStart(Bukkit.getPlayer(players.get(a)));
-                DisguiseManager.setZombifiedPiglinDisguise(Bukkit.getPlayer(players.get(a)));
+                //setup mother zombie
+                DatabaseManager.setInfectedKit(players.get(a), KitType.MOTHERZOMBIE);
+                ZombieManager.playerZombieSetup(Bukkit.getPlayer(players.get(a)));
                 sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(players.get(a)).getName() + ChatColor.RED + " is the mother zombie!");
             }
         }
@@ -421,24 +425,6 @@ public class Arena {
         }
     }
 
-    public void setZombieKit(Player player) {
-        switch(DatabaseManager.getInfectedKit(player)) {
-            case ZOMBIE:
-                System.out.println("INFECTED KIT SET");
-                new KitZombie(player.getUniqueId()).onStart(player);
-                setZombieDisguise(player);
-                break;
-            case SKELETON:
-                new KitSkeleton(player.getUniqueId()).onStart(player);
-                setSkeletonDisguise(player);
-                break;
-        }
-//        for (UUID uuid : teams.keySet()) {
-//            if (teams.get(player.getUniqueId()) == Team.ZOMBIE) {
-//                new KitZombie(uuid).onStart(player);
-//            }
-//        }
-    }
 
     public void zombieInfectMessage(Player player) {
         String msg1 = Manager.getServerTag() + ChatColor.YELLOW + player.getName() + ChatColor.RED + " got infected!";
@@ -522,6 +508,24 @@ public class Arena {
         }
     }
 
+//    public void setZombieKit(Player player) {
+//        switch(DatabaseManager.getInfectedKit(player)) {
+//            case ZOMBIE:
+//                System.out.println("INFECTED KIT SET");
+//                KitZombie kit = new KitZombie(player.getUniqueId());
+//                DisguiseManager.setZombieDisguise(player);
+//                break;
+//            case SKELETON:
+//                new KitSkeleton(player.getUniqueId()).onStart(player);
+//                DisguiseManager.setZombieDisguise(player);
+//                break;
+//        }
+//        for (UUID uuid : teams.keySet()) {
+//            if (teams.get(player.getUniqueId()) == Team.ZOMBIE) {
+//                new KitZombie(uuid).onStart(player);
+//            }
+//        }
+//    }
 
 
 }

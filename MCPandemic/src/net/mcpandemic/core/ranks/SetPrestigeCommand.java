@@ -1,6 +1,6 @@
 package net.mcpandemic.core.ranks;
 
-import net.mcpandemic.core.Main;
+import net.mcpandemic.core.infectedmanager.DatabaseManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

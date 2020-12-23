@@ -1,5 +1,6 @@
 package net.mcpandemic.core.kits.infectedtypes;
 
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import net.mcpandemic.core.kits.Kit;
 import net.mcpandemic.core.kits.KitType;
 import org.bukkit.ChatColor;
@@ -12,8 +13,11 @@ import java.util.UUID;
 
 public class KitZombie extends Kit {
 
+    private static DisguiseType disguise;
+
     public KitZombie(UUID uuid) {
         super(uuid, KitType.ZOMBIE);
+        disguise = DisguiseType.ZOMBIE;
     }
 
     @Override
@@ -34,5 +38,9 @@ public class KitZombie extends Kit {
         player.getInventory().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
         player.getInventory().setLeggings(new ItemStack(Material.CHAINMAIL_LEGGINGS));
         player.getInventory().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+    }
+
+    public static DisguiseType getDisguise() {
+        return disguise;
     }
 }

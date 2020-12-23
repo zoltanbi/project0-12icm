@@ -1,6 +1,6 @@
 package net.mcpandemic.core.voting;
 
-import net.mcpandemic.core.GameState;
+import net.mcpandemic.core.gamestates.GameState;
 import net.mcpandemic.core.Manager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

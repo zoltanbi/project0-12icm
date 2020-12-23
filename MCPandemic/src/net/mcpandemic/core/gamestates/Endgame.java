@@ -1,11 +1,11 @@
-package net.mcpandemic.core;
+package net.mcpandemic.core.gamestates;
 
+import net.mcpandemic.core.Arena;
+import net.mcpandemic.core.Main;
+import net.mcpandemic.core.Manager;
+import net.mcpandemic.core.gamestates.GameState;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * The Game class is responsible for the game mode's logic

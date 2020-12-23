@@ -1,5 +1,10 @@
-package net.mcpandemic.core;
+package net.mcpandemic.core.gamestates;
 
+import net.mcpandemic.core.Arena;
+import net.mcpandemic.core.Config;
+import net.mcpandemic.core.Main;
+import net.mcpandemic.core.Manager;
+import net.mcpandemic.core.gamestates.GameState;
 import net.mcpandemic.core.teams.Team;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

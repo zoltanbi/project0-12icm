@@ -1,5 +1,7 @@
 package net.mcpandemic.core.kits.infectedtypes;
 
+import me.libraryaddict.disguise.disguisetypes.Disguise;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import net.mcpandemic.core.kits.Kit;
 import net.mcpandemic.core.kits.KitType;
 import org.bukkit.Material;
@@ -10,8 +12,11 @@ import java.util.UUID;
 
 public class KitSkeleton extends Kit {
 
+    private static DisguiseType disguise;
+
     public KitSkeleton(UUID uuid) {
         super(uuid, KitType.SKELETON);
+        disguise = DisguiseType.SKELETON;
     }
 
     @Override
@@ -33,5 +38,9 @@ public class KitSkeleton extends Kit {
         player.getInventory().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
         player.getInventory().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
         player.getInventory().setBoots(new ItemStack(Material.LEATHER_BOOTS));
+    }
+
+    public static DisguiseType getDisguise() {
+        return disguise;
     }
 }

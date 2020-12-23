@@ -1,4 +1,4 @@
-package net.mcpandemic.core;
+package net.mcpandemic.core.gamestates;
 
 /**
  * This enum shows what game-state the game mode is currently at.

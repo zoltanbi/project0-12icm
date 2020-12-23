@@ -1,10 +1,8 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.gamestates.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The Manager class is responsible for looking after the Arena class.

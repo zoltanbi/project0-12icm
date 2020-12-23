@@ -1,5 +1,6 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.gamestates.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,13 +1,12 @@
-package net.mcpandemic.core.voting;
+package net.mcpandemic.core.gamestates;
 
 import net.mcpandemic.core.*;
+import net.mcpandemic.core.gamestates.Countdown;
+import net.mcpandemic.core.gamestates.GameState;
+import net.mcpandemic.core.voting.Maps;
 import net.mcpandemic.core.voting.VoteMap;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.UUID;
 
 /**
  * The Countdown class is responsible for the countdown logic. Announces

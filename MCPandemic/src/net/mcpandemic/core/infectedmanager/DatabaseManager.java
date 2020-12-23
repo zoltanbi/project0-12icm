@@ -1,7 +1,10 @@
-package net.mcpandemic.core.ranks;
+package net.mcpandemic.core.infectedmanager;
 
 import net.mcpandemic.core.Main;
 import net.mcpandemic.core.kits.KitType;
+import net.mcpandemic.core.ranks.InfectedRank;
+import net.mcpandemic.core.ranks.Prestige;
+import net.mcpandemic.core.ranks.Rank;
 import org.bukkit.entity.Player;
 
 import java.sql.ResultSet;
