@@ -48,6 +48,9 @@ public class Arena {
     private Infection infection;
     private Endgame endgame;
 
+    /**
+     * Initialize arena.
+     */
 
     public Arena() {
         //initial setup
@@ -70,31 +73,9 @@ public class Arena {
         endgame = new Endgame(this);
     }
 
-    public Location getLobbySpawn() {
-        return spawn;
-    }
-
-    public void startCountdown() {
-        countdown.begin();
-    }
-
-    public void startGame() {
-        game.start();
-    }
-
-    public void startInfection() {
-        infection.start();
-    }
-
-    public void startEndgame() {
-        endgame.start();
-    }
-
-    public void teleportPlayersToArena() {
-        for (UUID uuid : players) {
-            Bukkit.getPlayer(uuid).teleport(mapSpawn);
-        }
-    }
+    /**
+     * Reset arena.
+     */
 
     public void reset() {
         for (UUID uuid : teams.keySet()) {
@@ -131,10 +112,6 @@ public class Arena {
         }
     }
 
-    /**
-     * Sends a message to everyone in the Arena.
-     * @param message a String.
-     */
     public void sendMessage(String message) {
         for (UUID uuid : players) {
             Bukkit.getPlayer(uuid).sendMessage(message);
@@ -142,10 +119,33 @@ public class Arena {
     }
 
     /**
-     * This method adds a Player to the players ArrayList. The Player is
-     * then teleported to the Arena's spawn Location.
-     * @param player a Player.
+     * Bukkit runnable methods (Game states)
      */
+
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+    public void startCountdown() {
+        countdown.begin();
+    }
+
+    public void startGame() {
+        game.start();
+    }
+
+    public void startInfection() {
+        infection.start();
+    }
+
+    public void startEndgame() {
+        endgame.start();
+    }
+
+    /**
+     * Methods that add and remove players.
+     */
+
     public void addPlayer(Player player) {
         player.getInventory().clear();
         players.add(player.getUniqueId());
@@ -176,9 +176,69 @@ public class Arena {
         }
 
     }
+
+    public void removePlayer(Player player) {
+        if (teams.get(player.getUniqueId()) == Team.ZOMBIE && state.equals(GameState.INFECTION) && getTeamCount(Team.ZOMBIE) < 2) {
+            setBackupMotherZombie();
+        }
+        players.remove(player.getUniqueId());
+        teams.remove(player.getUniqueId());
+
+        votedPlayers.remove(player.getUniqueId());
+        if (player.isOnline()) {
+            player.teleport(spawn);
+            player.sendMessage(ChatColor.RED + "You're not supposed to be out of the game... Contact a staff member");
+        }
+
+        if (players.size() <= Config.getRequiredPlayers() && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
+            sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
+            reset();
+        }
+
+        if (players.size() == 0 && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
+            sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
+            reset();
+        }
+
+    }
+
     /**
-     * TEAM ADDING/REMOVING
+     * Mother zombie methods.
      */
+    public void setMotherZombie() {
+        int infAmount = 1 + (teams.size() / 7);
+        Random random = new Random();
+        ArrayList<UUID> unique = new ArrayList<UUID>();
+        while (unique.size() < infAmount) {
+            int a = random.nextInt(players.size());
+            UUID temp = players.get(a);
+            if (!unique.contains(temp)) {
+                unique.add(temp);
+                setTeam(Bukkit.getPlayer(temp), Team.ZOMBIE);
+                //setup mother zombie
+                DatabaseManager.setInfectedKit(temp, KitType.MOTHERZOMBIE);
+                ZombieManager.playerZombieSetup(Bukkit.getPlayer(temp));
+                sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(temp).getName() + ChatColor.RED + " is the mother zombie!");
+            }
+        }
+    }
+
+    public void setBackupMotherZombie() {
+        Random random = new Random();
+        int a = random.nextInt(players.size());
+        UUID temp = players.get(a);
+        setTeam(Bukkit.getPlayer(temp), Team.ZOMBIE);
+        //setup mother zombie
+        DatabaseManager.setInfectedKit(temp, KitType.MOTHERZOMBIE);
+        ZombieManager.playerZombieSetup(Bukkit.getPlayer(temp));
+        Bukkit.getPlayer(temp).sendMessage(Manager.getServerTag() + ChatColor.LIGHT_PURPLE + "you were picked as a new mother zombie! Go eat some human brains!");
+        sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(temp).getName() + ChatColor.RED + " became a mother zombie!");
+    }
+
+    /**
+     * Team methods.
+     */
+
     public void setTeam(Player p, Team t) {
         removeTeam(p);
         teams.put(p.getUniqueId(), t);
@@ -204,6 +264,28 @@ public class Arena {
         return amount;
     }
 
+    /**
+     * Location methods.
+     */
+
+    public void setMapSpawn(Location mapSpawn) {
+        this.mapSpawn = mapSpawn;
+    }
+
+    public Location getLobbySpawn() {
+        return spawn;
+    }
+
+    public void teleportPlayersToArena() {
+        for (UUID uuid : players) {
+            Bukkit.getPlayer(uuid).teleport(mapSpawn);
+        }
+    }
+
+    /**
+     * Condition check methods,
+     */
+
     public boolean areSurvivors() {
         for (UUID uuid : teams.keySet()) {
             if (teams.get(uuid) == Team.HUMAN) {
@@ -225,49 +307,9 @@ public class Arena {
         return output.toString();
     }
 
-    public void setMotherZombie() {
-        int infAmount = 1 + (teams.size() / 7);
-        Random random = new Random();
-        ArrayList<Integer> unique = new ArrayList<Integer>();
-        while (unique.size() < infAmount) {
-            int a = random.nextInt(players.size());
-            if (!unique.contains(a)) {
-                unique.add(a);
-                setTeam(Bukkit.getPlayer(players.get(a)), Team.ZOMBIE);
-                //setup mother zombie
-                DatabaseManager.setInfectedKit(players.get(a), KitType.MOTHERZOMBIE);
-                ZombieManager.playerZombieSetup(Bukkit.getPlayer(players.get(a)));
-                sendMessage(Manager.getServerTag() + ChatColor.RED + "Player " + ChatColor.YELLOW + Bukkit.getPlayer(players.get(a)).getName() + ChatColor.RED + " is the mother zombie!");
-            }
-        }
-    }
-
     /**
-     * This method removes a Player from the players ArrayList. The
-     * Player is then teleported back to the lobby-spawn Location.
-     * @param player a Player.
+     * Vote methods.
      */
-    public void removePlayer(Player player) {
-        players.remove(player.getUniqueId());
-        teams.remove(player.getUniqueId());
-
-        votedPlayers.remove(player.getUniqueId());
-        if (player.isOnline()) {
-            player.teleport(spawn);
-            player.sendMessage(ChatColor.RED + "You're not supposed to be out of the game... Contact a staff member");
-        }
-
-        if (players.size() <= Config.getRequiredPlayers() && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
-            sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
-            reset();
-        }
-
-        if (players.size() == 0 && (state.equals(GameState.COUNTDOWN) || state.equals(GameState.VOTING))) {
-            sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
-            reset();
-        }
-
-    }
 
     public void promptVotableMaps() {
         StringBuilder prompt = new StringBuilder();
@@ -287,9 +329,20 @@ public class Arena {
         sendMessage(Manager.getServerTag() + ChatColor.DARK_AQUA + "Player " + ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " voted for " + ChatColor.YELLOW + mapArray[id-1].getMapName());
     }
 
+    public Maps getHighestVoted() {
+        Random random = new Random();
+        int randSelect = random.nextInt(4) + 1;//generates values 0 - 4, hence + 1
+        Maps chosenMap = mapArray[randSelect];
+        for (Maps map : votableMaps.keySet()) {
+            if (votableMaps.get(map) > votableMaps.get(chosenMap)) {
+                chosenMap = map;
+            }
+        }
+        return chosenMap;
+    }
 
-    /*
-     * GETTERS:
+    /**
+     * Useful getters.
      */
 
     public String getID() {
@@ -336,6 +389,9 @@ public class Arena {
         return countdown;
     }
 
+    /**
+     * Human methods.
+     */
 
     public Kit getHumanKit(Player player) {
 
@@ -385,29 +441,11 @@ public class Arena {
         return new KitA(player.getUniqueId());
     }
 
-
-    public Maps getHighestVoted() {
-        Random random = new Random();
-        int randSelect = random.nextInt(4) + 1;//generates values 0 - 4, hence + 1
-        Maps chosenMap = mapArray[randSelect];
-        for (Maps map : votableMaps.keySet()) {
-            if (votableMaps.get(map) > votableMaps.get(chosenMap)) {
-                chosenMap = map;
-            }
+    public void setHumans() {
+        for (UUID uuid : players) {
+            setTeam(Bukkit.getPlayer(uuid), Team.HUMAN);
+            getHumanKit(Bukkit.getPlayer(uuid)).onStart(Bukkit.getPlayer(uuid));
         }
-        return chosenMap;
-    }
-
-    /*
-     * SETTERS:
-     */
-
-    public void setState(GameState state) {
-        this.state = state;
-    }
-
-    public void setMapSpawn(Location mapSpawn) {
-        this.mapSpawn = mapSpawn;
     }
 
     public void setHuman(UUID uuid) {
@@ -416,15 +454,8 @@ public class Arena {
     }
 
     /**
-     * Set human team and apply kits
+     * Kill messages
      */
-    public void setHumans() {
-        for (UUID uuid : players) {
-            setTeam(Bukkit.getPlayer(uuid), Team.HUMAN);
-            getHumanKit(Bukkit.getPlayer(uuid)).onStart(Bukkit.getPlayer(uuid));
-        }
-    }
-
 
     public void zombieInfectMessage(Player player) {
         String msg1 = Manager.getServerTag() + ChatColor.YELLOW + player.getName() + ChatColor.RED + " got infected!";
@@ -466,8 +497,9 @@ public class Arena {
     }
 
     /**
-     * CURRENCY LOGIC
+     * Rank points currency methods
      */
+
     public void survivorBonus(int multiplier) throws SQLException {
         for (UUID uuid : teams.keySet()) {
             if (teams.get(uuid) == Team.HUMAN) {
@@ -507,25 +539,5 @@ public class Arena {
             }
         }
     }
-
-//    public void setZombieKit(Player player) {
-//        switch(DatabaseManager.getInfectedKit(player)) {
-//            case ZOMBIE:
-//                System.out.println("INFECTED KIT SET");
-//                KitZombie kit = new KitZombie(player.getUniqueId());
-//                DisguiseManager.setZombieDisguise(player);
-//                break;
-//            case SKELETON:
-//                new KitSkeleton(player.getUniqueId()).onStart(player);
-//                DisguiseManager.setZombieDisguise(player);
-//                break;
-//        }
-//        for (UUID uuid : teams.keySet()) {
-//            if (teams.get(player.getUniqueId()) == Team.ZOMBIE) {
-//                new KitZombie(uuid).onStart(player);
-//            }
-//        }
-//    }
-
 
 }
