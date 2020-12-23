@@ -22,6 +22,8 @@ import java.util.HashMap;
 public class GameListener implements Listener {
 
     HashMap<Player, Location> newlyInfected = new HashMap<>();
+    HashMap<Player, Integer> playerKillstreaks = new HashMap<>();
+    HashMap<Player, Integer> infectedKillStreaks = new HashMap<>();
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
@@ -207,6 +209,28 @@ public class GameListener implements Listener {
             });
         }
     }
+
+//    @EventHandler
+//    public void killStreakHandler(PlayerDeathEvent e) {
+//        if (Manager.getArena().getState() == GameState.INFECTION && e.getEntity().getKiller() != null) {
+//            Player killed = e.getEntity();
+//            Player killer = e.getEntity().getKiller();
+//            if (Manager.getArena().getTeam(killer) == Team.HUMAN && Manager.getArena().getTeam(killed) == Team.ZOMBIE) {
+//                if (!playerKillstreaks.containsKey(killer)) {
+//                    playerKillstreaks.put(killer, 1);
+//                } else if (playerKillstreaks.containsKey(killer)) {
+//                    playerKillstreaks.put(killer, (playerKillstreaks.get(killer) + 1));
+//                    Killstreaks.giveKillstreakReward(killer, playerKillstreaks.get(killer));
+//                    Manager.getArena().sendMessage(Manager.getServerTag() + ChatColor.AQUA + "Player " + ChatColor.GOLD +
+//                            killer.getName() + ChatColor.AQUA + " is on a " + ChatColor.GOLD + playerKillstreaks.get(killer) +
+//                            " kills killing spree!");
+//                }
+//            }
+////            } else if(Manager.getArena().getTeam(killer) == Team.ZOMBIE && Manager.getArena().getTeam(killed) == Team.HUMAN) {
+////
+////            }
+//        }
+//    }
 
 
     @EventHandler

@@ -9,10 +9,14 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import java.util.Objects;
 
@@ -46,9 +50,12 @@ public class FoodHealer implements Listener {
                 e.setUseItemInHand(Event.Result.DENY);
                 player.setHealth(Math.min(20.0, e.getPlayer().getHealth() + Objects.requireNonNull(Food.getFood(e.getItem())).getHeal()));
                 removeItem((Inventory)player.getInventory(), e.getItem(), 1);
+                //Potion potion = new Potion(PotionType.STRENGTH);
             }
         }
     }
+
+
 
     @EventHandler
     public void playerConsume(final PlayerItemConsumeEvent e) {
