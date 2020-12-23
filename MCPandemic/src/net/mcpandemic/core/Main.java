@@ -1,5 +1,6 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.foodhealing.FoodHealer;
 import net.mcpandemic.core.infectionkitgui.InfectionKitGUI;
 import net.mcpandemic.core.infectionkitgui.InfectionKitListener;
 import net.mcpandemic.core.ranks.*;
@@ -68,6 +69,7 @@ public class Main extends JavaPlugin {
                 new GameListener(), this);
         Bukkit.getPluginManager().registerEvents(new VoteListener(),this);
         Bukkit.getPluginManager().registerEvents(new InfectionKitListener(),this);
+        Bukkit.getPluginManager().registerEvents(new FoodHealer(),this);
     }
 
     private void openConnection() throws SQLException {
