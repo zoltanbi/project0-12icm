@@ -8,6 +8,7 @@ commands:
   arena:
   vote:
   infectedKits:
+    aliases: [kit, kits]
   setrank:
     description: Set a players rank.
     aliases: [ sr ]
@@ -17,3 +18,6 @@ commands:
   setprestige:
     description: Set a players prestige rank.
     aliases: [ sp ]
+  rankup:
+    description: Rankup with Rankpoints!
+    aliases: [ ru ]

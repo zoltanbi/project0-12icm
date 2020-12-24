@@ -1,5 +1,6 @@
 package net.mcpandemic.core;
 
+import com.mojang.authlib.yggdrasil.response.User;
 import net.mcpandemic.core.gamestates.GameState;
 import net.mcpandemic.core.infectedmanager.ZombieManager;
 import net.mcpandemic.core.teams.Team;
@@ -8,13 +9,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -22,37 +26,45 @@ import java.util.HashMap;
 public class GameListener implements Listener {
 
     HashMap<Player, Location> newlyInfected = new HashMap<>();
-    HashMap<Player, Integer> playerKillstreaks = new HashMap<>();
-    HashMap<Player, Integer> infectedKillStreaks = new HashMap<>();
+    static HashMap<Player, Integer> playerKillstreaks = new HashMap<Player, Integer>();
+    static HashMap<Player, Integer> infectedKillStreaks = new HashMap<Player, Integer>();
 
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {
-
-        Player player = e.getPlayer();
-
-        if (Manager.isPlaying(player) && Manager.getArena(player).getState()
-                .equals((GameState.INFECTION))) {
-
-            player.sendMessage(ChatColor.GOLD + "+1 Point!");
-
-            Manager.getArena(player).getInfection().addPoint(player);
-        }
-
+    public static void clearPlayerKillStreaks() {
+        playerKillstreaks.clear();
     }
+
+    public void clearInfectedKillStreaks() {
+        infectedKillStreaks.clear();
+    }
+
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player attacker = (Player) e.getDamager();
             Player attacked = (Player) e.getEntity();
-
             Team attackerTeam = Manager.getArena().getTeam(attacker);
             Team attackedTeam = Manager.getArena().getTeam(attacked);
+
 
             if (Manager.getArena().getState() == GameState.INFECTION) {
                 if (attackerTeam == attackedTeam) {
                     e.setCancelled(true);
                     attacker.sendMessage(Manager.getServerTag() + ChatColor.RED + "You can't attack your teammate!");
+                }
+            } else {
+                e.setCancelled(true);
+            }
+        } else if(e.getDamager() instanceof Player && e.getEntity() instanceof Player ||
+                (e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player)) {
+            Player shooter = ((Player) ((Projectile) e.getDamager()).getShooter());
+            Player attacked = (Player) e.getEntity();
+            Team attackerTeam = Manager.getArena().getTeam(shooter);
+            Team attackedTeam = Manager.getArena().getTeam(attacked);
+            if (Manager.getArena().getState() == GameState.INFECTION) {
+                if (attackerTeam == attackedTeam) {
+                    e.setCancelled(true);
+                    shooter.sendMessage(Manager.getServerTag() + ChatColor.RED + "You can't attack your teammate!");
                 }
             } else {
                 e.setCancelled(true);
@@ -210,27 +222,29 @@ public class GameListener implements Listener {
         }
     }
 
-//    @EventHandler
-//    public void killStreakHandler(PlayerDeathEvent e) {
-//        if (Manager.getArena().getState() == GameState.INFECTION && e.getEntity().getKiller() != null) {
-//            Player killed = e.getEntity();
-//            Player killer = e.getEntity().getKiller();
-//            if (Manager.getArena().getTeam(killer) == Team.HUMAN && Manager.getArena().getTeam(killed) == Team.ZOMBIE) {
-//                if (!playerKillstreaks.containsKey(killer)) {
-//                    playerKillstreaks.put(killer, 1);
-//                } else if (playerKillstreaks.containsKey(killer)) {
-//                    playerKillstreaks.put(killer, (playerKillstreaks.get(killer) + 1));
-//                    Killstreaks.giveKillstreakReward(killer, playerKillstreaks.get(killer));
-//                    Manager.getArena().sendMessage(Manager.getServerTag() + ChatColor.AQUA + "Player " + ChatColor.GOLD +
-//                            killer.getName() + ChatColor.AQUA + " is on a " + ChatColor.GOLD + playerKillstreaks.get(killer) +
-//                            " kills killing spree!");
-//                }
+    @EventHandler
+    public void killStreakHandler(PlayerDeathEvent e) {
+        if (Manager.getArena().getState() == GameState.INFECTION && e.getEntity().getKiller() != null) {
+            Player killed = e.getEntity();
+            Player killer = e.getEntity().getKiller();
+            if (Manager.getArena().getTeam(killer) == Team.HUMAN && Manager.getArena().getTeam(killed) == Team.ZOMBIE) {
+                if (!playerKillstreaks.containsKey(killer)) {
+                    playerKillstreaks.put(killer, 1);
+                } else if (playerKillstreaks.containsKey(killer)) {
+                    playerKillstreaks.put(killer, (playerKillstreaks.get(killer) + 1));
+                    Killstreaks.giveKillstreakReward(killer, playerKillstreaks.get(killer));
+                    Manager.getArena().sendMessage(Manager.getServerTag() + ChatColor.AQUA + "Player " + ChatColor.GOLD +
+                            killer.getName() + ChatColor.AQUA + " is on a " + ChatColor.GOLD + playerKillstreaks.get(killer) +
+                            ChatColor.AQUA + " kills killing spree!");
+                }
+            }
+//            } else if(Manager.getArena().getTeam(killer) == Team.ZOMBIE && Manager.getArena().getTeam(killed) == Team.HUMAN) {
+//
 //            }
-////            } else if(Manager.getArena().getTeam(killer) == Team.ZOMBIE && Manager.getArena().getTeam(killed) == Team.HUMAN) {
-////
-////            }
-//        }
-//    }
+        }
+    }
+
+
 
 
     @EventHandler

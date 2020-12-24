@@ -2,7 +2,7 @@ package net.mcpandemic.core.ranks;
 
 public enum Prestige {
 
-    ONE("I-", "❄"),
+    ONE("I-", "✻"),
     TWO("II-", "❊"),
     THREE("III-", "✽"),
     FOUR("IV-", "❋"),

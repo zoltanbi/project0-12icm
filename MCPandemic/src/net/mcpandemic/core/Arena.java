@@ -78,6 +78,7 @@ public class Arena {
      */
 
     public void reset() {
+        GameListener.clearPlayerKillStreaks();
         for (UUID uuid : teams.keySet()) {
             if (teams.get(uuid) == Team.ZOMBIE) {
                 DisguiseManager.removeDisguise(Bukkit.getPlayer(uuid));

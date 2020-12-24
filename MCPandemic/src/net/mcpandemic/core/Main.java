@@ -62,7 +62,8 @@ public class Main extends JavaPlugin {
         getCommand("setRank").setExecutor(new RankCommand());
         getCommand("setInfectedRank").setExecutor(new InfectedRankCommand());
         getCommand("setPrestige").setExecutor(new SetPrestigeCommand());
-        getCommand("infectedKits").setExecutor(new InfectionKitGUI());
+        getCommand("kit").setExecutor(new InfectionKitGUI());
+        getCommand("rankup").setExecutor(new PlayerRankupCommand());
 
         Bukkit.getPluginManager().registerEvents(
                 new TeleportFix(this), this);
