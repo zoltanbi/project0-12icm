@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 import java.util.HashMap;
@@ -18,7 +20,9 @@ public class Killstreaks {
     public static ItemStack getPotionItemStack(PotionType type, boolean extend, boolean upgraded, String displayName){
         ItemStack potion = new ItemStack(Material.POTION, 1);
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
-        meta.setBasePotionData(new PotionData(type, extend, upgraded));
+        meta.setDisplayName(ChatColor.DARK_RED + "Adrenaline");
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 600, 0), false);
+        //meta.setBasePotionData(new PotionData(type, extend, upgraded));
         potion.setItemMeta(meta);
         return potion;
     }
@@ -26,6 +30,7 @@ public class Killstreaks {
     public static ItemStack getSplashPotionItemStack(PotionType type, boolean extend, boolean upgraded, String displayName){
         ItemStack potion = new ItemStack(Material.SPLASH_POTION, 1);
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
+        meta.setDisplayName(ChatColor.DARK_GREEN + "Poison O' Zombie");
         meta.setBasePotionData(new PotionData(type, extend, upgraded));
         potion.setItemMeta(meta);
         return potion;
