@@ -39,7 +39,6 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        (new ItemStack(Material.GOLDEN_SWORD)).getItemMeta().setUnbreakable(true);
         Bukkit.getPluginManager().registerEvents(new QualityOfLifeListener(),this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         System.out.println("ENABLING MCPANDEMIC");

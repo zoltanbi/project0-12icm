@@ -11,6 +11,7 @@ import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
@@ -90,6 +91,13 @@ public class QualityOfLifeListener implements Listener {
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent e) {
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void regen(EntityRegainHealthEvent e) {
+        if (e.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED || e.getRegainReason() == EntityRegainHealthEvent.RegainReason.REGEN) {
+            e.setCancelled(true);
+        }
     }
 
 }

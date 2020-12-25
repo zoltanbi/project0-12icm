@@ -49,7 +49,7 @@ public class BlindGrenade implements Listener {
                                 PacketPlayOutAnimation damage = new PacketPlayOutAnimation(((CraftPlayer) e).getHandle(), 1);
                                 ReflectionUtils.sendPacket((Player) e, damage);
 
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 5));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 9));
                             }
                         }
                         grenade.remove();
