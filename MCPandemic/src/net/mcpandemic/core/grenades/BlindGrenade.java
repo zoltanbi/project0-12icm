@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -26,16 +25,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class FragGrenade implements Listener {
+public class BlindGrenade implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        if(e.getMaterial() == Material.EGG) {
+        if(e.getMaterial() == Material.GHAST_TEAR) {
             if(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR ) {
+
                 p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
 
-                final Item grenade = p.getWorld().dropItem(p.getEyeLocation(), new ItemStack(Material.EGG));
+                final Item grenade = p.getWorld().dropItem(p.getEyeLocation(), new ItemStack(Material.GHAST_TEAR));
                 grenade.setVelocity(p.getLocation().getDirection().multiply(0.8D));
 
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
@@ -48,11 +48,8 @@ public class FragGrenade implements Listener {
                             if(e instanceof Player) {
                                 PacketPlayOutAnimation damage = new PacketPlayOutAnimation(((CraftPlayer) e).getHandle(), 1);
                                 ReflectionUtils.sendPacket((Player) e, damage);
-                                if (((Player) e).getHealth() <= 7) {
-                                    ((Player) e).setHealth(0);
-                                } else {
-                                    ((Player) e).setHealth(((Player) e).getHealth() - 7);
-                                }
+
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 5));
                             }
                         }
                         grenade.remove();
@@ -60,14 +57,6 @@ public class FragGrenade implements Listener {
                 }, 40);
             }
         }
-    }
-
-    @EventHandler
-    public void onEggThrow(ProjectileLaunchEvent e) {
-        if (e.getEntity().getName().equals("Thrown Egg")) {
-            e.setCancelled(true);
-        }
-
     }
 
 }

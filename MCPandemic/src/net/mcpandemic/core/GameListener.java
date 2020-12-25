@@ -5,7 +5,9 @@ import net.mcpandemic.core.gamestates.GameState;
 import net.mcpandemic.core.infectedmanager.ZombieManager;
 import net.mcpandemic.core.teams.Team;
 import net.minecraft.server.v1_16_R2.PacketPlayInClientCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -72,17 +74,6 @@ public class GameListener implements Listener {
         }
     }
 
-//    @EventHandler
-//    public void RespawnScreen(PlayerDeathEvent e){
-//        final Player p = e.getEntity();
-//        Main.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable(){
-//            public void run(){
-//                if (p.isDead()){
-//                    ((CraftPlayer)p).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
-//                }
-//            }
-//        });
-//    }
 
     //KILL MESSAGE NEEDS TO BE SET ON ONJOIN STILL
     @EventHandler
@@ -252,6 +243,11 @@ public class GameListener implements Listener {
         Player player = e.getPlayer();
         Manager.getArena().addPlayer(player);
         player.sendMessage("You are playing MCPandemic");
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+            public void run() {
+                player.setGameMode(GameMode.ADVENTURE);
+            }
+        }, 1);
     }
 
     @EventHandler

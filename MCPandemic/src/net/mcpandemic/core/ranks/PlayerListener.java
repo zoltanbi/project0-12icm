@@ -1,8 +1,10 @@
 package net.mcpandemic.core.ranks;
 
 import net.mcpandemic.core.Main;
+import net.mcpandemic.core.QualityOfLifeListener;
 import net.mcpandemic.core.infectedmanager.DatabaseManager;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

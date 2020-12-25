@@ -1,7 +1,9 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.grenades.BlindGrenade;
 import net.mcpandemic.core.grenades.FragGrenade;
 import net.mcpandemic.core.foodhealing.FoodHealer;
+import net.mcpandemic.core.grenades.SlowGrenade;
 import net.mcpandemic.core.infectionkitgui.InfectionKitGUI;
 import net.mcpandemic.core.infectionkitgui.InfectionKitListener;
 import net.mcpandemic.core.ranks.*;
@@ -10,7 +12,11 @@ import net.mcpandemic.core.voting.VoteGUICommand;
 import net.mcpandemic.core.voting.VoteListener;
 import org.apache.logging.log4j.core.appender.FileManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
@@ -33,6 +39,8 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        (new ItemStack(Material.GOLDEN_SWORD)).getItemMeta().setUnbreakable(true);
+        Bukkit.getPluginManager().registerEvents(new QualityOfLifeListener(),this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         System.out.println("ENABLING MCPANDEMIC");
         host = "localhost";
@@ -70,10 +78,15 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(
                 new GameListener(), this);
         Bukkit.getPluginManager().registerEvents(new VoteListener(),this);
-        Bukkit.getPluginManager().registerEvents(new FragGrenade(this),this);
+        //grenades
+        Bukkit.getPluginManager().registerEvents(new FragGrenade(),this);
+        Bukkit.getPluginManager().registerEvents(new SlowGrenade(),this);
+        Bukkit.getPluginManager().registerEvents(new BlindGrenade(),this);
+
         Bukkit.getPluginManager().registerEvents(new InfectionKitListener(),this);
         Bukkit.getPluginManager().registerEvents(new FoodHealer(),this);
     }
+
 
     private void openConnection() throws SQLException {
         if (connection != null && !connection.isClosed()) {

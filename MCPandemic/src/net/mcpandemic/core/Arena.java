@@ -11,10 +11,7 @@ import net.mcpandemic.core.teams.Team;
 import net.mcpandemic.core.voting.Maps;
 import net.mcpandemic.core.gamestates.VoteCountdown;
 import net.mcpandemic.core.voting.VoteMap;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
@@ -56,7 +53,7 @@ public class Arena {
         //initial setup
         players = new ArrayList<>();
         World world = Bukkit.getServer().getWorld("lobby");
-        spawn = new Location(world, 77.4, 13.0, 90.47, 0, 0);
+        spawn = new Location(world, -32.4, 142, 9.5, 180, 0);
         teams = new HashMap<>();
         //gamestate
         state = GameState.RECRUITING;
@@ -152,6 +149,7 @@ public class Arena {
         players.add(player.getUniqueId());
         if (state == GameState.RECRUITING || state == GameState.VOTING ||
                 state == GameState.COUNTDOWN) {
+            player.getInventory().setItem(0, QualityOfLifeListener.howToPlayBook());
             player.teleport(spawn);
             if (state == GameState.RECRUITING && players.size() >= Config.getRequiredPlayers()) {
                 voteCountdown.startVote();
