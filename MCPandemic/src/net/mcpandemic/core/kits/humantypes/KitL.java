@@ -1,15 +1,13 @@
 package net.mcpandemic.core.kits.humantypes;
 
-import net.mcpandemic.core.Manager;
 import net.mcpandemic.core.kits.Kit;
 import net.mcpandemic.core.kits.KitType;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
+
+import static net.mcpandemic.core.kits.humantypes.ItemHandler.*;
+import static net.mcpandemic.core.kits.humantypes.ItemHandler.setNetheriteBoots;
 
 public class KitL extends Kit {
 
@@ -24,36 +22,25 @@ public class KitL extends Kit {
         //clear
         player.getInventory().clear();
         //sword and shield
-        player.getInventory().setItemInOffHand(new ItemStack(Material.SHIELD));
-        player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
+        setShield(player);
+        setStoneSword(player);
+
         //grenades
-        ItemStack slime = new ItemStack(Material.SLIME_BALL, 1);
-        ItemMeta slimeMeta = slime.getItemMeta();
-        slimeMeta.setDisplayName(ChatColor.GREEN + "Sticky Grenade");
-        slime.setItemMeta(slimeMeta);
+        setSlime(player, 1);
 
-        player.getInventory().addItem(slime);
         //food
-        ItemStack apple = new ItemStack(Material.APPLE, 4);
-        ItemMeta appleMeta = apple.getItemMeta();
-        appleMeta.setDisplayName(ChatColor.RED + "Heal 2❤");
-        apple.setItemMeta(appleMeta);
+        setApple(player,4);
+        setMelon(player,1);
 
-        ItemStack melon = new ItemStack(Material.MELON_SLICE);
-        ItemMeta melonMeta = melon.getItemMeta();
-        melonMeta.setDisplayName(ChatColor.RED + "Heal 1❤");
-        melon.setItemMeta(melonMeta);
-
-        player.getInventory().addItem(melon);
-        player.getInventory().addItem(apple);
         //prestige items
+
         //bow
-        player.getInventory().addItem(new ItemStack(Material.BOW));
-        player.getInventory().addItem(new ItemStack(Material.ARROW, 3));
+        setBow(player);
+        setArrows(player, 3);
         //armor
-        player.getInventory().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
-        player.getInventory().setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
-        player.getInventory().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-        player.getInventory().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+        setNetheriteHelmet(player);
+        setIronChest(player);
+        setIronPants(player);
+        setNetheriteBoots(player);
     }
 }
