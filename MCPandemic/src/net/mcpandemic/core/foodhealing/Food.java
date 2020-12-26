@@ -13,7 +13,7 @@ public enum Food
     POISONOUS_POTATO(2, "POISONOUS_POTATO", 0),
     BREAD(5, "BREAD", 0),
     FULL_CAKE(14, "CAKE_BLOCK", 0),
-    CAKE(2, "CAKE", 0),
+    CAKE(16, "CAKE", 0),
     CARROT(3, "CARROT", 3),
     GOLDEN_CARROT(6, "GOLDEN_CARROT", 3),
     COOKED_FISH(5, "COOKED_FISH", 0),

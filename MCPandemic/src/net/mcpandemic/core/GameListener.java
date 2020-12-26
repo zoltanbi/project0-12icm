@@ -20,6 +20,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
@@ -80,6 +81,9 @@ public class GameListener implements Listener {
     public void onKill(PlayerDeathEvent e) {
         Player killed = e.getEntity();
         Location deathLocation = e.getEntity().getLocation();
+        for (PotionEffect effect : killed.getActivePotionEffects()) {
+            killed.removePotionEffect(effect.getType());
+        }
         if (Manager.getArena().getState() == GameState.INFECTION){
             //if unknown cause of death and human
             //sets to team zombie and kill feed message. Adds human to newly infected hashmap

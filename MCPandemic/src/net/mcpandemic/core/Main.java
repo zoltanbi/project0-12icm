@@ -1,11 +1,13 @@
 package net.mcpandemic.core;
 
 import net.mcpandemic.core.grenades.BlindGrenade;
+import net.mcpandemic.core.grenades.FireGrenade;
 import net.mcpandemic.core.grenades.FragGrenade;
 import net.mcpandemic.core.foodhealing.FoodHealer;
 import net.mcpandemic.core.grenades.SlowGrenade;
 import net.mcpandemic.core.infectionkitgui.InfectionKitGUI;
 import net.mcpandemic.core.infectionkitgui.InfectionKitListener;
+import net.mcpandemic.core.mysterychest.MysteryChestListener;
 import net.mcpandemic.core.ranks.*;
 import net.mcpandemic.core.voting.VoteCommand;
 import net.mcpandemic.core.voting.VoteGUICommand;
@@ -81,9 +83,11 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new FragGrenade(),this);
         Bukkit.getPluginManager().registerEvents(new SlowGrenade(),this);
         Bukkit.getPluginManager().registerEvents(new BlindGrenade(),this);
+        Bukkit.getPluginManager().registerEvents(new FireGrenade(),this);
 
         Bukkit.getPluginManager().registerEvents(new InfectionKitListener(),this);
         Bukkit.getPluginManager().registerEvents(new FoodHealer(),this);
+        Bukkit.getPluginManager().registerEvents(new MysteryChestListener(),this);
     }
 
 
