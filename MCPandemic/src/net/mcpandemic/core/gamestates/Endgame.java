@@ -31,6 +31,7 @@ public class Endgame extends BukkitRunnable {
         if (endSeconds == 0) {
             cancel();
             arena.reset();
+            arena.resetParkourReward();
         }
 
         if (endSeconds == 2) {

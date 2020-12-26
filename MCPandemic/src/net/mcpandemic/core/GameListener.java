@@ -2,13 +2,11 @@ package net.mcpandemic.core;
 
 import com.mojang.authlib.yggdrasil.response.User;
 import net.mcpandemic.core.gamestates.GameState;
+import net.mcpandemic.core.infectedmanager.DatabaseManager;
 import net.mcpandemic.core.infectedmanager.ZombieManager;
 import net.mcpandemic.core.teams.Team;
 import net.minecraft.server.v1_16_R2.PacketPlayInClientCommand;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -18,6 +16,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
@@ -240,6 +240,34 @@ public class GameListener implements Listener {
     }
 
 
+    @EventHandler
+    public void onEnderchestReward(PlayerInteractEvent e) {
+        Player player = e.getPlayer();
+        if (Manager.getArena().getState() == GameState.VOTING || Manager.getArena().getState() == GameState.RECRUITING ||
+                Manager.getArena().getState() == GameState.COUNTDOWN) {
+            if (e.getClickedBlock().getType() == Material.ENDER_CHEST) {
+                if (Manager.getArena().canReceiveParkourReward(player)) {
+                    Manager.getArena().addToParkourReward(player);
+                    player.sendMessage(Manager.getServerTag() + ChatColor.GREEN + "You got " + ChatColor.YELLOW +
+                            "10 Rankpoints" + ChatColor.GREEN + " for completing the parkour!");
+                    try {
+                        DatabaseManager.setRankPoints(player.getUniqueId(), 10);
+                    } catch (SQLException exception) {
+                        exception.printStackTrace();
+                    }
+                } else {
+                    player.sendMessage(Manager.getServerTag() + ChatColor.RED + "You already received this reward!");
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onChestClick(PlayerInteractEvent e) {
+        if (e.getClickedBlock().getType() == Material.ENDER_CHEST || e.getClickedBlock().getType() == Material.CHEST) {
+            e.setCancelled(true);
+        }
+    }
 
 
     @EventHandler

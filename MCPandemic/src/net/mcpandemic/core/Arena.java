@@ -31,6 +31,7 @@ import java.util.*;
 public class Arena {
 
     private ArrayList<UUID> players;
+    private ArrayList<UUID> parkourReward;
     private HashMap<UUID, Team> teams;
     private Location spawn;
     private Location mapSpawn;
@@ -52,6 +53,7 @@ public class Arena {
     public Arena() {
         //initial setup
         players = new ArrayList<>();
+        parkourReward = new ArrayList<>();
         World world = Bukkit.getServer().getWorld("lobby");
         spawn = new Location(world, -32.4, 142, 9.5, 180, 0);
         teams = new HashMap<>();
@@ -68,6 +70,21 @@ public class Arena {
         game = new Game(this);
         infection = new Infection(this);
         endgame = new Endgame(this);
+    }
+
+    public boolean canReceiveParkourReward(Player player) {
+        if (parkourReward.contains(player.getUniqueId())) {
+            return false;
+        }
+        return true;
+    }
+
+    public void addToParkourReward(Player player) {
+        parkourReward.add(player.getUniqueId());
+    }
+
+    public void resetParkourReward() {
+        parkourReward = new ArrayList<>();
     }
 
     /**
