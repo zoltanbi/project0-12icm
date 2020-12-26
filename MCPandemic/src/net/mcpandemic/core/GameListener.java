@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -25,6 +26,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class GameListener implements Listener {
 
@@ -243,20 +245,22 @@ public class GameListener implements Listener {
     @EventHandler
     public void onEnderchestReward(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if (Manager.getArena().getState() == GameState.VOTING || Manager.getArena().getState() == GameState.RECRUITING ||
-                Manager.getArena().getState() == GameState.COUNTDOWN) {
-            if (e.getClickedBlock().getType() == Material.ENDER_CHEST) {
-                if (Manager.getArena().canReceiveParkourReward(player)) {
-                    Manager.getArena().addToParkourReward(player);
-                    player.sendMessage(Manager.getServerTag() + ChatColor.GREEN + "You got " + ChatColor.YELLOW +
-                            "10 Rankpoints" + ChatColor.GREEN + " for completing the parkour!");
-                    try {
-                        DatabaseManager.setRankPoints(player.getUniqueId(), 10);
-                    } catch (SQLException exception) {
-                        exception.printStackTrace();
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (Manager.getArena().getState() == GameState.VOTING || Manager.getArena().getState() == GameState.RECRUITING ||
+                    Manager.getArena().getState() == GameState.COUNTDOWN) {
+                if (e.getClickedBlock().getType() == Material.ENDER_CHEST) {
+                    if (Manager.getArena().canReceiveParkourReward(player)) {
+                        Manager.getArena().addToParkourReward(player);
+                        player.sendMessage(Manager.getServerTag() + ChatColor.GREEN + "You got " + ChatColor.YELLOW +
+                                "10 Rankpoints" + ChatColor.GREEN + " for completing the parkour!");
+                        try {
+                            DatabaseManager.setRankPoints(player.getUniqueId(), 10);
+                        } catch (SQLException exception) {
+                            exception.printStackTrace();
+                        }
+                    } else {
+                        player.sendMessage(Manager.getServerTag() + ChatColor.RED + "You already received this reward!");
                     }
-                } else {
-                    player.sendMessage(Manager.getServerTag() + ChatColor.RED + "You already received this reward!");
                 }
             }
         }
@@ -264,8 +268,10 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void onChestClick(PlayerInteractEvent e) {
-        if (e.getClickedBlock().getType() == Material.ENDER_CHEST || e.getClickedBlock().getType() == Material.CHEST) {
-            e.setCancelled(true);
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (Objects.requireNonNull(e.getClickedBlock()).getType() == Material.ENDER_CHEST || (Objects.requireNonNull(e.getClickedBlock()).getType() == Material.CHEST)) {
+                e.setCancelled(true);
+            }
         }
     }
 

@@ -55,8 +55,10 @@ public class FragGrenade implements Listener {
                                         PacketPlayOutAnimation damage = new PacketPlayOutAnimation(((CraftPlayer) e).getHandle(), 1);
                                         ReflectionUtils.sendPacket((Player) e, damage);
                                         if (((Player) e).getHealth() <= 7) {
+                                            ((Player) e).damage(0.01, p);
                                             ((Player) e).setHealth(0);
                                         } else {
+                                            ((Player) e).damage(0.01, p);
                                             ((Player) e).setHealth(((Player) e).getHealth() - 7);
                                         }
                                     }

@@ -55,6 +55,7 @@ public class FireGrenade implements Listener {
                                         PacketPlayOutAnimation damage = new PacketPlayOutAnimation(((CraftPlayer) e).getHandle(), 1);
                                         ReflectionUtils.sendPacket((Player) e, damage);
 
+                                        ((Player) e).damage(0.01, p);
                                         e.setFireTicks(100);
                                     }
                                 }
