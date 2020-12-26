@@ -167,7 +167,11 @@ public class Arena {
         if (state == GameState.RECRUITING || state == GameState.VOTING ||
                 state == GameState.COUNTDOWN) {
             player.getInventory().setItem(0, QualityOfLifeListener.howToPlayBook());
-            player.teleport(spawn);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+                public void run() {
+                    player.teleport(spawn);
+                }
+            }, 5);
             if (state == GameState.RECRUITING && players.size() >= Config.getRequiredPlayers()) {
                 voteCountdown.startVote();
             }
@@ -179,14 +183,22 @@ public class Arena {
         if (state == GameState.LIVE) {
             //setting all players to HUMAN at first and settong kit
             setHuman(player.getUniqueId());
-            player.teleport(mapSpawn);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+                public void run() {
+                    player.teleport(mapSpawn);
+                }
+            }, 5);
             if (DatabaseManager.getInfectedKit(player) == KitType.MOTHERZOMBIE) {
                 DatabaseManager.setInfectedKit(player.getUniqueId(), KitType.ZOMBIE);
             }
         }
         if (state == GameState.INFECTION) {
             setTeam(player, Team.ZOMBIE);
-            player.teleport(mapSpawn);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
+                public void run() {
+                    player.teleport(mapSpawn);
+                }
+            }, 5);
             ZombieManager.playerZombieSetup(player);
             zombieInfectMessage(player);
         }

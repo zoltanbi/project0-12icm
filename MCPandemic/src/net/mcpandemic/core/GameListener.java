@@ -5,9 +5,9 @@ import net.mcpandemic.core.gamestates.GameState;
 import net.mcpandemic.core.infectedmanager.DatabaseManager;
 import net.mcpandemic.core.infectedmanager.ZombieManager;
 import net.mcpandemic.core.teams.Team;
-import net.minecraft.server.v1_16_R2.PacketPlayInClientCommand;
+import net.minecraft.server.v1_16_R3.PacketPlayInClientCommand;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -285,7 +285,7 @@ public class GameListener implements Listener {
             public void run() {
                 player.setGameMode(GameMode.ADVENTURE);
             }
-        }, 1);
+        }, 5);
     }
 
     @EventHandler
