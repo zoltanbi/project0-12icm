@@ -53,6 +53,7 @@ public class Infection extends BukkitRunnable {
 
     @Override
     public void run() {
+        Manager.turnGamemodeAdventure();
         if (seconds == 0) {
             cancel();
             arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Time limit reached! Congratulations to these survivors:" + arena.getSurvivors());

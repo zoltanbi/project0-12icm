@@ -44,11 +44,11 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new QualityOfLifeListener(),this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         System.out.println("ENABLING MCPANDEMIC");
-        host = "mysql.mcprohosting.com";
+        host = "na03-sql.pebblehost.com";
         port = 3306;
-        database = "server_1012351_684f072a";
-        username = "server_1012351";
-        password = "jsaxC@qGH$846#Ki";
+        database = "customer_156347_mcpandemic";
+        username = "customer_156347_mcpandemic";
+        password = "07Zoltan#11";
 
         try {
             openConnection();

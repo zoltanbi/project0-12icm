@@ -19,10 +19,9 @@ public enum Maps {
     FALLEN("Fallen", Config.getArenaSpawn(5)),
     FIRINGRANGE("Firing Range", Config.getArenaSpawn(6)),
     GRIND("Grind", Config.getArenaSpawn(7)),
-    HARTHAT("Hardhat", Config.getArenaSpawn(8)),
-    HIJACKED("Hijacked", Config.getArenaSpawn(9)),
-    INTERCHANGE("Interchange", Config.getArenaSpawn(10)),
-    JUNGLE("Jungle", Config.getArenaSpawn(11));
+    HIJACKED("Hijacked", Config.getArenaSpawn(8)),
+    INTERCHANGE("Interchange", Config.getArenaSpawn(9)),
+    JUNGLE("Jungle", Config.getArenaSpawn(10));
 
     private String mapName;
     private Location location;

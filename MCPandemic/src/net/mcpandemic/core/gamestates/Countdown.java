@@ -24,6 +24,7 @@ public class Countdown extends BukkitRunnable {
     }
 
     public void begin() {
+        Manager.turnGamemodeAdventure();
         arena.setState(GameState.COUNTDOWN);
         this.runTaskTimer(Main.getInstance(), 0, 20);
 

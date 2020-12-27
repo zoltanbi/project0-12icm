@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -40,6 +41,20 @@ public class GameListener implements Listener {
 
     public void clearInfectedKillStreaks() {
         infectedKillStreaks.clear();
+    }
+
+    @EventHandler
+    public void onFallDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            Player player = (Player) e.getEntity();
+            if (Manager.getArena().getState() == GameState.RECRUITING || Manager.getArena().getState() == GameState.VOTING ||
+                    Manager.getArena().getState() == GameState.COUNTDOWN) {
+                e.setCancelled(true);
+                if (player.getLocation().getY() < 1) {
+                    player.teleport(Manager.getArena().getLobbySpawn());
+                }
+            }
+        }
     }
 
 

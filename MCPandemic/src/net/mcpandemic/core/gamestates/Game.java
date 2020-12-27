@@ -49,6 +49,7 @@ public class Game extends BukkitRunnable {
 
     @Override
     public void run() {
+        Manager.turnGamemodeAdventure();
         if (preGameSeconds == 0) {
             cancel();
             arena.startInfection();

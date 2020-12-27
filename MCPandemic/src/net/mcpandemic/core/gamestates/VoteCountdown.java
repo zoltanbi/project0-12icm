@@ -27,6 +27,7 @@ public class VoteCountdown extends BukkitRunnable {
     }
 
     public void startVote() {
+        Manager.turnGamemodeAdventure();
         arena.setState(GameState.VOTING);
         arena.promptVotableMaps();
         this.runTaskTimer(Main.getInstance(), 0, 20);

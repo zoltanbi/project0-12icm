@@ -2,6 +2,7 @@ package net.mcpandemic.core;
 
 import net.mcpandemic.core.gamestates.GameState;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 /**
@@ -60,6 +61,14 @@ public class Manager {
     public static String getServerTag() {
         String tag = ChatColor.DARK_RED + "[MCPandemic] " + ChatColor.RESET;
         return tag;
+    }
+
+    public static void turnGamemodeAdventure() {
+        for (Player player : Main.getInstance().getServer().getOnlinePlayers()) {
+            if (player.getGameMode() != GameMode.ADVENTURE) {
+                player.setGameMode(GameMode.ADVENTURE);
+            }
+        }
     }
 
 }

@@ -52,6 +52,7 @@ public class Arena {
 
     public Arena() {
         //initial setup
+        Manager.turnGamemodeAdventure();
         players = new ArrayList<>();
         parkourReward = new ArrayList<>();
         World world = Bukkit.getServer().getWorld("lobby");
@@ -92,6 +93,7 @@ public class Arena {
      */
 
     public void reset() {
+        Manager.turnGamemodeAdventure();
         GameListener.clearPlayerKillStreaks();
         for (UUID uuid : teams.keySet()) {
             if (teams.get(uuid) == Team.ZOMBIE) {
@@ -125,6 +127,7 @@ public class Arena {
         if(players.size() >= Config.getRequiredPlayers()) {
             voteCountdown.startVote();
         }
+        Manager.turnGamemodeAdventure();
     }
 
     public void sendMessage(String message) {
@@ -202,6 +205,7 @@ public class Arena {
             ZombieManager.playerZombieSetup(player);
             zombieInfectMessage(player);
         }
+        Manager.turnGamemodeAdventure();
 
     }
 
@@ -227,6 +231,7 @@ public class Arena {
             sendMessage(Manager.getServerTag() + "There are too few players. Resetting game.");
             reset();
         }
+        Manager.turnGamemodeAdventure();
 
     }
 

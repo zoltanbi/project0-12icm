@@ -28,6 +28,7 @@ public class Endgame extends BukkitRunnable {
 
     @Override
     public void run() {
+        Manager.turnGamemodeAdventure();
         if (endSeconds == 0) {
             cancel();
             arena.reset();

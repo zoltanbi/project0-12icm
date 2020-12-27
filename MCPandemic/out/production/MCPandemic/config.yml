@@ -1,4 +1,4 @@
-required-players: 1
+required-players: 2
 vote-seconds: 60
 countdown-seconds: 30
 lobby-spawn:
@@ -10,86 +10,240 @@ lobby-spawn:
   yaw: 0
 arenas:
   '0':
-    world: 'world'
-    x: 100
-    y: 20
-    z: 100
+    world: 'bailout'
+    x: -56.51
+    y: 13
+    z: 151.5
     pitch: 0
-    yaw: 0
+    yaw: -180
   '1':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'bayview'
+    x: -158.56
+    y: 25
+    z: 552.61
     pitch: 0
     yaw: 0
   '2':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'central_city'
+    x: -115
+    y: 12
+    z: 2170
     pitch: 0
-    yaw: 0
+    yaw: -180
   '3':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'dome'
+    x: -102.7
+    y: 18
+    z: 2917
     pitch: 0
-    yaw: 0
+    yaw: 90
   '4':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'estate'
+    x: -86.5
+    y: 8
+    z: -12515.5
     pitch: 0
-    yaw: 0
+    yaw: 90
   '5':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'fallen'
+    x: -143.84
+    y: 2
+    z: 4470.5
     pitch: 0
-    yaw: 0
+    yaw: -90
   '6':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'firing_range'
+    x: -143.5
+    y: 14
+    z: 4777
     pitch: 0
-    yaw: 0
+    yaw: -140
   '7':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'grind'
+    x: -144
+    y: 1.5
+    z: 5688
     pitch: 0
-    yaw: 0
+    yaw: -90
   '8':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'hijacked'
+    x: -227
+    y: 17
+    z: 1230
     pitch: 0
-    yaw: 0
+    yaw: -90
   '9':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'interchange'
+    x: -116
+    y: 7.5
+    z: 7459
     pitch: 0
     yaw: 0
   '10':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
+    world: 'jungle'
+    x: -163
+    y: 12
+    z: 7852
     pitch: 0
-    yaw: 0
-  '11':
-    world: 'world'
-    x: 100
-    y: 100
-    z: 100
-    pitch: 0
-    yaw: 0
+    yaw: -90
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
+#  '11':
+#    world: 'lockdown'
+#    x: 100
+#    y: 100
+#    z: 100
+#    pitch: 0
+#    yaw: 0
