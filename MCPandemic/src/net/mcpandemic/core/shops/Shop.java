@@ -58,61 +58,71 @@ public class Shop {
         ItemStack rankUp = new ItemStack(Material.IRON_SWORD);
         ItemMeta rankMeta = rankUp.getItemMeta();
         assert rankMeta != null;
-        rankMeta.setDisplayName(ChatColor.DARK_AQUA + "Rank Up");
+        rankMeta.setDisplayName(ChatColor.BLUE + "Rank Up");
+        rankMeta.setLore(rankLore);
         rankUp.setItemMeta(rankMeta);
 
-        ItemStack heal2 = new ItemStack(Material.MELON_SLICE);
-        ItemMeta h2Meta = heal2.getItemMeta();
-        assert h2Meta != null;
-        h2Meta.setDisplayName(ChatColor.RED + "Heal 1❤");
-        heal2.setItemMeta(h2Meta);
-
-        ItemStack heal1 = new ItemStack(Material.APPLE);
+        ItemStack heal1 = new ItemStack(Material.MELON_SLICE);
         ItemMeta h1Meta = heal1.getItemMeta();
         assert h1Meta != null;
-        h1Meta.setDisplayName(ChatColor.RED + "Heal 2❤");
+        h1Meta.setDisplayName(ChatColor.RED + "Heal 1❤");
+        h1Meta.setLore(h1Lore);
         heal1.setItemMeta(h1Meta);
 
-        ItemStack heal4 = new ItemStack(Material.CHICKEN);
-        ItemMeta h4Meta = heal4.getItemMeta();
-        assert h4Meta != null;
-        h4Meta.setDisplayName(ChatColor.RED + "Heal 3❤");
-        heal4.setItemMeta(h4Meta);
+        ItemStack heal2 = new ItemStack(Material.APPLE);
+        ItemMeta h2Meta = heal2.getItemMeta();
+        assert h2Meta != null;
+        h2Meta.setDisplayName(ChatColor.RED + "Heal 2❤");
+        h2Meta.setLore(h2Lore);
+        heal2.setItemMeta(h2Meta);
 
-        ItemStack heal3 = new ItemStack(Material.COOKED_PORKCHOP);
+        ItemStack heal3 = new ItemStack(Material.COOKED_CHICKEN);
         ItemMeta h3Meta = heal3.getItemMeta();
         assert h3Meta != null;
-        h3Meta.setDisplayName(ChatColor.RED + "Heal 4❤");
+        h3Meta.setDisplayName(ChatColor.RED + "Heal 3❤");
+        h3Meta.setLore(h3Lore);
         heal3.setItemMeta(h3Meta);
+
+        ItemStack heal4 = new ItemStack(Material.COOKED_PORKCHOP);
+        ItemMeta h4Meta = heal4.getItemMeta();
+        assert h4Meta != null;
+        h4Meta.setDisplayName(ChatColor.RED + "Heal 4❤");
+        h4Meta.setLore(h4Lore);
+        heal4.setItemMeta(h4Meta);
 
         ItemStack sGrenade = new ItemStack(Material.SLIME_BALL);
         ItemMeta sGrenadeMeta = sGrenade.getItemMeta();
         assert sGrenadeMeta != null;
         sGrenadeMeta.setDisplayName(ChatColor.GREEN + "Sticky Grenade");
+        sGrenadeMeta.setLore(sLore);
         sGrenade.setItemMeta(sGrenadeMeta);
 
         ItemStack bGrenade = new ItemStack(Material.GHAST_TEAR);
         ItemMeta bGrenadeMeta = bGrenade.getItemMeta();
         assert bGrenadeMeta != null;
         bGrenadeMeta.setDisplayName(ChatColor.GOLD + "Flash Grenade");
+        bGrenadeMeta.setLore(bLore);
         bGrenade.setItemMeta(bGrenadeMeta);
 
         ItemStack fireGrenade = new ItemStack(Material.MAGMA_CREAM);
         ItemMeta fireGrenadeMeta = fireGrenade.getItemMeta();
         assert fireGrenadeMeta != null;
         fireGrenadeMeta.setDisplayName(ChatColor.RED + "Fire Grenade");
+        fireGrenadeMeta.setLore(fireLore);
         fireGrenade.setItemMeta(fireGrenadeMeta);
 
         ItemStack fragGrenade = new ItemStack(Material.EGG);
         ItemMeta fragGrenadeMeta = fragGrenade.getItemMeta();
         assert fragGrenadeMeta != null;
         fragGrenadeMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Frag Grenade");
+        fragGrenadeMeta.setLore(fragLore);
         fragGrenade.setItemMeta(fragGrenadeMeta);
 
         ItemStack mysChest = new ItemStack(Material.CHEST);
         ItemMeta mysChestMeta = mysChest.getItemMeta();
         assert mysChestMeta != null;
         mysChestMeta.setDisplayName(ChatColor.DARK_PURPLE + "Mystery Chest");
+        mysChestMeta.setLore(chestLore);
         mysChest.setItemMeta(mysChestMeta);
 
         //ITEM SETTINGS
