@@ -25,94 +25,94 @@ public class Shop {
 
         //LISTS
         List<String> rankLore = new ArrayList<>();
-        rankLore.add(ChatColor.GRAY + "Click to rank up!");
+        rankLore.add(ChatColor.GREEN + "Click to rank up!");
 
         List<String> h1Lore = new ArrayList<>();
-        h1Lore.add(ChatColor.GRAY + "Click to get Healing Apple!");
+        h1Lore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "10" + ChatColor.GREEN + " Rankpoints");
 
         List<String> h2Lore = new ArrayList<>();
-        h2Lore.add(ChatColor.GRAY + "Click to get Healing Melon Slice!");
+        h2Lore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "20" + ChatColor.GREEN + " Rankpoints");
 
         List<String> h3Lore = new ArrayList<>();
-        h3Lore.add(ChatColor.GRAY + "Click to get Healing Porkchop!");
+        h3Lore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "30" + ChatColor.GREEN + " Rankpoints");
 
         List<String> h4Lore = new ArrayList<>();
-        h4Lore.add(ChatColor.GRAY + "Click to get Healing Chicken!");
+        h4Lore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "40" + ChatColor.GREEN + " Rankpoints");
 
         List<String> sLore = new ArrayList<>();
-        sLore.add(ChatColor.GRAY + "Click to get Slow Grenade!");
+        sLore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "35" + ChatColor.GREEN + " Rankpoints");
 
         List<String> bLore = new ArrayList<>();
-        bLore.add(ChatColor.GRAY + "Click to get Blind Grenade!");
+        bLore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "35" + ChatColor.GREEN + " Rankpoints");
 
         List<String> fireLore = new ArrayList<>();
-        fireLore.add(ChatColor.GRAY + "Click to get Fire Grenade!");
+        fireLore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "50" + ChatColor.GREEN + " Rankpoints");
 
         List<String> fragLore = new ArrayList<>();
-        fragLore.add(ChatColor.GRAY + "Click to get Frag Grenade!");
+        fragLore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "50" + ChatColor.GREEN + " Rankpoints");
 
         List<String> chestLore = new ArrayList<>();
-        chestLore.add(ChatColor.GRAY + "Click to get Mystery Chest!");
+        chestLore.add(ChatColor.GREEN + "Costs " + ChatColor.GOLD + "200" + ChatColor.GREEN + " Rankpoints");
 
         //ITEMSTACKS
         ItemStack rankUp = new ItemStack(Material.IRON_SWORD);
         ItemMeta rankMeta = rankUp.getItemMeta();
         assert rankMeta != null;
-        rankMeta.setDisplayName(ChatColor.GREEN + "Rank Up");
+        rankMeta.setDisplayName(ChatColor.DARK_AQUA + "Rank Up");
         rankUp.setItemMeta(rankMeta);
-
-        ItemStack heal1 = new ItemStack(Material.APPLE);
-        ItemMeta h1Meta = heal1.getItemMeta();
-        assert h1Meta != null;
-        h1Meta.setDisplayName(ChatColor.GREEN + "Heal 2");
-        heal1.setItemMeta(h1Meta);
 
         ItemStack heal2 = new ItemStack(Material.MELON_SLICE);
         ItemMeta h2Meta = heal2.getItemMeta();
         assert h2Meta != null;
-        h2Meta.setDisplayName(ChatColor.GREEN + "Heal 1");
+        h2Meta.setDisplayName(ChatColor.RED + "Heal 1❤");
         heal2.setItemMeta(h2Meta);
 
-        ItemStack heal3 = new ItemStack(Material.PORKCHOP);
-        ItemMeta h3Meta = heal3.getItemMeta();
-        assert h3Meta != null;
-        h3Meta.setDisplayName(ChatColor.GREEN + "Heal 1.5");
-        heal3.setItemMeta(h3Meta);
+        ItemStack heal1 = new ItemStack(Material.APPLE);
+        ItemMeta h1Meta = heal1.getItemMeta();
+        assert h1Meta != null;
+        h1Meta.setDisplayName(ChatColor.RED + "Heal 2❤");
+        heal1.setItemMeta(h1Meta);
 
         ItemStack heal4 = new ItemStack(Material.CHICKEN);
         ItemMeta h4Meta = heal4.getItemMeta();
         assert h4Meta != null;
-        h4Meta.setDisplayName(ChatColor.GREEN + "Heal 3");
+        h4Meta.setDisplayName(ChatColor.RED + "Heal 3❤");
         heal4.setItemMeta(h4Meta);
+
+        ItemStack heal3 = new ItemStack(Material.COOKED_PORKCHOP);
+        ItemMeta h3Meta = heal3.getItemMeta();
+        assert h3Meta != null;
+        h3Meta.setDisplayName(ChatColor.RED + "Heal 4❤");
+        heal3.setItemMeta(h3Meta);
 
         ItemStack sGrenade = new ItemStack(Material.SLIME_BALL);
         ItemMeta sGrenadeMeta = sGrenade.getItemMeta();
         assert sGrenadeMeta != null;
-        sGrenadeMeta.setDisplayName(ChatColor.GREEN + "Slow Grenade");
+        sGrenadeMeta.setDisplayName(ChatColor.GREEN + "Sticky Grenade");
         sGrenade.setItemMeta(sGrenadeMeta);
 
         ItemStack bGrenade = new ItemStack(Material.GHAST_TEAR);
         ItemMeta bGrenadeMeta = bGrenade.getItemMeta();
         assert bGrenadeMeta != null;
-        bGrenadeMeta.setDisplayName(ChatColor.GREEN + "Blind Grenade");
+        bGrenadeMeta.setDisplayName(ChatColor.GOLD + "Flash Grenade");
         bGrenade.setItemMeta(bGrenadeMeta);
 
         ItemStack fireGrenade = new ItemStack(Material.MAGMA_CREAM);
         ItemMeta fireGrenadeMeta = fireGrenade.getItemMeta();
         assert fireGrenadeMeta != null;
-        fireGrenadeMeta.setDisplayName(ChatColor.GREEN + "Fire Grenade");
+        fireGrenadeMeta.setDisplayName(ChatColor.RED + "Fire Grenade");
         fireGrenade.setItemMeta(fireGrenadeMeta);
 
         ItemStack fragGrenade = new ItemStack(Material.EGG);
         ItemMeta fragGrenadeMeta = fragGrenade.getItemMeta();
         assert fragGrenadeMeta != null;
-        fragGrenadeMeta.setDisplayName(ChatColor.GREEN + "Frag Grenade");
+        fragGrenadeMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Frag Grenade");
         fragGrenade.setItemMeta(fragGrenadeMeta);
 
         ItemStack mysChest = new ItemStack(Material.CHEST);
         ItemMeta mysChestMeta = mysChest.getItemMeta();
         assert mysChestMeta != null;
-        mysChestMeta.setDisplayName(ChatColor.GREEN + "Mystery Chest");
+        mysChestMeta.setDisplayName(ChatColor.DARK_PURPLE + "Mystery Chest");
         mysChest.setItemMeta(mysChestMeta);
 
         //ITEM SETTINGS

@@ -20,7 +20,7 @@ public class ShopCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] strings) {
-        if (sender instanceof Player && arenaInstance.getState() == GameState.INFECTION) {
+        if (sender instanceof Player) {
             instance.applyShopUI((Player) sender);
         }
 

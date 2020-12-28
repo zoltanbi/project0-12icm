@@ -142,7 +142,7 @@ public class ItemHandler {
     public static void setFire(Player player, int n) {
         ItemStack fire = new ItemStack(Material.MAGMA_CREAM, n);
         ItemMeta fireMeta = fire.getItemMeta();
-        fireMeta.setDisplayName(ChatColor.GOLD + "Fire Grenade");
+        fireMeta.setDisplayName(ChatColor.RED + "Fire Grenade");
         fire.setItemMeta(fireMeta);
 
         player.getInventory().addItem(fire);
@@ -151,7 +151,7 @@ public class ItemHandler {
     public static void setFrag(Player player, int n) {
         ItemStack frag = new ItemStack(Material.EGG, n);
         ItemMeta fragMeta = frag.getItemMeta();
-        fragMeta.setDisplayName(ChatColor.GOLD + "Flash Grenade");
+        fragMeta.setDisplayName(ChatColor.LIGHT_PURPLE + "Frag Grenade");
         frag.setItemMeta(fragMeta);
 
         player.getInventory().addItem(frag);
@@ -176,18 +176,18 @@ public class ItemHandler {
     }
 
     public static void setPork(Player player, int n) {
-        ItemStack porkchop = new ItemStack(Material.PORKCHOP, n);
+        ItemStack porkchop = new ItemStack(Material.COOKED_PORKCHOP, n);
         ItemMeta porkMeta = porkchop.getItemMeta();
-        porkMeta.setDisplayName(ChatColor.RED + "Heal 2❤");
+        porkMeta.setDisplayName(ChatColor.RED + "Heal 4❤");
         porkchop.setItemMeta(porkMeta);
 
         player.getInventory().addItem(porkchop);
     }
 
     public static void setChicken(Player player, int n) {
-        ItemStack chicken = new ItemStack(Material.CHICKEN, n);
+        ItemStack chicken = new ItemStack(Material.COOKED_CHICKEN, n);
         ItemMeta chickenMeta = chicken.getItemMeta();
-        chickenMeta.setDisplayName(ChatColor.RED + "Heal 2❤");
+        chickenMeta.setDisplayName(ChatColor.RED + "Heal 3❤");
         chicken.setItemMeta(chickenMeta);
 
         player.getInventory().addItem(chicken);
