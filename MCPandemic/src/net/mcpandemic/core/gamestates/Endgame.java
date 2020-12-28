@@ -3,7 +3,6 @@ package net.mcpandemic.core.gamestates;
 import net.mcpandemic.core.Arena;
 import net.mcpandemic.core.Main;
 import net.mcpandemic.core.Manager;
-import net.mcpandemic.core.gamestates.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 

@@ -1,6 +1,5 @@
 package net.mcpandemic.core;
 
-import com.mojang.authlib.yggdrasil.response.User;
 import net.mcpandemic.core.gamestates.GameState;
 import net.mcpandemic.core.infectedmanager.DatabaseManager;
 import net.mcpandemic.core.infectedmanager.ZombieManager;
@@ -13,17 +12,13 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -32,8 +27,8 @@ import java.util.Objects;
 public class GameListener implements Listener {
 
     HashMap<Player, Location> newlyInfected = new HashMap<>();
-    static HashMap<Player, Integer> playerKillstreaks = new HashMap<Player, Integer>();
-    static HashMap<Player, Integer> infectedKillStreaks = new HashMap<Player, Integer>();
+    static HashMap<Player, Integer> playerKillstreaks = new HashMap<>();
+    static HashMap<Player, Integer> infectedKillStreaks = new HashMap<>();
 
     public static void clearPlayerKillStreaks() {
         playerKillstreaks.clear();

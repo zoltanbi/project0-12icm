@@ -3,9 +3,7 @@ package net.mcpandemic.core.kits.humantypes;
 import net.mcpandemic.core.kits.Kit;
 import net.mcpandemic.core.kits.KitType;
 import org.bukkit.entity.Player;
-
 import java.util.UUID;
-
 import static net.mcpandemic.core.kits.humantypes.ItemHandler.*;
 
 public class KitA extends Kit {

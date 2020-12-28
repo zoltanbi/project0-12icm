@@ -1,6 +1,5 @@
 package net.mcpandemic.core.ranks;
 
-import net.mcpandemic.core.kits.Kit;
 import net.mcpandemic.core.kits.KitType;
 import org.bukkit.ChatColor;
 

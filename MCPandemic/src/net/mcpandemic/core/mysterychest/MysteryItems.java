@@ -11,7 +11,7 @@ public enum MysteryItems {
     FIRE_GRENADES,
     FRAG_GRENADES,
     FLASH_GRENADES,
-    STICKY_GRENDAES,
-    RANKPOINTS;
+    STICKY_GRENADES,
+    RANKPOINTS
 
 }

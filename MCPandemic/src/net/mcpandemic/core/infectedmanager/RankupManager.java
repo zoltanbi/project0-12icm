@@ -1,7 +1,6 @@
 package net.mcpandemic.core.infectedmanager;
 
 import net.mcpandemic.core.ranks.InfectedRank;
-import net.mcpandemic.core.ranks.Rank;
 
 
 public class RankupManager {

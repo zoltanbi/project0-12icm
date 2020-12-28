@@ -24,7 +24,7 @@ public enum KitType {
     T,
     ZOMBIE,
     MOTHERZOMBIE,
-    SKELETON;
+    SKELETON
 
 //    MINER(ChatColor.GOLD + "Miner", Material.DIAMOND_PICKAXE,
 //            new String[]{ChatColor.GRAY + "The best Mining kit!"}),

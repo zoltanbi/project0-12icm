@@ -3,13 +3,11 @@ package net.mcpandemic.core.ranks;
 import net.mcpandemic.core.Manager;
 import net.mcpandemic.core.infectedmanager.DatabaseManager;
 import net.mcpandemic.core.infectedmanager.RankupManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.EnumUtils;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;

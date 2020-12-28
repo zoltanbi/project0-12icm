@@ -1,8 +1,9 @@
 package net.mcpandemic.core.gamestates;
 
-import net.mcpandemic.core.*;
-import net.mcpandemic.core.gamestates.Countdown;
-import net.mcpandemic.core.gamestates.GameState;
+import net.mcpandemic.core.Arena;
+import net.mcpandemic.core.Config;
+import net.mcpandemic.core.Main;
+import net.mcpandemic.core.Manager;
 import net.mcpandemic.core.voting.Maps;
 import net.mcpandemic.core.voting.VoteMap;
 import org.bukkit.ChatColor;

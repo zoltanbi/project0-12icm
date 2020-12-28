@@ -4,7 +4,6 @@ import net.mcpandemic.core.Arena;
 import net.mcpandemic.core.Config;
 import net.mcpandemic.core.Main;
 import net.mcpandemic.core.Manager;
-import net.mcpandemic.core.gamestates.GameState;
 import net.mcpandemic.core.infectedmanager.DatabaseManager;
 import net.mcpandemic.core.kits.KitType;
 import org.bukkit.Bukkit;

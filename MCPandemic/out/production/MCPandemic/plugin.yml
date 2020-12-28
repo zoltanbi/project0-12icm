@@ -7,6 +7,8 @@ softdepend: [Multiverse-Core]
 commands:
   arena:
   vote:
+  shop:
+  pshop:
   infectedKits:
     aliases: [kit, kits]
   setrank:

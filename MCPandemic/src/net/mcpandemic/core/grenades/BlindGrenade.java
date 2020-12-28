@@ -1,15 +1,11 @@
 package net.mcpandemic.core.grenades;
 
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketContainer;
-import me.libraryaddict.disguise.utilities.packets.packethandlers.PacketHandlerEntityStatus;
 import net.mcpandemic.core.Main;
 import net.mcpandemic.core.Manager;
 import net.mcpandemic.core.gamestates.GameState;
 import net.mcpandemic.core.teams.Team;
 import net.minecraft.server.v1_16_R3.PacketPlayOutAnimation;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
@@ -24,10 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import javax.annotation.Nonnull;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class BlindGrenade implements Listener {
 

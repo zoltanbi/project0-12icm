@@ -12,5 +12,6 @@
     <orderEntry type="library" name="ProtocolLib1" level="project" />
     <orderEntry type="library" name="LibsDisguises1" level="project" />
     <orderEntry type="library" name="spigot-1.16.4" level="project" />
+    <orderEntry type="library" name="spigot-1.16.41" level="project" />
   </component>
 </module>

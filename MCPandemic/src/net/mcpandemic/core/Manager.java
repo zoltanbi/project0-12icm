@@ -28,10 +28,7 @@ public class Manager {
      * @return a boolean.
      */
     public static boolean isPlaying(Player player) {
-         if (arena.getPlayers().contains(player.getUniqueId())) {
-             return true;
-         }
-         return false;
+        return arena.getPlayers().contains(player.getUniqueId());
     }
 
     /**

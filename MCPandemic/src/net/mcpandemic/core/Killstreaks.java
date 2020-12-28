@@ -11,9 +11,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 
 public class Killstreaks {
 

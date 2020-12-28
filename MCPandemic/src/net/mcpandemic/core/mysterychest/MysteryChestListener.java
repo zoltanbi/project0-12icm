@@ -1,18 +1,11 @@
 package net.mcpandemic.core.mysterychest;
 
-import net.mcpandemic.core.Main;
 import net.mcpandemic.core.Manager;
 import net.mcpandemic.core.gamestates.GameState;
-import net.mcpandemic.core.grenades.ReflectionUtils;
 import net.mcpandemic.core.infectedmanager.DatabaseManager;
-import net.mcpandemic.core.teams.Team;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,18 +13,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Random;
 
 public class MysteryChestListener implements Listener {
 
     public MysteryItems[] items = {MysteryItems.CAKE, MysteryItems.PORKCHOP, MysteryItems.GOLDEN_APPLE,
             MysteryItems.FIRE_ASPECT, MysteryItems.BOW_V1, MysteryItems.BOW_V2, MysteryItems.FIRE_GRENADES,
-            MysteryItems.FRAG_GRENADES, MysteryItems.FLASH_GRENADES, MysteryItems.STICKY_GRENDAES, MysteryItems.RANKPOINTS};
+            MysteryItems.FRAG_GRENADES, MysteryItems.FLASH_GRENADES, MysteryItems.STICKY_GRENADES, MysteryItems.RANKPOINTS};
 
     public void recieveItem(MysteryItems item, Player player) {
         switch(item) {
@@ -121,7 +111,7 @@ public class MysteryChestListener implements Listener {
                 player.sendMessage(Manager.getServerTag() + ChatColor.GREEN + "You got " + ChatColor.YELLOW + "3 Flash Grenades" +
                         ChatColor.GREEN + " from your Mystery Chest!");
                 break;
-            case STICKY_GRENDAES:
+            case STICKY_GRENADES:
                 ItemStack slime = new ItemStack(Material.SLIME_BALL, 3);
                 ItemMeta slimeMeta = slime.getItemMeta();
                 slimeMeta.setDisplayName(ChatColor.GREEN + "Sticky Grenade");

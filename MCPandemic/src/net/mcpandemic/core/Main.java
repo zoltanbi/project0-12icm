@@ -1,24 +1,18 @@
 package net.mcpandemic.core;
 
+import net.mcpandemic.core.foodhealing.FoodHealer;
 import net.mcpandemic.core.grenades.BlindGrenade;
 import net.mcpandemic.core.grenades.FireGrenade;
 import net.mcpandemic.core.grenades.FragGrenade;
-import net.mcpandemic.core.foodhealing.FoodHealer;
 import net.mcpandemic.core.grenades.SlowGrenade;
 import net.mcpandemic.core.infectionkitgui.InfectionKitGUI;
 import net.mcpandemic.core.infectionkitgui.InfectionKitListener;
 import net.mcpandemic.core.mysterychest.MysteryChestListener;
 import net.mcpandemic.core.ranks.*;
+import net.mcpandemic.core.shops.*;
 import net.mcpandemic.core.voting.VoteCommand;
-import net.mcpandemic.core.voting.VoteGUICommand;
 import net.mcpandemic.core.voting.VoteListener;
-import org.apache.logging.log4j.core.appender.FileManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Item;
-import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
@@ -73,6 +67,8 @@ public class Main extends JavaPlugin {
         getCommand("setPrestige").setExecutor(new SetPrestigeCommand());
         getCommand("kit").setExecutor(new InfectionKitGUI());
         getCommand("rankup").setExecutor(new PlayerRankupCommand());
+        getCommand("shop").setExecutor(new ShopCommand(new Shop()));
+        getCommand("pshop").setExecutor(new PShopCommand(new PrestigeShop()));
 
         Bukkit.getPluginManager().registerEvents(
                 new TeleportFix(this), this);
@@ -88,6 +84,8 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new InfectionKitListener(),this);
         Bukkit.getPluginManager().registerEvents(new FoodHealer(),this);
         Bukkit.getPluginManager().registerEvents(new MysteryChestListener(),this);
+        Bukkit.getPluginManager().registerEvents(new ShopListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PShopListener(), this);
     }
 
 
