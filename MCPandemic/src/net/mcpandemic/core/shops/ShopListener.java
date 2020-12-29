@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,9 +21,13 @@ import static net.mcpandemic.core.kits.humantypes.ItemHandler.*;
 public class ShopListener implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e) {
+        if (e.getClick() == ClickType.SHIFT_LEFT ||e.getClick() == ClickType.SHIFT_RIGHT ) {
+            e.setCancelled(true);
+        }
+
         Player p = (Player) e.getWhoClicked();
 
-        if (e.getView().getTitle().contains(("Shop"))) {
+        if (!e.getView().getTitle().contains(("Prestige")) && e.getView().getTitle().contains(("Shop"))) {
             if (e.getCurrentItem() != null) {
                 e.setCancelled(true);
 
