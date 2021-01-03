@@ -3,6 +3,7 @@ package net.mcpandemic.core.shops;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class PShopListener implements Listener {
@@ -11,52 +12,47 @@ public class PShopListener implements Listener {
         Player p = (Player) e.getWhoClicked();
 
         if (e.getView().getTitle().contains(("Prestige"))) {
+            if (e.getClick().isShiftClick() || e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                e.setCancelled(true);
+            }
             if (e.getCurrentItem() != null) {
                 e.setCancelled(true);
 
                 switch (e.getCurrentItem().getType()) {
-                    case LEATHER_CHESTPLATE:
-                        //final stand
+                    case GOLD_BLOCK:
+                        //prestige
+
+                        break;
+                    case DIAMOND_CHESTPLATE:
+                        //juggernaut
 
                         break;
                     case TRIPWIRE_HOOK:
                         //throwing knives
 
                         break;
-                    case MELON_SLICE:
-                        //hardline
-
-                        break;
-                    case WOODEN_SWORD:
-                        //knockback
-
-                        break;
-                    case IRON_BOOTS:
-                        //Feather falling
+                    case IRON_AXE:
+                        //tomahawk
 
                         break;
                     case STONE_SWORD:
-                        //zpower
+                        //knockback
 
                         break;
-                    case APPLE:
-                        //Scavenger
-
-                        break;
-                    case IRON_DOOR:
-                        //Blast Shield
+                    case NETHERITE_BOOTS:
+                        //Feather falling
 
                         break;
                     case SLIME_BALL:
-                        //Demolitionist
+                        //demolotionist
 
                         break;
-                    case CHAINMAIL_CHESTPLATE:
-                        //Juggernaut
+                    case NETHERITE_AXE:
+                        //zPower
 
                         break;
-                    case ARROW:
-                        //Double Tap
+                    case APPLE:
+                        //scavenger
 
                         break;
                     default:

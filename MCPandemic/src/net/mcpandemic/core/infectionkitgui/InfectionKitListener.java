@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import static net.mcpandemic.core.infectedmanager.DatabaseManager.getInfectedKit;
@@ -18,6 +19,9 @@ public class InfectionKitListener implements Listener {
         Player p = (Player) e.getWhoClicked();
 
         if (e.getView().getTitle().contains(("Infected Kits"))) {
+            if (e.getClick().isShiftClick() || e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                e.setCancelled(true);
+            }
             if (e.getCurrentItem() != null) {
                 e.setCancelled(true);
 

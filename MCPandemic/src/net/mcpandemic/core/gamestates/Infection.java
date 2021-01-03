@@ -5,7 +5,9 @@ import net.mcpandemic.core.Config;
 import net.mcpandemic.core.Main;
 import net.mcpandemic.core.Manager;
 import net.mcpandemic.core.teams.Team;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -52,7 +54,11 @@ public class Infection extends BukkitRunnable {
 
     @Override
     public void run() {
-        Manager.turnGamemodeAdventure();
+        for (UUID uuid : Manager.getArena().getPlayers()) {
+            Bukkit.getPlayer(uuid).setLevel(seconds);
+            Bukkit.getPlayer(uuid).setExp(0);
+        }
+
         if (seconds == 0) {
             cancel();
             arena.sendMessage(Manager.getServerTag() + ChatColor.DARK_GREEN + "Time limit reached! Congratulations to these survivors:" + arena.getSurvivors());
@@ -89,8 +95,14 @@ public class Infection extends BukkitRunnable {
         }
         if (seconds <= 10) {
             if (seconds != 0) {
-                arena.sendMessage(Manager.getServerTag() + ChatColor.AQUA + seconds);
+                for (UUID uuid : Manager.getArena().getPlayers()) {
+                    Bukkit.getPlayer(uuid).playSound(Bukkit.getPlayer(uuid).getLocation(), Sound.UI_BUTTON_CLICK, 1.0F, 1.0F);
+                }
             }
+        }
+
+        if (seconds >= 230) {
+            Manager.turnGamemodeAdventure();
         }
 
         if (arena.getPlayers().size() < Config.getRequiredPlayers()) {
@@ -100,21 +112,8 @@ public class Infection extends BukkitRunnable {
             return;
         }
 
+
         seconds--;
-    }
-
-    public void addPoint(Player player) {
-        int p = points.get(player.getUniqueId()) + 1;
-
-        if (p == 20) {
-            arena.sendMessage(player.getName() + " WINS!!");
-            cancel();
-
-            arena.startEndgame();
-            return;
-        }
-
-        points.replace(player.getUniqueId(), p);
     }
 
 }

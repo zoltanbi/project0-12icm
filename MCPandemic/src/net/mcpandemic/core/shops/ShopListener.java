@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,7 +23,10 @@ public class ShopListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
 
-        if (e.getView().getTitle().contains(("Shop"))) {
+        if (e.getView().getTitle().contains(("Rankpoints"))) {
+            if (e.getClick().isShiftClick() || e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                e.setCancelled(true);
+            }
             if (e.getCurrentItem() != null) {
                 e.setCancelled(true);
 
@@ -34,7 +38,7 @@ public class ShopListener implements Listener {
                     case APPLE:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {
@@ -57,7 +61,7 @@ public class ShopListener implements Listener {
                     case MELON_SLICE:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {
@@ -77,10 +81,10 @@ public class ShopListener implements Listener {
                         }
 
                         break;
-                    case PORKCHOP:
+                    case COOKED_PORKCHOP:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {
@@ -100,10 +104,10 @@ public class ShopListener implements Listener {
                         }
 
                         break;
-                    case CHICKEN:
+                    case COOKED_CHICKEN:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {
@@ -126,7 +130,7 @@ public class ShopListener implements Listener {
                     case SLIME_BALL:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {
@@ -149,7 +153,7 @@ public class ShopListener implements Listener {
                     case GHAST_TEAR:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {
@@ -172,7 +176,7 @@ public class ShopListener implements Listener {
                     case MAGMA_CREAM:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {
@@ -195,7 +199,7 @@ public class ShopListener implements Listener {
                     case EGG:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {
@@ -218,7 +222,7 @@ public class ShopListener implements Listener {
                     case CHEST:
                         if (Manager.getArena().getState() != GameState.INFECTION) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be in-game to buy that!");
-                        } else if (Manager.getArena().getState() != GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
+                        } else if (Manager.getArena().getState() == GameState.INFECTION && Manager.getArena().getTeam(p) == Team.ZOMBIE) {
                             p.sendMessage(Manager.getServerTag() + ChatColor.RED + "You need to be a " + ChatColor.GREEN + "Human" + ChatColor.RED + " to buy that!");
                         } else {
                             try {

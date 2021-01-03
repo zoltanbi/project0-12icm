@@ -3,6 +3,7 @@ package net.mcpandemic.core.voting;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class VoteListener implements Listener {
@@ -17,6 +18,9 @@ public class VoteListener implements Listener {
         Player p = (Player) e.getWhoClicked();
 
         if (e.getView().getTitle().contains(("Vote"))) {
+            if (e.getClick().isShiftClick() || e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+                e.setCancelled(true);
+            }
             if (e.getCurrentItem() != null) {
                 e.setCancelled(true);
 

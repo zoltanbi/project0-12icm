@@ -48,7 +48,6 @@ public class Game extends BukkitRunnable {
 
     @Override
     public void run() {
-        Manager.turnGamemodeAdventure();
         if (preGameSeconds == 0) {
             cancel();
             arena.startInfection();
@@ -61,6 +60,10 @@ public class Game extends BukkitRunnable {
             if (preGameSeconds != 0) {
                 arena.sendMessage(Manager.getServerTag() + ChatColor.YELLOW + preGameSeconds + ChatColor.DARK_GREEN + "...");
             }
+        }
+
+        if (preGameSeconds >= 50) {
+            Manager.turnGamemodeAdventure();
         }
 
         if (arena.getPlayers().size() < Config.getRequiredPlayers()) {

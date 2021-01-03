@@ -21,7 +21,7 @@ public class Shop {
     public void applyShopUI(Player p) {
         //SETUP
         Inventory gui = Bukkit.createInventory(
-                null,18, ChatColor.DARK_GRAY + "Shop");
+                null,18, ChatColor.BLUE + "Rankpoints Shop");
 
         //LISTS
         List<String> rankLore = new ArrayList<>();

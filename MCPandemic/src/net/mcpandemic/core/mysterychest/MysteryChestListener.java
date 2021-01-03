@@ -35,7 +35,7 @@ public class MysteryChestListener implements Listener {
                         ChatColor.GREEN + " from your Mystery Chest!");
                 break;
             case PORKCHOP:
-                ItemStack pork = new ItemStack(Material.PORKCHOP, 2);
+                ItemStack pork = new ItemStack(Material.COOKED_PORKCHOP, 2);
                 ItemMeta porkMeta = pork.getItemMeta();
                 porkMeta.setDisplayName(ChatColor.RED + "Heal 4❤");
                 pork.setItemMeta(porkMeta);
