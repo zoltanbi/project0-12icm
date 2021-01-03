@@ -8,11 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-<<<<<<< HEAD
 import org.bukkit.event.inventory.InventoryAction;
-=======
 import org.bukkit.event.inventory.ClickType;
->>>>>>> 51e034362e7951fbc76a10b409ba10212cbdd63b
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
