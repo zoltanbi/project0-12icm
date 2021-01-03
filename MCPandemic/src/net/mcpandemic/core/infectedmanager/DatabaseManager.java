@@ -186,5 +186,194 @@ public class DatabaseManager {
         return null;
     }
 
+    /**
+     * PRESTIGE PERKS
+     */
+
+    // 1. Juggernaut
+    public static boolean getJuggernaut(Player player) {
+        try {
+            ResultSet rs = Main.prepareStatement("SELECT juggernaut FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
+            rs.next();
+            int value = rs.getInt("juggernaut");
+            return value != 0;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void setJuggernaut(Player player) {
+        try {
+            Main.prepareStatement("UPDATE player_info SET juggernaut = " + 1 + " WHERE uuid = '" + player.getUniqueId() + "';").executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    // 2. Throwing Knives
+    public static boolean getThrowingKnives(Player player) {
+        try {
+            ResultSet rs = Main.prepareStatement("SELECT throwing_knives FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
+            rs.next();
+            int value = rs.getInt("throwing_knives");
+            return value != 0;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void setThrowingKnives(Player player) {
+        try {
+            Main.prepareStatement("UPDATE player_info SET throwing_knives = " + 1 + " WHERE uuid = '" + player.getUniqueId() + "';").executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    // 3. Tomahawk
+    public static boolean getTomahawk(Player player) {
+        try {
+            ResultSet rs = Main.prepareStatement("SELECT tomahawk FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
+            rs.next();
+            int value = rs.getInt("tomahawk");
+            return value != 0;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void setTomahawk(Player player) {
+        try {
+            Main.prepareStatement("UPDATE player_info SET tomahawk = " + 1 + " WHERE uuid = '" + player.getUniqueId() + "';").executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    // 4. Knockback
+    public static boolean getKnockback(Player player) {
+        try {
+            ResultSet rs = Main.prepareStatement("SELECT knockback FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
+            rs.next();
+            int value = rs.getInt("knockback");
+            return value != 0;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void setKnockback(Player player) {
+        try {
+            Main.prepareStatement("UPDATE player_info SET knockback = " + 1 + " WHERE uuid = '" + player.getUniqueId() + "';").executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+
+    //5. Feather Falling
+    public static boolean getFeatherFalling(Player player) {
+        try {
+            ResultSet rs = Main.prepareStatement("SELECT feather_falling FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
+            rs.next();
+            int value = rs.getInt("feather_falling");
+            return value != 0;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void setFeatherFalling(Player player) {
+        try {
+            Main.prepareStatement("UPDATE player_info SET feather_falling = " + 1 + " WHERE uuid = '" + player.getUniqueId() + "';").executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+
+    // 6. Demolitionist
+    public static boolean getDemolotionist(Player player) {
+        try {
+            ResultSet rs = Main.prepareStatement("SELECT demolitionist FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
+            rs.next();
+            int value = rs.getInt("demolitionist");
+            return value != 0;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void setDemolitionist(Player player) {
+        try {
+            Main.prepareStatement("UPDATE player_info SET demolitionist = " + 1 + " WHERE uuid = '" + player.getUniqueId() + "';").executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    // 7. ZPower
+    public static boolean getZpower(Player player) {
+        try {
+            ResultSet rs = Main.prepareStatement("SELECT zpower FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
+            rs.next();
+            int value = rs.getInt("zpower");
+            return value != 0;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void setZpower(Player player) {
+        try {
+            Main.prepareStatement("UPDATE player_info SET zpower = " + 1 + " WHERE uuid = '" + player.getUniqueId() + "';").executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+
+    // 8. Scavenger
+    public static boolean getScavenger(Player player) {
+        try {
+            ResultSet rs = Main.prepareStatement("SELECT scavenger FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
+            rs.next();
+            int value = rs.getInt("scavenger");
+            return value != 0;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void setScavenger(Player player) {
+        try {
+            Main.prepareStatement("UPDATE player_info SET scavenger = " + 1 + " WHERE uuid = '" + player.getUniqueId() + "';").executeUpdate();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
 
 }

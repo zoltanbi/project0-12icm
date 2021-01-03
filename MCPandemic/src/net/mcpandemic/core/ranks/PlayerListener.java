@@ -45,9 +45,12 @@ public class PlayerListener implements Listener {
             if (rs.getInt(1) == 0) { //is not in system
                 Main.prepareStatement("INSERT INTO player_info(" +
                         "uuid, server_rank, infected_rank, prestige_rank, " +
-                        "rank_points, prestige_tokens, join_date, infected_kit) " +
+                        "rank_points, prestige_tokens, join_date, infected_kit," +
+                        "juggernaut, throwing_knives, tomahawk, knockback, feather_falling," +
+                        "demolitionist, zpower, scavenger) " +
                         "VALUES ('" + player.getUniqueId() + "'," +
-                        "DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
+                        "DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT," +
+                        "DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT);").executeUpdate();
             } else { //is already in system
                 ResultSet rs2 = Main.prepareStatement("SELECT * FROM player_info WHERE uuid = '" + player.getUniqueId() + "';").executeQuery();
                 rs2.next();
