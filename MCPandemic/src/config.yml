@@ -1,6 +1,10 @@
 required-players: 2
 vote-seconds: 60
 countdown-seconds: 30
+Groups:
+  guest:
+    #insert all permissions here with a '-' in front of it
+
 lobby-spawn:
   world: 'lobby'
   x: 77.488

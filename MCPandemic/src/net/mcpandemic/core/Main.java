@@ -8,6 +8,7 @@ import net.mcpandemic.core.grenades.SlowGrenade;
 import net.mcpandemic.core.infectionkitgui.InfectionKitGUI;
 import net.mcpandemic.core.infectionkitgui.InfectionKitListener;
 import net.mcpandemic.core.mysterychest.MysteryChestListener;
+import net.mcpandemic.core.permissions.PermissionHandler;
 import net.mcpandemic.core.ranks.*;
 import net.mcpandemic.core.shops.*;
 import net.mcpandemic.core.voting.VoteCommand;
@@ -86,6 +87,7 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new MysteryChestListener(),this);
         Bukkit.getPluginManager().registerEvents(new ShopListener(), this);
         Bukkit.getPluginManager().registerEvents(new PShopListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PermissionHandler(), this);
     }
 
 
