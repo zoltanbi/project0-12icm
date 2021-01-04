@@ -53,4 +53,6 @@ public class PermissionHandler implements Listener {
             }
         }
     }
+
+    private PermissionHandler getInstance() { return this; }
 }

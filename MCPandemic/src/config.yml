@@ -4,7 +4,22 @@ countdown-seconds: 30
 Groups:
   guest:
     #insert all permissions here with a '-' in front of it
-
+  jagger:
+    #insert all permissions here with a '-' in front of it
+  splash:
+    #insert all permissions here with a '-' in front of it
+  banger:
+    #insert all permissions here with a '-' in front of it
+  matey:
+    #insert all permissions here with a '-' in front of it
+  mod:
+    #insert all permissions here with a '-' in front of it
+  admin:
+    #insert all permissions here with a '-' in front of it
+  owner:
+    #insert all permissions here with a '-' in front of it
+  donator:
+    #insert all permissions here with a '-' in front of it
 lobby-spawn:
   world: 'lobby'
   x: 77.488
